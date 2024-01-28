@@ -378,3 +378,34 @@ next-router-mockを使用する
       });
     });
     ```
+
+## 画像選択テスト
+
+jsdomでは、画像選択関連のインタラクションが整備されていない
+
+- 下記仕様の関数を用意する
+    - ダミーの画像ファイルを作成する
+    - 画像インタラクションを再現する
+    
+    ```tsx
+    import userEvent from "@testing-library/user-event";
+    
+    export function selectImageFile(
+      inputTestId = "file",
+      fileName = "hello.png",
+      content = "hello"
+    ) {
+    	// userEventの初期化
+      const user = userEvent.setup();
+    	// ダミーの画像ファイルを作成
+      const filePath = [`C:\\fakepath\\${fileName}`]; 
+      const file = new File([content], fileName, { type: "image/png" });
+    
+    	// renderしたコンポーネントに含まれるdata-testid="file"相当のinput要素を取得
+      const fileInput = screen.getByTestId(inputTestId);
+    
+    	// このkな数を実行すると、画像選択が再現される
+      const selectImage = () => user.upload(fileInput, file);
+      return { fileInput, filePath, selectImage };
+    }
+    ```
