@@ -115,11 +115,6 @@
         
         - argsプロパティで、コンポーネントに渡すPropsを定義することができる
         - Large, Smallで別名でexportすることで、異なるサイズのStoryを登録することができる
-    - Storybook エクスプローラー
-        
-        ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/dd7a89a3-4721-4090-b7b9-781efd532f7a/Untitled.png)
-        
-        ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ac003c21-c819-46e9-98b5-d5ecbfc3f867/Untitled.png)
         
 
 ### 3レベル設定のディープマージ
@@ -144,5 +139,243 @@
 - Controlsパネルを使ったデバッグ
     - Propsの値を書き換えることで、表示がどうなるかリアルタイムでデバッグすることができる
         - 筆者は文字が長くなった場合に意図したレイアウトになっているかを確認
+
+
+### actionsパネル(storybook/addon-actions)
+
+- Propsに渡されたイベントハンドラーがどのように呼び出されたのかをログ出力する機能
+- 初期設定では、.storybook/preview.js上にて、接頭辞「on」で始まるイベントハンドラーが自動でactionsに出力されるようになっている
     
-    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6c7c130b-6e8e-4aa5-8689-c5a9fd3d01a4/Untitled.png)
+    ```tsx
+    export const parameters = {
+      actions: { argTypesRegex: "^on[A-Z].*" },
+    }
+    ```
+    
+- Ex.
+    - Story
+        
+        ```tsx
+        export const FailedSaveAsDraft: Story = {
+          play: async ({ canvasElement }) => {
+            const canvas = within(canvasElement);
+            await user.click(canvas.getByRole("button", { name: "下書き保存する" }));
+            const textbox = canvas.getByRole("textbox", { name: "記事タイトル" });
+            await waitFor(() =>
+              expect(textbox).toHaveErrorMessage("1文字以上入力してください")
+            );
+          },
+        };
+        ```
+
+### レスポンシブレイアウトに対応するViewport設定
+
+- スマートフォンレイアウトでStoryを登録したい場合、`parameters.viewport`を設定する必要がある
+- Ex.
+    
+    ```tsx
+    export const SPLoggedIn: Story = {
+      parameters: {
+        viewport: {
+          viewports: INITIAL_VIEWPORTS,
+          defaultViewport: "iphone6",
+        },
+      },
+    ```
+    
+- 全storyで共通で使用する場合、設定ファイルにparameterを持たせておく
+    - story
+        
+        ```tsx
+        export const SPLoggedIn: Story = {
+          parameters: {
+            ...SPStory.parameters,
+          },
+        ```
+        
+    - 設定ファイル
+        
+        ```tsx
+        export const SPStory = {
+          parameters: {
+            viewport: {
+              viewports: INITIAL_VIEWPORTS,
+              defaultViewport: "iphone6",
+            },
+            screenshot: {
+              ...
+            },
+          },
+        };
+        ```
+        
+
+## WebAPIに依存したStoryの登録
+
+### アドオンを設定する
+
+- mswと、msw-storybook-addon をインストールする
+- .storybook/preview.jsにて設定する
+    
+    ```tsx
+    import { initialize, mswDecorator } from "msw-storybook-addon";
+    
+    export const decorators = [mswDecorator];
+    
+    initialize();
+    ```
+    
+    - initialize()関数で有効化
+    - mswDecoratorも全てのStoryで必要になるため、exportで設定しておく
+- パブリックディレクトリの場所を宣言する
+    
+    ```tsx
+    $ npx msw init <PUBLIC_DIR>
+    ```
+    
+- Storybookにも、パブリックディレクトリの場所を明記しておく
+    
+    ```tsx
+    const path = require("path");
+    
+    module.exports = {
+    	...
+      staticDirs: ["../public"],
+    }
+    ```
+    
+
+### リクエストハンドラーを変更する
+
+- 認証のリクエストなど、全てのStoryで使用する場合はGlobal(.storybook/preview.js)に設定しておく
+    
+    ```tsx
+    import { **handleGetMyProfile** } from ..
+    
+    export const parameters = {
+    	msw: { handlers: [**handleGetMyProfile**()] },
+    	...
+    }
+    ```
+    
+    src/services/client/MyProfile/__mock__/msw.ts
+    
+    ```tsx
+    export function handleGetMyProfile(args?: {
+      mock?: jest.Mock<any, any>;
+      status?: number;
+    }) {
+      **return rest.get(path(), async (_, res, ctx) => {
+        args?.mock?.();
+        if (args?.status) {
+          return res(ctx.status(args.status));
+        }
+        return res(ctx.status(200), ctx.json(getMyProfileData));
+      });**
+    }
+    ```
+    
+- Story 使用例
+    
+    ```tsx
+    import { handleGetMyProfile } from "@/services/client/MyProfile/__mock__/msw";
+    import { Login } from "./";
+    
+    export default {
+      component: Login,
+      parameters: {
+        nextRouter: { pathname: "/login" },
+        msw: { handlers: [**handleGetMyProfile({ status: 401 })**] },
+      },
+      decorators: [BasicLayoutDecorator],
+    } as ComponentMeta<typeof Login>;
+    
+    ...
+    ```
+    
+
+## Router依存したStoryの登録
+
+### アドオンを設定する
+
+- storybook-addon-next-router をインストールする
+- .storybook/main.jsと.storybook/preview.jsに設定をする
+    - main.js
+        
+        ```jsx
+        module.exports = {
+          stories: ["../src/**/*.stories.@(js|jsx|ts|tsx)"],
+          addons: [ "storybook-addon-next-router",],
+        	...
+        }
+        ```
+        
+    - preview.js
+        
+        ```jsx
+        import { RouterContext } from "next/dist/shared/lib/router-context";
+        
+        nextRouter: {
+          Provider: RouterContext.Provider,
+        },
+        ```
+        
+- Story
+    
+    ```jsx
+    export const RouteMyPosts: Story = {
+      parameters: {
+        nextRouter: { pathname: "/my/posts" },
+      },
+    };
+    ```
+    
+
+## Play functionを利用したインタラクションテスト
+
+Storybook上でユーザーの操作を再現できる
+
+### アドオンを設定する
+
+- インストール
+    
+    ```jsx
+    $ npm install @storybook/testing-library @storybook/jest @storybook/addon-interactions --save-dev
+    ```
+    
+- .storybook/main.jsに設定を追加する
+    
+    ```jsx
+    module.exports = {
+      stories: ["../src/**/*.stories.@(js|jsx|ts|tsx)"],
+    	addons: ["@storybook/addon-interactions"],
+    	features: {
+    		interactionsDebugger: true,
+    	}
+    	...
+    }
+    ```
+    
+
+### インタラクションを与える
+
+StoryにPlay関数を使用する
+
+- Ex.
+    - Story
+        
+        ```jsx
+        import { userEvent as user, waitFor, within } from "@storybook/testing-library";
+        
+        export const SucceedSaveAsDraft: Story = {
+          **play:** async ({ canvasElement }) => {
+            const canvas = within(canvasElement);
+            await **user.type(**
+              canvas.getByRole("textbox", { name: "記事タイトル" }),
+              "私の技術記事"
+            );
+          },
+        };
+        ```
+        
+        - インタラクション自体の記述はtesting-library+jsdomの書き方と同様
