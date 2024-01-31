@@ -379,3 +379,227 @@ StoryにPlay関数を使用する
         ```
         
         - インタラクション自体の記述はtesting-library+jsdomの書き方と同様
+
+## アクセシビリティテスト
+
+- アクセシビリティについて
+    
+    [Webアクセシビリティとアクセシブルネーム](https://www.notion.so/Web-b1c65f7d5c8e449da9802c06fc21fe43?pvs=21) 
+    
+- Storybookを活用してコンポーネント単位でのアクセシビリティ検証が行える
+
+### アドオンを設定する
+
+- @storybook/addon-a11y —save-dev
+- .storybook/main.jsに追加する
+    
+    ```jsx
+    module.exports = {
+    	addons: [
+    		"@storybook/addon-a11y",
+    	]
+    }
+    ```
+    
+
+### 検証を確認する
+
+- StoryエクスプローラーのAccessibilityタグで検証される
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/1746ebec-51f2-431b-a42e-76f9c97f0f82/Untitled.png)
+    
+    - Violations 違反
+    - Passes パス
+    - Incomplete 修正すべき
+
+### 一部のルール違反を無効化する
+
+- ケースに応じて無効化したい場合がある。こちらも他と同様、Global, Component, Storyの3つのレベルで設定できる
+    - Ex.  Componentレベルで設定
+        
+        ```jsx
+        export default {
+          component: Switch,
+          parameters: {
+            **a11y: {
+              config: { rules: [{ id: "label", enabled: false }] },
+            },**
+          },
+        } as ComponentMeta<typeof Switch>;
+        ```
+        
+
+### アクセシビリティ検証を無効化にする
+
+- Ex. Componentレベルで設定
+    
+    ```jsx
+    export default {
+      component: Switch,
+      parameters: {
+        **a11y: { disable: true }**
+      },
+    } as ComponentMeta<typeof Switch>;
+    ```
+    
+
+## Storybookのスモークテスト (Test runner)
+
+- スモークテスト
+    - Storybookが壊れていないか、ざっくり検証するテストのこと
+- Storybook自体をテスト化する
+    - JestとPlaywrightで実行される
+- ライブラリのインストール
+    
+    ```jsx
+    npm install @storybook/test-runner --save-dev
+    ```
+    
+- package.jsonにスクリプトを登録しておくと便利
+    
+    ```jsx
+    {
+     "scripts": {
+    		"test:storybook": "test-storybook"
+      }
+    }
+    ```
+    
+
+### Viewportの設定が反映されない課題の回避策(2023年3月時点)
+
+- Storyごとに設定したViewportsがTest Runnerに適用されない問題が報告されている
+- issueに習い一時的に問題への回避策として、.storybook/test-runner.jsに次の設定を施している
+    
+    ```jsx
+    module.exports = {
+      async preRender(page, context) {
+        **if (context.name.startsWith("SP")) {
+          page.setViewportSize({ width: 375, height: 667 });
+        } else {
+          page.setViewportSize({ width: 1280, height: 800 });
+        }**
+      },
+      ...
+    };
+    ```
+    
+
+### Test runnerによるアクセシビリティテスト
+
+- インストール
+    
+    ```jsx
+    $ npm install axe-playwright --save-dev
+    ```
+    
+- .storybook/test-runner.jsに設定を追記する
+    
+    ```jsx
+    module.exports = {
+      async preRender(page, context) {
+        ...
+        **await injectAxe(page); // axeを使用した検証のセットアップ**
+      },
+      async postRender(page, context) {
+        ...
+        **await checkA11y(page, "#root", {
+          includedImpacts: ["critical"], // Violations相当のみのエラーを計上**
+          detailedReport: false,
+          detailedReportOptions: { html: true },
+          axeOptions: storyContext.parameters?.a11y?.options,
+        });
+      },
+    };
+    ```
+    
+
+## Storyを結合テストとして再利用する
+
+- Storyで使用した**「状態の準備」**を結合テストで再利用する
+- インストール
+    
+    ```jsx
+    $ npm install --save-dev @storybook/testing-react
+    ```
+    
+- Ex.
+    - Story(状態の準備)
+        
+        ```jsx
+        import { composeStories } from "@storybook/testing-react";
+        import { render, screen } from "@testing-library/react";
+        import * as stories from "./index.stories";
+        
+        const { Default, CustomButtonLabel, ExcludeCancel } = composeStories(stories);
+        
+        describe("AlertDialog", () => {
+          test("Default", () => {
+            render(<Default />);
+            expect(screen.getByRole("alertdialog")).toBeInTheDocument();
+          });
+        
+          test("CustomButtonLabel", () => {
+            render(<CustomButtonLabel />);
+            expect(screen.getByRole("button", { name: "OK" })).toBeInTheDocument();
+            expect(
+              screen.getByRole("button", { name: "キャンセル" })
+            ).toBeInTheDocument();
+          });
+        
+          test("ExcludeCancel", () => {
+            render(<ExcludeCancel />);
+            expect(screen.getByRole("button", { name: "OK" })).toBeInTheDocument();
+            expect(
+              screen.queryByRole("button", { name: "CANCEL" })
+            ).not.toBeInTheDocument();
+          });
+        });
+        ```
+        
+    - Storyを用いた結合テスト
+        
+        ```jsx
+        import { composeStories } from "@storybook/testing-react";
+        import { render, screen } from "@testing-library/react";
+        **import * as stories from "./index.stories";**
+        
+        **const { Default, CustomButtonLabel, ExcludeCancel } = composeStories(stories);**
+        
+        describe("AlertDialog", () => {
+          test("Default", () => {
+            **render(<Default />);**
+            expect(screen.getByRole("alertdialog")).toBeInTheDocument();
+          });
+        
+          test("CustomButtonLabel", () => {
+            **render(<CustomButtonLabel />);**
+            expect(screen.getByRole("button", { name: "OK" })).toBeInTheDocument();
+            expect(
+              screen.getByRole("button", { name: "キャンセル" })
+            ).toBeInTheDocument();
+          });
+        
+          test("ExcludeCancel", () => {
+            **render(<ExcludeCancel />);**
+            expect(screen.getByRole("button", { name: "OK" })).toBeInTheDocument();
+            expect(
+              screen.queryByRole("button", { name: "CANCEL" })
+            ).not.toBeInTheDocument();
+          });
+        });
+        ```
+        
+
+### storybook/test-runnerとの違い
+
+- テストとStoryの登録を一度に行い、工数を削減するアプローチは、Test runnnerによるアプローチと似ている。どちらが適しているかは、目的や甲乙を比較して検討する
+- JestでStoryを使用する
+    - モジュールモックやスパイが必要なテストをかける
+    - 実行速度が速い(ヘッドレスブラウザを使用しない)
+- Test runnerの方が優れている
+    - テストファイルを別途用意する必要がない
+        
+        → Storyファイルだけで
+        
+    - 忠実性が高い(ブラウザを使用するため、CSSが再現される)
