@@ -352,6 +352,48 @@
     ```
     
 
-p276
+### CUBE  全ての可能な組み合わせを算出する
 
-CUBE  全ての可能な組み合わせを算出する
+- CUBE演算子の役割は「全ての可能な組み合わせを算出する」
+    - Ex.のケースでは、次の4つの組み合わせについての集約を一度に計算している
+        - `GROUP BY()` - GROUP BYがないと同義。全体の合計行のレコードを生み出す
+        - `GROUP BY(shohin_bunrui)`
+        - `GROUP BY(torokubi)`  (ROLLUPからさらに追加された)
+        - `GROUP BY((shohin_bunrui, torokubi)`
+- MySQL8.0ではサポートされていない
+- EX.
+    
+    ```sql
+    SELECT CASE WHEN GROUPING(shohin_bunrui) = 1
+                THEN '商品分類 合計'
+                ELSE shohin_bunrui END AS shohin_bunrui,
+           CASE WHEN GROUPING(torokubi) = 1
+                THEN '登録日 合計'
+                ELSE torokubi END AS torokubi,
+           SUM(hanbai_tanka) AS sum_tanka
+      FROM Shohin
+     GROUP BY CUBE(shohin_bunrui, torokubi);
+    ```
+    
+
+### GROUPING SETS 欲しい組み合わせだけ取得する
+
+- CUBE演算子を使って求めた結果の一部だけ求めたい時に使用する
+- Ex.のケースでは、次の2つの組み合わせについての集約を一度に計算している
+    - `GROUP BY(shohin_bunrui)`
+    - `GROUP BY(torokubi)`
+- Ex.
+    
+    ```sql
+    SELECT CASE WHEN GROUPING(shohin_bunrui) = 1
+                THEN '商品分類 合計'
+                ELSE shohin_bunrui END AS shohin_bunrui,
+           CASE WHEN GROUPING(torokubi) = 1
+                THEN '登録日 合計'
+                ELSE CAST(torokubi AS VARCHAR(16)) END AS torokubi,
+           SUM(hanbai_tanka) AS sum_tanka
+      FROM Shohin
+     GROUP BY GROUPING SETS (shohin_bunrui, torokubi);
+    ```
+    
+- MySQL8.0ではサポートされていない
