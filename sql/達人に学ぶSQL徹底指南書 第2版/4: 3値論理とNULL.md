@@ -97,7 +97,7 @@ NULLには2種類
             | 和泉 | 18 | 千葉 |
             | 石川 | 19 | 神奈川 |
     - SQL: Bクラスの東京在住の生徒と年齢が一致しないAクラスの生徒を選択する
-        - このSQLだと結果は空で、一行も返されない
+        - `NOT IN`を使用すると空で、一行も返されない
             
             ```sql
             SELECT *
@@ -108,77 +108,112 @@ NULLには2種類
             			WHERE city = '東京');
             ```
             
-        - 処理の流れ
+            - 処理の流れ
+                
+                ```sql
+                1.サブクエリを実行して、年齢のリストを取得
+                SELECT *
+                FROM Class_A
+                WHERE age NOT IN (22, 23, NULL);
+                ```
+                
+                ```sql
+                2. NOT INをNOTとINを使って同値変換
+                SELECT *
+                FROM Class_A
+                WHERE NOT age IN (22, 23, NULL);
+                ```
+                
+                ```sql
+                3．IN述語をORで同値変換
+                SELECT *
+                FROM Class_A
+                WHERE NOT ( (age = 22) OR (age = 23) OR (age = NULL) );
+                ```
+                
+                ```sql
+                4．ド・モルガンの法則を使って同値変換
+                FROM Class_A
+                WHERE NOT (age = 22) AND NOT(age = 23) AND NOT (age = NULL);
+                ```
+                
+                ```sql
+                5.NOTと＝を<>で同値変換
+                SELECT *
+                FROM Class_A
+                WHERE (age <> 22) AND (age <> 23) AND (age <> NULL);
+                ```
+                
+                ```sql
+                6.NULLに<>を適用するとunknownになる
+                SELECT *
+                FROM Class_A
+                WHERE (age <> 22) AND (age <> 23) AND unknown;
+                ```
+                
+                ```sql
+                7.ANDの演算にunknownが含まれると結果がtrueにならない（理論編のマトリックス参照）
+                SELECT *
+                FROM Class_A
+                WHERE false
+                -- または unknown
+                ```
+                
+        - `NOT EXISTS`を使用すると、意図する値が帰ってくる
             
             ```sql
-            1.サブクエリを実行して、年齢のリストを取得
             SELECT *
-            FROM Class_A
-            WHERE age NOT IN (22, 23, NULL);
+            	FROM Class_A A
+            WHERE NOT EXISTS
+            		( SELECT *
+            				FROM Class_B B
+            			WHERE A.age = B.age
+            			  AND B.city = '東京');
             ```
             
-            ```sql
-            2. NOT INをNOTとINを使って同値変換
-            SELECT *
-            FROM Class_A
-            WHERE NOT age IN (22, 23, NULL);
-            ```
-            
-            ```sql
-            3．IN述語をORで同値変換
-            SELECT *
-            FROM Class_A
-            WHERE NOT ( (age = 22) OR (age = 23) OR (age = NULL) );
-            ```
-            
-            ```sql
-            4．ド・モルガンの法則を使って同値変換
-            FROM Class_A
-            WHERE NOT (age = 22) AND NOT(age = 23) AND NOT (age = NULL);
-            ```
-            
-            ```sql
-            5.NOTと＝を<>で同値変換
-            SELECT *
-            FROM Class_A
-            WHERE (age <> 22) AND (age <> 23) AND (age <> NULL);
-            ```
-            
-            ```sql
-            6.NULLに<>を適用するとunknownになる
-            SELECT *
-            FROM Class_A
-            WHERE (age <> 22) AND (age <> 23) AND unknown;
-            ```
-            
-            ```sql
-            7.ANDの演算にunknownが含まれると結果がtrueにならない（理論編のマトリックス参照）
-            SELECT *
-            FROM Class_A
-            WHERE false
-            -- または unknown
-            ```
-            
+            - EXISTS述語は、trueかfalseしか返さないため
+                - サブクエリの結果が返されたらtrueになるし、返されなかったらfalseになる
 
-- p72
+### 限定述語 ALL, ANYもNULLがあると成立しない
+
+- ALLは比較述語と併用して、「~すべてと等しい」「すべてよりも大きい」
     
-    NOT EXISTSは、trueかfalseしか返さない
+    ```sql
+    -- Bクラスの東京在住の誰よリも若いAクラスの生徒を選択する
+    SELECT *
+    	FROM Class_A
+    WHERE age < ALL ( SELECT age
+    										FROM Class_B
+    									 WHERE city = '東京'
+    								)
+    ```
     
+- ALL述語も実行時にANDで同値変換されるため、NULLが入ってくると成立しなくなる
 
-p74
+### 集約関数(極値関数)もレコードが一つもないとNULLを返すため注意する
 
-ALL述語, 極値関数
+```sql
+-- Class_Bにひとつもレコードがないと、結果が一つも返らない
+SELECT *
+	FROM Class_A
+WHERE age < ( SELECT MIN(age)
+										FROM Class_B
+									 WHERE city = '東京'
+								)
+```
 
-p76
+## まとめ
 
-NULLがある列に等号を用いるとunknownが帰る
+- NULLがある列に等号を用いるとunknownが帰る
+- unknownが論理演算に紛れ込むと、SQLが直感に反する動作をする
+- 対処するには、段階的なステップに分けてSQLの動作を追うことが有効
+- 極力NULLは排除する(NOT NULL制約)
 
-unknownが論理演算に紛れ込むと、SQLが直感に反する動作をする
+## Column
 
-対処するには、段階的なステップに分けてSQLの動作を追うことが有効
-
-→ 極力NULLは排除する
-
-p81
-
-OracleDBでは、NULLと文字列連結が標準SQLと仕様が違う
+- OracleDBでは、NULLと文字列連結が標準SQLと仕様が違う
+- 標準SQL
+    - NULLと文字列を連結すると、NULLが返る
+- Oracle
+    - 原則空文字をNULLとして扱う
+    - NULLと文字列を連結すると、文字列が返る
