@@ -1,30 +1,36 @@
-## 理論編
+# 理論編
 
 ---
 
-### 述語の定義
+## 述語の定義
 
 - 関数。戻り値が真理値になるもの
 
-### 存在の階層
+## 存在の階層
 
-- `=`, `BETWEEN`, とEXISTSを比較すると大きな違いは引数が単一の値か集合か
-    - `=`, `BETWEEN`は単一の値(スカラ値)のみ引数に取る (Ex. `age = 13`, `age BETWHEEN 6 AND 13`)
-    - EXISTSは行の集合を引数にとる
-        
-        ```sql
-        SELECT id
-        	FROM Foo AS F
-        WHERE EXISTS
-        	( SELECT *
-        			FROM Bar AS B
-        		WHERE F.id=B.id
-        	);
-        ```
-        
-- 述語論理では上記のように入力のレベルに応じて、分類している
-    - `=`, `BETWEEN`のように、一行を入力する述語を「一階の述語」
-    - EXISTSのように行の集合を入力とする述語を「二階の述語」
+---
+
+### EXISTSだけが、他の述語と違って(行の集合を引数に取る)
+
+- (`=`, `BETWEEN`)とEXISTSを比較すると大きな違いは引数が単一の値か集合か
+- `=`, `BETWEEN`は単一の値(スカラ値)のみ引数に取る (Ex. `age = 13`, `age BETWHEEN 6 AND 13`)
+- EXISTSは行の集合を引数にとる
+    
+    ```sql
+    SELECT id
+    	FROM Foo AS F
+    WHERE EXISTS
+    	( SELECT *
+    			FROM Bar AS B
+    		WHERE F.id=B.id
+    	);
+    ```
+    
+
+### 述語論理の分類
+
+- `=`, `BETWEEN`のように、一行を入力する述語を「一階の述語」
+- EXISTSのように行の集合を入力とする述語を「二階の述語」
 
 ### 全称量化と存在量化
 
@@ -36,8 +42,13 @@
 - 存在量子化
     - 「条件Pを満たすx(行)が(少なくともひとつ)存在する」という文を書くための道具
     - EXISTS術語はこれにあたる
-- SQLで、全称量子化を存在量子化にするには
-    - 「全ての行が条件Pを満たす」のを、「条件Pを満たさない行は存在しない」へ変換する必要がある
+
+<aside>
+💡 **SQLで、全称量子化を存在量子化にするには**
+
+*「全ての行が条件Pを満たす」のを、「条件Pを満たさない行は存在しない」へ変換する必要がある*
+
+</aside>
 
 ## 実践編
 
@@ -147,16 +158,47 @@
         ```
         
 
-p101
+### 列に対する量化
 
-列と値を入れ替える IN句
-
-p102
-
-まとめ
-
-EXISTのみ、行の集合を引数に取る
-
-高階関数の一種と見做せる
-
-全称量子化に相当する演算子がない。
+- 列に対して、量化を使用したい場合
+    - 「全てのy(列)が条件Pを満たす」
+- ALLか、ANY句を使用する
+    - Ex. 成績テーブルで、全ての列が成績1の行を抽出する (全称量)
+        - ALL述語
+            
+            ```sql
+            -- 列方向への全称量化
+            SELECT *
+              FROM ArrayTbl
+            WHERE 1 = ALL (col1, col2, col3, col4, col5, col6, col7, col8, col9, col10);
+            ```
+            
+    - Ex. 成績テーブルで、少なくとも1つの列が成績9の行を抽出する(存在量)
+        - ANY述語
+            
+            ```sql
+            -- 列方向への存在量化
+            SELECT *
+              FROM ArrayTbl
+             WHERE 9 = ANY (col1, col2, col3, col4, col5, col6, col7, col8, col9, col10);
+            ```
+            
+        - IN述語も使用できる
+            - 左辺に値、右辺に列名で使用することもできる
+            
+            ```sql
+            SELECT *
+              FROM ArrayTbl
+             WHERE 9 IN (col1, col2, col3, col4, col5, col6, col7, col8, col9, col10);
+            ```
+            
+    - Ex. 成績テーブルで、オールNULLの行を抽出する
+        
+        ‣ を使用する
+        
+        ```sql
+        -- オールNULLの行を探す：正しい答え
+        SELECT *
+          FROM ArrayTbl
+         WHERE COALESCE(col1, col2, col3, col4, col5, col6, col7, col8, col9, col10) IS NULL;
+        ```
