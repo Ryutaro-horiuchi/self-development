@@ -133,3 +133,96 @@ SELECT A.id, A.name
     ```sql
     SELECT * FROM SomeTable WHERE col_1 > 100 / 1.1;
     ```
+    
+
+### インデックス列にNULLが存在する
+
+IS NULLや、IS NOT NULLを使用するとインデックスが利用されなかったりする
+
+### 否定系を使っている
+
+以下、否定系はインデックスを使用できない
+
+- <>
+- !=
+- NOT IN
+
+### ORを使っている
+
+- col1,col2にそれぞれのインデックス、あるいは(col1, col2)に複合インデックスを使用しているいずれの場合も、ORを使って条件を結合すると、インデックスが使用できなくなる
+
+```sql
+SELECT * FROM SomTable WHERE col_1 > 100 OR col_2 = 'abc';
+```
+
+### 複合索引の場合に、列の順番を間違えている
+
+- (col1, col2, col3)の順番で複合インデックスを使用している場合、作成されたインデックスの列の順番が重要
+    - ○ `SELECT * FROM SomeTable WHERE col_1 = 10 AND col_2 = 100 AND col_3 = 500;`
+    - ○ `SELECT * FROM SomeTable WHERE col_1 = 10 AND col_2 = 100;`
+    - × `SELECT * FROM SomeTable WHERE col_1 = 10 AND col_3 = 500;`
+    - × `SELECT * FROM SomeTable WHERE col_2 = 100 AND col_3 = 500;`
+- 順番が崩れていてもインデックスを利用できるDBはあるが、正しい場合と比較するとパフォーマンスが落ちる
+
+### 後方一致、または中間一致のLIKE述語を用いている
+
+- LIKE述語は前方一致検索のみインデックスが使用される
+
+### 暗黙の型変換を行なっている
+
+- 暗黙の型変換はオーバヘッドを発生させるだけでなく、インデックスまで使用不可になる
+    
+    →  明示的な型変換を行う
+    
+- Ex. 文字列型 col_1に対する条件
+    - × `SELECT * FROM SomeTable WHERE col_1 = 10;`
+    - ○ `SELECT * FROM SomeTable WHERE col_1 = '10';`
+    - ○`SELECT * FROM SomeTable WHERE col_1 = CAST(10, AS CHAR(2));`
+
+## 中間テーブルを減らせ
+
+### IN述語で複数のキーを利用する場合は、一箇所にまとめる
+
+- BAD: IN述語に複数のサブクエリを使用している
+    
+    ```sql
+    SELECT id,state,city
+    	FROM Address1 A1
+    WHERE state IN (SELECT state
+    								 FROM Addresses2 A2
+    								WHERE A1.id = A2.id)
+    AND city IN (SELECT city
+    							FROM Addresses2 A2
+    						 WHERE A1.id = A2.id);
+    ```
+    
+- GOOD キーを結合してサブクエリを一つにする
+    
+    ```sql
+    SELECT *
+    	FROM Address1 A1
+    WHERE id || state || city IN (SELECT id || state || city
+    																FROM Addresses2 A2);
+    ```
+    
+
+### ビューの利用は計画的に
+
+- 安易に複雑なビューを定義するとパフォーマンス低下につながる
+- 以下のような演算が含まれている場合、非効率なSQLになる
+    - 集約関数(SUM, MIN, MAX, AVG, COUNT)
+    - 集合演算子(UNION, INTERSECT, EXCEPT等)
+    
+    <aside>
+    💡 ビューで集約をしていたら要注意
+    
+    </aside>
+    
+
+## まとめ
+
+- パフォーマンスチューニングの大事な点
+    - ボトルネックを見つけて、重点的に解消すること
+- 最大のボトルネック
+    - ストレージ(ハードディスク)へのアクセス
+        - アクセスしないように、メモリの増設などを検討する
