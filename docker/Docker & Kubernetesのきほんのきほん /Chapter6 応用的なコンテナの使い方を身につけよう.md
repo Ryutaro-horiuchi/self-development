@@ -181,7 +181,7 @@ Dockerに記憶領域をマウントするには2種類の方法がある
     ```
     
 
-### Dockerfileでイメージを作成する
+## Dockerfileでイメージを作成する
 
 - いろいろなことができそうな印象を持たれるが、イメージを作ることしかできない。いわば「Docker image file」とも言える
 - 元となるイメージや、実行したいコマンドなどを記載する
@@ -190,7 +190,7 @@ Dockerに記憶領域をマウントするには2種類の方法がある
 - コマンド
     
     ```bash
-    % docker build -t 作成するイメージ名 材料フォルダのパス
+    % docker build -t <作成するイメージ名> <材料フォルダのパス>
     ```
     
 - Dockerfileの記述例
@@ -215,71 +215,198 @@ Dockerに記憶領域をマウントするには2種類の方法がある
     | ENV | 環境変数を定義する |
     | WORKDIR | RUN CMD ENTRYPOINT ADD COPYの際のディレクトリを指定する |
 
-p185
+### ハンズオン Dockerfileでイメージを作ろう
 
-saveコマンドでtarファイル化する
+- ハンズオン
+    
+    1.　材料フォルダを用意する
+    
+    フォルダ内にはindex.htmlのみ用意する
+    
+    1. Dockerfileを作成する
+        
+        ```docker
+        FROM httpd
+        COPY index.html /usr/local/apache2/htdocs/
+        ```
+        
+    2. buildコマンドを実行してイメージを作る
+        
+        ```bash
+        % docker build -t ex22_original2 /Users/ryutafolder/Documents/apa_folder
+        ```
+        
+    3. イメージが作成されたことを確認する `docker image ls`
+    4. 後始末を行う
+        
+        コンテナと作成したイメージ「ex22_original2」を削除する
+        
 
-p186
+# コンテナの改造
 
-コンテナの改造
+方法は2種類
 
 1. ファイルのやり取り
     
-    ファイルをコピーしたり、記憶領域をマウントしたり
+    ファイルをコピーしたり、記憶領域をマウントしたりする
     
 2. コンテナに対して、Linuxのコマンドで命令する
 
-コンテナに対して、Linuxのコマンドで命令する
+## コンテナに対して、Linuxのコマンドで命令する
 
-命令を伝えるには、shellが必要。shellを起動させるにはdocker runコマンドや、docker execコマンドの引数 /bin/bash で行う
+---
 
-```bash
-docker exec (オプション) コンテナ名 /bin/bash
+- 命令を通してソフトウェアのインストールを行ったり、設定を書き換えたりする
+- 命令を伝えるには、shellが必要。shellを起動させるにはdocker runコマンドや、docker execコマンドの引数に /bin/bash をつけて行う
+    - docker exec
+        
+        ```bash
+        % docker exec (オプション) コンテナ名 /bin/bash
+        
+        % docker exec -it apa000ex23 /bin/bash
+        ```
+        
+        - コンテナの中でコマンドを実行する。起動中のコンテナに命令をしたい時に使用する
+        - bashを使わずに、execコマンドである程度の命令はできるが、初期設定されていないがために動かないことがあるので、基本的にはシェルを通して実行する
+    - docker run
+        
+        ```bash
+        
+        docker run (オプション) イメージ名 /bin/bash
+        
+        docker run --name apa000ex23 -it -p 8089:80 httpd /bin/bash
+        ```
+        
+        - runコマンドに/bin/bashをつけて実行したときは、イメージのソフトウェアは起動されない
+            - bashでの操作が終わった後に、改めて「docker start」コマンドでスタートさせる必要がある
+- bashを起動したら操作対象はDocker Engineではなく、コンテナになるため、Dockerコマンドは使用できなくなる
+    
+    → コンテナから抜けるにはexitコマンドを使用する
+    
 
-docker exec -it apa000ex23 /bin/bash
-```
+### コンテナのLinuxの種類に応じてコマンドが変わる
 
-runコマンドに/bin/bashをつけて実行したときは、イメージのソフトウェアは起動されない
+- コンテナの中に入っているOSっぽいものが、LinuxOSのどのディストリビューションなのかでパッケージ管理のインストールコマンド等が変わってくる
+- 公式では「特に理由がなければDebian系をベースにすると良い」という方針を出している
+- Ex. Apacheのインストール
+    - Debian系  `apt install apache2`
+    - Red Hat系 `yum install httpd`
 
-```bash
+# イメージの保管
 
-docker run (オプション) イメージ名 /bin/bash
+## Docker HubとDockerレジストリ
 
-docker run --name apa000ex23 -it -p 8089:80 httpd /bin/bash
-```
+---
 
-bashを起動したら操作対象はDocker Engineではなく、コンテナになるため、Dockerコマンドは使用できなくなる
+- イメージの配布場所のことをDockerレジストリと呼ぶ
+    - 一般に公開されている・否にかかわらず、配布場所のことを指す
+- DockerHubはDockerレジストリのうち、Docker公式が運営しているイメージ配布場所
 
-→ コンテナから抜けるにはexitコマンドを使用する
+### レジストリとリポジトリ
 
-p193
+- レジストリはイメージの配布場所
+    - 会社単位、部署単位で作られることが多い
+- リポジトリは、レジストリの中をさらに区切った単位
+    - ソフトウェア単位で作られる
+- Docker Hubの場合は、リポジトリがそれぞれIDを持つ形になっている
+    
+    → Docker Hubの中に各社・個人のレジストリが大量にある
+    
 
-Docker公式では、LinuxOSのディストリビューションの種類でDebian系を進めている
+## イメージのアップロード
 
-Debian系のソフトウェアの管理コマンドは apt
+---
 
-Red Hat系のソフトウェアの管理コマンドは yum
+### タグの命名
 
-p195
+- アップロードする際にはタグをつける必要がある
+    - タグのフォーマット: レジストリの場所とバージョン表記
+- Ex.  タグの命名
+    - フォーマット
+        
+        ```bash
+        レジストリの場所/リポジトリ名:バージョン名
+        ```
+        
+    - Ex.
+        
+        ```bash
+        zoozoo.coomm/nyapacchi:13
+        							
+        ```
+        
+    - プライベート
+        - 自身のPCに作ったレジストリで作成する場合
+            
+            ```bash
+            localhost:5000/ nyapacchi:13
+            ```
+            
+        - 独自のドメイン(zoozoo.coomm)のレジストリで作成する場合
+            
+            ```bash
+            zoozoo.coomm/nyapacchi:13
+            ```
+            
+    - DockerHub
+        
+        zoozoousagiというDockerHubのIDで、作成する場合
+        
+        ```bash
+        zoozoousagi/nyapacchi:13
+        ```
+        
 
-イメージはコピーしても良い
+### イメージにタグ名をつけて複製する
 
-DockerHubとDockerレジストリ
+- コマンド
+    - フォーマット
+        
+        ```bash
+        docker tag 元のイメージ名 レジストリの場所/命名したいリポジトリ名:バージョン
+        ```
+        
+    - Ex.
+        
+        ```bash
+        docker tag apa000ex22 zoozoo.coomm/nyapacchi:13
+        ```
+        
 
-Dockerレジストリは、公 であるないにもかかわらず、イメージを保管する場所
+### イメージをアップロードする
 
-DockerHubはDockerレジストリのうち、Docker公式が管理しているイメージ保管場所
+- pushコマンドを使用する
+    - フォーマット
+        
+        ```bash
+        docker push タグ名(レジストリの場所/リポジトリ名:バージョン)
+        ```
+        
+    - Ex.
+        
+        ```bash
+        
+        docker push zoozoo.coomm/nyapacchi:13
+        ```
+        
 
-p196
+## レジストリを作るには
 
-リポジトリとレジストリ
+---
 
-p198
+### プライベートなDockerレジストリを作る方法
 
-docker push
+- レジストリ用コンテナがあるので、それを使用する
+    
+    → レジストリもDockerで運用する
+    
+- コマンド
+    
+    ```bash
+    docker run -d -p 5000:5000 registry
+    ```
+    
 
-イメージをアップロードする
+### Docker Hubを使う
 
-p199
-
-プライベートレジストリを作る
+- プライベートな設定にしておけば、クローズドな環境で使用できる
