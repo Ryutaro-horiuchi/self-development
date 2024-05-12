@@ -133,152 +133,189 @@
     - 記述が一つの場合は、コロンの後に続けて書けば良い
     - 記述が複数になる場合は、ハイフンで改行して記入する
 
-p212
+### 定義ファイル（YAML形式）の記述ルールまとめ
 
-記述ルールまとめ
+- まとめ
+    - 最初にDocker Composeのバージョンを書く
+    - 大項目「services」「networks」「volumes」に続いて設定内容を書く
+    - 親子関係はスペースで字下げして表す
+    - 字下げのスペースは、同じ数の倍数とする
+    - 名前は、大項目の下に字下げして書く
+    - コンテナの設定内容は、名前の下に字下げして書く
+    - 「一」が入っていたら複数指定できる
+    - 名前の後ろには「：」をつける
+    - 「：」の後ろには空白が必要（例外的にすぐ改行するときは不要）
+    - コメントを入れたい場合は＃を使う（コメントアウト）
+    - 文字列を入れる場合は、「’（シングルクォート）」「"（ダブルクォート）」のどちらかでくくる
 
-p213
+### 定義ファイルの項目
 
-定義ファイルの項目
+- 大項目
+    
+    
+    | 項目 | 内容 |
+    | --- | --- |
+    | services | コンテナに関する定義をする |
+    | networks | ネットワークに関する定義をする |
+    | volumes | ボリュームに関する定義をする |
+- よく使われる定義内容
+    
+    
+    | 項目 | docker runでの対応 | 内容 |
+    | --- | --- | --- |
+    | image | イメージ引数 | 利用するイメージを指定する |
+    | networks | —net | 接続するネットワークを指定する |
+    | volumes | -v, —mount | 記憶領域のマウントを設定する |
+    | ports | -p | ポートのマッピングを設定する |
+    | environment | -e | 環境変数を設定する |
+    | depends_on | なし | 別のサービスに依存することを示す(依存先のコンテナが作られてからコンテナを作成する) |
+    | restart | なし | コンテナが停止したときの再試行ポリシーを設定する |
+- その他の定義項目
+    
+    
+    | 項目 | docker runでの対応 | 内容 |
+    | --- | --- | --- |
+    | command | コマンド引数 | 起動時の規定コマンドを上書きする |
+    | cotainer_name | —name | 起動するコンテナ名を明示的に指定する |
+    | dns | —dns | カスタムなDNSサーバーを明示的に設定する |
+    | env_file | なし | 環境設定情報を書いたファイルを読み込む |
+    | entrypoint | —entrypoint | 起動時のENTRYPOINTを上書きする |
+    | external_links | —link | 外部リンクを設定する |
+    | extra_hosts | —add-host | 外部ホストのIPアドレスを明示的に指定する |
+    | logging | —log-driver | ログ出力先を設定する |
+    | network_mode | —network | ネットワークモードを設定する |
 
-depends_on: 他のサービスに依存することを示す。依存先のコンテナが作られてからコンテナを作成する
+### ハンズオン 定義ファイルを作成する
 
-restart: コンテナが停止した時にどうするか
+- 下記と同様のものをdocker-composeで作成する
+    
+    [ハンズオン WordPressコンテナとMySQLコンテナを作成し、動かしてみよう](https://www.notion.so/WordPress-MySQL-145f081c660e42b38da8052f95f93da9?pvs=21) 
+    
+- ハンズオン
+    1. docker-compose.ymlを作成する
+        
+        適切な場所に作った「com_folder」内に「docker-compose.yml」ファイルを作成する
+        
+    2. 大項目を並べる
+        
+        ```yaml
+        version: "3"
+        services:
+        networks:
+        volumes:
+          
+        ```
+        
+    3. 名前を書く
+        
+        ```yaml
+        version: "3"
+        services:
+          mysql000ex11:
+          wordpress000ex12:
+        networks:
+          wordpress000net1:
+        volumes:
+          mysql000vol11:
+        ```
+        
+    4. MySQLコンテナの定義を行う
+        
+        ```yaml
+        version: "3"
+        services:
+          mysql000ex11:
+            image: mysql
+            networks:
+              - wordpress000net1
+            volumes:
+              - mysql000vol11:/var/lib/mysql
+            restart: always
+            command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --mysql_native_password=ON
+            environment:
+              MYSQL_ROOT_PASSWORD: myrootpass
+              MYSQL_DATABASE: wordpress000db
+              MYSQL_USER: wordpress000kun
+              MYSQL_PASSWORD: wkunpass
+          wordpress000ex12:
+        networks:
+          wordpress000net1:
+        volumes:
+          mysql000vol11:
+          wordpress000vol12:
+          
+        ```
+        
+    5. WordPressコンテナの定義を行う
+        
+        ```yaml
+        version: "3"
+        services:
+          mysql000ex11:
+            ...
+          wordpress000ex12:
+            depends_on:
+              - mysql000ex11
+            image: wordpress
+            networks:
+              - wordpress000net1
+            volumes:
+              - wordpress000vol12:/var/www/html
+            ports:
+              - 8085:80
+            restart: always
+            environment:
+              WORDPRESS_DB_HOST: mysql000ex11
+              WORDPRESS_DB_NAME: wordpress000db
+              WORDPRESS_DB_USER: wordpress000kun
+              WORDRESS_DB_PASSWORD: wkunpass
+        networks:
+          wordpress000net1:
+        volumes:
+          mysql000vol11:
+          wordpress000vol12:
+        ```
+        
+    6. 保存する
 
-p215
+# Docker Composeを実行してみる
 
-ハンズオン
+## Docker Composeの操作コマンド
 
-下記と同様のものをdocker-composeで作成する
+---
 
-[ハンズオン WordPressコンテナとMySQLコンテナを作成し、動かしてみよう](https://www.notion.so/WordPress-MySQL-145f081c660e42b38da8052f95f93da9?pvs=21) 
+- Docker Composeはdocker-composeコマンドを使用する
+- up, down, stopのコマンドをとりあえず覚えておけば良い。
 
-STEP2
+### コンテナや周辺環境を作成するコマンド docker-compose up
 
-```yaml
-version: "3"
-services:
-networks:
-volumes:
-  
-```
+- よく使う記述例
+    
+    ```bash
+    docker-compose -f 定義ファイルのパス up オプション
+    ```
+    
+- 記述例
+    
+    ```bash
+    docker-compose -f /Users/ユーザー名/Documents/com_folder/docker-compose.yml up -d
+    ```
+    
+    - -d バックグラウンドで実行する
 
-STEP3
+### コンテナや周辺環境を削除するコマンド docker-compose down
 
-```yaml
-version: "3"
-services:
-  mysql000ex11:
-  wordpress000ex12:
-networks:
-  wordpress000net1:
-volumes:
-  mysql000vol11:
-```
+- よく使う記述例
+    
+    ```bash
+    docker-compose -f 定義ファイルのパス down オプション
+    ```
+    
 
-step4
+### コンテナを停止するコマンド docker-compose stop
 
-```yaml
-version: "3"
-services:
-  mysql000ex11:
-    image: mysql
-    networks:
-      - wordpress000net1
-    volumes:
-      - mysql000vol11:/var/lib/mysql
-    restart: always
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --mysql_native_password=ON
-    environment:
-      MYSQL_ROOT_PASSWORD: myrootpass
-      MYSQL_DATABASE: wordpress000db
-      MYSQL_USER: wordpress000kun
-      MYSQL_PASSWORD: wkunpass
-  wordpress000ex12:
-networks:
-  wordpress000net1:
-volumes:
-  mysql000vol11:
-  wordpress000vol12:
-  
-```
-
-step5
-
-```yaml
-version: "3"
-services:
-  mysql000ex11:
-    ...
-  wordpress000ex12:
-    depends_on:
-      - mysql000ex11
-    image: wordpress
-    networks:
-      - wordpress000net1
-    volumes:
-      - wordpress000vol12:/var/www/html
-    ports:
-      - 8085:80
-    restart: always
-    environment:
-      WORDPRESS_DB_HOST: mysql000ex11
-      WORDPRESS_DB_NAME: wordpress000db
-      WORDPRESS_DB_USER: wordpress000kun
-      WORDRESS_DB_PASSWORD: wkunpass
-networks:
-  wordpress000net1:
-volumes:
-  mysql000vol11:
-  wordpress000vol12:
-```
-
-p221
-
-docker-composeコマンドを使用する
-
-up, down, stopのコマンドをとりあえず覚えておけば良い。
-
-コンテナや周辺環境を作成するコマンド docker-compose up
-
-よく使う記述例
-
-```bash
-docker-compose -f 定義ファイルのパス up オプション
-```
-
-```bash
-docker-compose -f /Users/ユーザー名/Documents/com_folder/docker-compose.yml up -d
-```
-
-- -d バックグラウンドで実行する
-
-コンテナや周辺環境を削除するコマンド docker-compose down
-
-```bash
-docker-compose -f 定義ファイルのパス down オプション
-```
-
-コンテナを停止するコマンド docker-compose stop
-
-```bash
-docker-compose -f 定義ファイルのパス stop オプション
-```
-
-p226
-
-```bash
-% docker-compose -f /Users/ryutafolder/Documents/com_folder/docker-compose.yml up -d
-WARN[0000] /Users/ryutafolder/Documents/com_folder/docker-compose.yml: `version` is obsolete 
-[+] Running 3/33
- ⠴ wordpress000ex12 [⣿⣿⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀] Pulling                                                                                                                                                                                  5.6s 
-   ✔ b0a0cf830b12 Already exists                                                                                                                                                                                                     0.0s 
-   ✔ c93478d47932 Pull complete                                                                                                                                                                                                      0.9s 
-   ⠙ e74cc574d0d2 Downloading  [>                                                  ]  539.9kB/104.4MB                                                                                                                                1.1s 
-   ✔ e4782e138a90 Download complete                                                                                                                                                                                                  0.9s 
-   ⠙ cfeec87621ae Waiting                                                                                                                                                                                                            1.1s 
-   ⠙ c1badcd002c0 Waiting                                                                                                                                                                                                            1.1s 
-[+] Running 3/336 Waiting                                                                                                                                                                                                            1.1s                                                                                                                                                                                                         1.2s  
-....
-
-```
+- よく使う記述例
+    
+    ```bash
+    docker-compose -f 定義ファイルのパス stop オプション
+    ```
