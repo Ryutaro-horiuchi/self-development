@@ -1,84 +1,137 @@
-p202
+# Docker Composeとは
 
-構築に関わるコマンド分の内容を一つのテキストファイルに画期混んで、一気に実行したり、停止したり破棄したりできるのが、Docker Compose
+構築に関わるコマンド分の内容を一つのテキストファイルに書き込み、一気にコンテナを作成・実行・廃棄することができる
 
-p203
+## Docker Compose 仕組み
 
-upコマンドは、docker runコマンドに似ている。定義ファイルに従って、イメージをDLしたり、コンテナを作成・起動したりする
+---
 
-downコマンドは、コンテナとネットワークを停止・削除する。ボリュームとイメージはそのまま残る
+- 構築に関する設定を記述した定義ファイルをYAML形式で用意し、upやdownコマンドを使用して操作する
 
-stopコマンドは、コンテナとネットワークを停止のみ行う
+### コマンド
 
-p204
+- upコマンド
+    
+    docker runコマンドに似ている。定義ファイルに従って、イメージをDLしたり、コンテナ・ネットワーク・ボリュームを作成・起動したりする
+    
+- downコマンド
+    
+    コンテナとネットワークを停止・削除する。(ボリュームとイメージはそのまま残る)
+    
+- stopコマンド
+    - コンテナとネットワークを停止する
 
-Docker ComposeとDockerfileの違い
+### Docker ComposeとDockerfileの違い
 
-Docker Compose - docker run コマンドの集合体で、作成するのは、コンテナとネットワークやボリュームといった周辺環境も合わせて作成できる
+- Docker Compose
+    
+    docker run コマンドの集合体で、コンテナと周辺環境(ネットワークやボリューム)を作成する
+    
+- Dockerfile
+    
+    イメージを作る。周辺環境は作成できない。
+    
 
-Dockerfile - イメージを作るもの。周辺環境は作成できない
+### Docker ComposeとKubernetesの違い
 
-p205
+- Docker Compose
+    
+    コンテナを作っては消す作業のみで、管理はできない
+    
+- Kubernetes
+    
+    Dockerコンテナを管理する
+    
 
-Docker Composeのインストールと使い方
+# Docker Composeのインストールと使い方
 
-Docker Engineとは別のソフトウェアであるため、別途インストールが必要
+- Docker Engineとは別のソフトウェアであるため、別途インストールが必要
+    
+    <aside>
+    💡 MacやWindowsのデスクトップアプリであれば、既に入っているためインストール作業がいらない
+     Linuxの場合は、Docker ComposeとPython3の実行環境と必要なツール(python3, python3-pip)をインストールする。(Docker Composeはpythonで書かれたプログラムであるため、pip3コマンドでインストールする)
+    
+    </aside>
+    
 
-→ MacやWindowsのデスクトップアプリであれば、既に入っているためインストール作業がいらない
+## Docker Composeの使い方
 
-→ Linuxの場合は、Docker ComposeとPython3の実行環境と必要なツール(python3, python3-pip)をインストールする
+- Dockerfileと同様に、ホスト側にフォルダを作りそこに定義ファイルを置く
+    - フォルダには、コンテナ作成に必要な画像ファイルや、HTMLファイルなども置いておく
+- 定義ファイル名は、必ず「`docker-compose.yml`」
+    - 実行するコマンドは、これまでと同様にDocker Engineに対して行われ、コンテナが作成されるのはDocker Engine上。
+        
+        人が手打ちで送るコマンド文を、Docker Composeが代理で打ち込んでいるイメージ
+        
+    - 定義ファイルは一つのフォルダに一つしか置かない
+- Docker Composeでは、コンテナの集合のことを「サービス」と呼んでいる
+    - 公式では、サービスとコンテナが混在しているが、全てコンテナとと読み替えてしまってほぼ問題ないとのこと
 
-- Docker Composeはpythonで書かれたプログラムであるため、pip3コマンドでインストールする
+# Docker Composeファイルの書き方
 
-p206
+## docker runコマンドとDocker Composeファイルは似ている
 
-定義ファイル名は、必ず「docker-compose.yml」
+---
 
-DockerComposeを使用するには、Dockerfileと同様、ホスト上にファルダを作成して、そこに定義ファイルを置く。定義ファイルはフォルダ内に一つのみおく。
+- [runコマンドを実行する](https://www.notion.so/run-07983fa7c9c84d308e09e3e03e5a10c0?pvs=21)
+    
+    ```bash
+    % docker run --name apa000ex2 -d -p 8080:80 httpd
+    ```
+    
+- 上記のDocker Composeファイル
+    
+    ```yaml
+    version: "3"
+    
+    services:
+    	apa000ex2
+    		image: httpd
+    		ports:
+    			- 8080:80
+    		restart: always
+    ```
+    
 
-フォルダには、コンテナ作成に必要な画像ファイルや、HTMLファイルなども置いておく
+## 定義ファイルの書式
 
-p207
+---
 
-Docker Composeでは、コンテナの集合のことを「サービス」と呼んでいる
+- 定義ファイルの記述例 大項目のみ
+    
+    ```yaml
+    version: 3
+    services:
+      コンテナ名1:
+      コンテナ名2:
+    networks:
+      ネットワーク名1:
+    volumes:
+      ボリューム名1:
+      ボリューム名2:
+    
+    ```
+    
+    - 最初にバージョンを書く
+    - servicesはコンテナのこと
+        - Kubernetesでも同様に、コンテナの集合体のことをServiceと呼ぶ
+    - 字下げはタブを使用するのは禁止。半角スペースを使用する
 
-p208
-
-定義ファイル doker run コマンドの内容と似ている
-
-p211
-
-定義ファイルの記述例 yml
-
-```yaml
-version: 3
-service:
-  コンテナ名1:
-  コンテナ名2:
-networks:
-  ネットワーク名1:
-volumes:
-  ボリューム名1:
-  ボリューム名2:
-
-```
-
-コンテナの設定記述例
-
-```yaml
-version: 3
-service:
-  コンテナ名1:
-	  image: イメージ名
-	  networks:
-	    - ネットワーク名1
-	  ports:
-	    - ポートの設定
-```
-
-記述が一つの場合は、コロンの後に続けて書けば良い
-
-記述が複数になる場合は、ハイフンで改行して記入する
+- 定義ファイルの記述例 設定を書く
+    
+    ```yaml
+    version: 3
+    service:
+      コンテナ名1:
+    	  image: イメージ名
+    	  networks:
+    	    - ネットワーク名1
+    	  ports:
+    	    - ポートの設定
+    ```
+    
+    - 記述が一つの場合は、コロンの後に続けて書けば良い
+    - 記述が複数になる場合は、ハイフンで改行して記入する
 
 p212
 
