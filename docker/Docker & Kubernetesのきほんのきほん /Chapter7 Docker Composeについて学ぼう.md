@@ -319,3 +319,56 @@
     ```bash
     docker-compose -f 定義ファイルのパス stop オプション
     ```
+    
+
+### Docker Composeでのコンテナ名と複数起動(scaleオプション)
+
+- Docker Composeでコンテナを作成すると、コンテナ名が勝手に変わる
+    - com_folderフォルダにpenguinという名のコンテナを作成すると、「com_folder_penguin_1」というコンテナ名になる
+    - 名前は変わるが、Docker Composeでコンテナを指定するときは、元のコンテナ名(定義ファイルに記入した名前)で良い
+    - 変更された名前は、Docker Engineから使用するときと、同じ構成のコンテナを複数起動したいとき(scaleオプション)に使用する
+
+## ハンズオン Docker Composeを実行してみよう
+
+---
+
+- ハンズオン
+    1. 定義ファイルを適切な場所に置く
+        
+        [ハンズオン 定義ファイルを作成する](https://www.notion.so/d4a4d93c5ba14171876a3c0a98ab6288?pvs=21) にて作成した「com_folder」と「docker-compose.yml」を使用する
+        
+    2. 定義ファイルの内容を実行する
+        
+        ```bash
+        % docker-compose -f /Users/ユーザー名/Documents/com_folder/docker-compose.yml up -d
+        ```
+        
+        ```bash
+        % docker-compose -f /Users/ryutafolder/Documents/com_folder/docker-compose.yml up -d
+        WARN[0000] /Users/ryutafolder/Documents/com_folder/docker-compose.yml: `version` is obsolete 
+        [+] Running 3/33
+         ⠴ wordpress000ex12 [⣿⣿⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀] Pulling                                                                                                                                                                                  5.6s 
+           ✔ b0a0cf830b12 Already exists                                                                                                                                                                                                     0.0s 
+           ✔ c93478d47932 Pull complete                                                                                                                                                                                                      0.9s 
+           ⠙ e74cc574d0d2 Downloading  [>                                                  ]  539.9kB/104.4MB                                                                                                                                1.1s 
+           ✔ e4782e138a90 Download complete                                                                                                                                                                                                  0.9s 
+           ⠙ cfeec87621ae Waiting                                                                                                                                                                                                            1.1s 
+           ⠙ c1badcd002c0 Waiting                                                                                                                                                                                                            1.1s 
+        [+] Running 3/336 Waiting                                                                                                                                                                                                            1.1s                                                                                                                                                                                                         1.2s  
+        ....
+        
+        ```
+        
+    3. ブラウザでWordPressにアクセスできることを確認する
+        
+        http://localhost:8085/ にアクセスする
+        
+    4. コンテナとネットワークを停止・削除する
+        
+        ```bash
+        docker-compose -f /Users/ユーザー名/Documents/com_folder/docker-compose.yml down 
+        ```
+        
+    5. 後始末をする
+        
+        イメージとボリュームはdownコマンドで削除されないため、手動で削除する
