@@ -110,7 +110,7 @@ Kubernetesは、Docker Engineなどのコンテナエンジンとは別のソフ
 ---
 
 - DockerComposeは、作成時のみオプションの指定によって、コンテナの数を指定できるが、監視はしていないため、「作って終わる」のに対し、Kubernetesは「その状態を維持する」
-    - Ex. コンテナを4つ ボリュームを4つをKubernetesでリリース
+    - Ex. コンテナを4つとボリュームを4つをKubernetesでリリース
         - → コンテナが1つ壊れたら、そのコンテナを自動で削除して新しいコンテナを1つ作成する
 
 ## Kubernetesを使ったシステムのコンテナ削除
@@ -151,7 +151,7 @@ Kubernetesは、Docker Engineなどのコンテナエンジンとは別のソフ
 ### レプリカセット
 
 - サービスと同じく同一の構成のPodをまとめて管理するが、こちらはPodの数を管理する班長
-    - Podが障害で一部停止してしまった場合に、足りない文を増やしたりする。定義ファイルのPodの数が変更されたら、その分数を変更する
+    - Podが障害で一部停止してしまった場合に、足りない分を増やしたりする。定義ファイルのPodの数が変更されたら、その分数を変更する
 - レプリカセットにより管理されている同一構成のPodをレプリカと呼ぶ
     - Podを増減することを、レプリカを増やす・減らすと言ったり、Podの数を決めることをレプリカの数を決めるとも言ったりする
 
@@ -172,27 +172,44 @@ Pod、サービス、デプロイメント、レプリカセットなどをリ�
 
 # Kubernetesのインストールと使い方
 
-Kubernetesにはいくつか種類がある
+## Kubernetesにはいくつか種類がある
 
-本家のKubernetesはあまり使われない。
+---
 
-→ 一から構築するのが大変。負担に対する利益が少ない
+- KubernetesはCloud Native Computing Foundation(CNCF)という団体で策定された規格
+    - 元々Google社の技術だったが、Google社などがCNCFという団体を作成し、そこに寄贈した
+- サードパーティーから、管理機能を充実させたものやコンパクトにしたものなど、Kubernetesの仕様に準拠したソフトウェアが提供されている
+    - こうしたソフトウェアは互換性がある。「Cerficied Kubernetes」という認定を受けている
 
-一般的に使うときは、AWSなどのクラウドコンピューティングサービスを使う
+## どのKubernetesを使うのか
 
-EC2かFargateをワーカーノードとして構築する。EKSで管理する
+---
 
-- 仮想サーバー
-    - EC2: サーバー機能を提供するサービス
-    - Fargate: コンテナの実行エンジンサービス
-- EKS(Amazon Elastic Kubernetes Service)
-    - マスターノードに当たるサービス
+- 一から構築するのが大変。負担に対する利益が少ない
+- 一般的に使うときは、AWSなどのクラウドコンピューティングサービスを使う
+    - Ex. AWS
+        - EC2かFargateをワーカーノードとして構築する。EKSでマスターノードとして管理する
+        - 仮想サーバー
+            - EC2: サーバー機能を提供するサービス
+            - Fargate: コンテナの実行エンジンサービス
+        - EKS(Amazon Elastic Kubernetes Service)
+            - マスターノードに当たるサービス
+- デスクトップ版は、あらかじめKubernetesがバンドルされている
+    - Settings → Enable Kubernetesにチェックをつければ使用できる
+    - etcdやCNIをわざわざ入れる必要はない
+    - 1台のマシンにマスターノードとワーカーノードとしての機能を持たせることができる
+    - とはいえ、あくまで学習用
 
-p252
+## 物理的なマシンでのKuberntes構築とkubeadm
 
-デスクトップ版だと、1台のマシンにマスターノードとワーカーノードとしての機能を持たせることができる
+---
 
-p255物理的なマシンでのKuberntes構築とkubeadm
+- 何台もの物理マシンを使った本格的なKubernetesを使用方法について
+    - 物理的なマシン、仮想的なマシンを必要数分用意し、UbuntuなどのLinuxOSを用意する
+    - kubeadmという構築ツールを使用して、[マスターノードとワーカーノード共通してインストールするもの](https://www.notion.so/cdf9c3bacdb7443289cd0722e14d7d18?pvs=21) で挙げられている必要なソフトウェアをインストールする
+    - マスターワーカーそれぞれでマシンが何を担当するのかを設定する
+        - マスターで`kubeadm initで`初期設定をする
+        - ワーカーで`kubeadm join`を実行するとマスターとワーカーが繋がる
 
 p256
 
@@ -227,3 +244,292 @@ spec どんなリソースにするのか。設定情報
 metadata リソースの名前等
 
 p261
+
+メタデータとスペック Pod編
+
+メタデータ
+
+- name: Pod(コンテナ+ボリューム)の名前
+- labels
+
+スペック
+
+- containers
+    - name: コンテナの名前
+    - image
+    - ports
+
+p265
+
+ハンズオン(1)
+
+step2
+
+```yaml
+apiVersion:
+kind:
+metadata:
+spec:
+```
+
+step3
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+spec:
+```
+
+step4
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: apa000pod
+  labels:
+    app: apa000kube
+spec:
+```
+
+step5
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: apa000pod
+  labels:
+    app: apa000kube
+spec:
+  containers:
+    - name: apa000ex91
+      image: httpd
+      ports:
+      - containerPort: 80
+```
+
+p266
+
+ハンズオン(2)
+
+- Podがアイドルのグループ、コンテナがアイドルだとすると、デプロイメントは所属事務所のようなもの
+- selector
+    - 管理対象を指定する
+    - ラベルを指定する。templateの中のmetadata
+- replica
+    - Pod数を幾つに保つか
+- template
+    - 作成するPodの情報を書く
+        - metadata, specが項目になる
+
+step2
+
+```yaml
+apiVersion:
+kind:
+metadata:
+spec:
+```
+
+step3
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+spec:
+```
+
+step4
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apa000dep
+spec:
+```
+
+step5
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apa000dep
+spec:
+  selector:
+    matchLabels:
+      app: apa000kube
+  replicas: 3
+```
+
+step6
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apa000dep
+spec:
+  selector:
+    matchLabels:
+      app: apa000kube
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: apa000kube
+    spec:
+      containers:
+        - name: apa000ex91
+          image: httpd
+          ports:
+          - containerPort: 80
+```
+
+templateのmetadata内のnameはいらない
+
+p272 ハンズオン(3)
+
+typeの設定
+
+- Serviceの種類。外部とサービス間の通信を、どのIPアドレス(もしくはDNS)でアクセスするかを設定するもの
+- 業務で使うときは、LoadBalancerを設定するケースがほとんど。
+- NodePortはそのワーカーノードに直接アクセスするためのもの。
+- Externalname
+    - 中から外に通信したい時に使用する
+
+p273
+
+ポートの設定
+
+- サービスのポート、ワーカーノードへのポート、コンテナへのポートをそれぞれ設定する
+
+(p274の図は写真をとる)
+
+p274
+
+セレクターの設定
+
+デプロイメントの時と違い、matchLabelsは書いてはダメ
+
+デプロイメントは、ラベルセレクターというものを使用して、この条件に合うときなどの指定ができる
+
+step2
+
+```yaml
+apiVersion:
+kind:
+metadata:
+spec:
+```
+
+step3
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+spec:
+```
+
+step4
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: apa000ser
+spec:
+  
+```
+
+step5
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: apa000ser
+spec:
+  type: NodePort
+  ports:
+  - port: 8099 # サービスのポート
+    targetPort: 80 # コンテナのポート
+    protocol: TCP
+    nodePort: 30080 # ノードのポート
+  selector:
+    app: apa000kube
+```
+
+p278
+
+Kubernetesのコマンド
+
+kubectlコマンドを使って操作する
+
+```yaml
+kubectl コマンド オプション
+```
+
+コマンド一覧
+
+太字のもののみ押さえる
+
+ハンズオン(1)定義ファイルでPodを作る
+
+step1
+
+デプロイメントの定義ファイルを読み込ませる
+
+```yaml
+kubectl apply -f /Users/
+```
+
+p284
+
+定義ファイルでPodを増やす
+
+apa000dep.ymlのreplicasを3から5に変更する
+
+```yaml
+apiVersion: apps/v1
+...
+spec:
+  selector:
+    matchLabels:
+      app: apa000kube
+  replicas: 5
+  template:
+    ...
+```
+
+p286
+
+イメージをApacheからnginxに変える
+
+```yaml
+apiVersion: apps/v1
+...
+spec:
+	...
+  template:
+		...
+    spec:
+      containers:
+        - name: apa000ex91
+          image: nginx
+          ports:
+          - containerPort: 80
+```
+
+p288
+
+手動でPodを削除する
+
+p290
+
+デプロイメントとサービスを削除する
