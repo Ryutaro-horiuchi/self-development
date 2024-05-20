@@ -1,4 +1,4 @@
-# kubernetesとは
+# Kubernetesとは
 
 ---
 
@@ -271,6 +271,8 @@ spec:
 
 ## メタデータとスペックの書き方 Pod編
 
+---
+
 - フォーマット
     
     ```yaml
@@ -293,277 +295,473 @@ spec:
         - コンテナ名前
         - アイドルグループに所属している個々のアイドル名(Ex. mina)
 
-p265
+### ハンズオン
 
-ハンズオン(1)
+- ApacheのPodを作成する
+- 後のデプロイメントに使用する
+- ハンズオン
+    1. Documentsフォルダ内にkube_folderを作り、その中に「apa000pod.yml」を作成する
+    2. 大項目を並べる
+        
+        ```yaml
+        apiVersion:
+        kind:
+        metadata:
+        spec:
+        ```
+        
+    3. apiVersion, kindの設定値を入力する
+        
+        ```yaml
+        apiVersion: v1
+        kind: Pod
+        metadata:
+        spec:
+        ```
+        
+    4. metadataの設定値を記入する
+        
+        ```yaml
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: apa000pod
+          labels:
+            app: apa000kube
+        spec:
+        ```
+        
+    5. specの設定値を入力する
+        
+        ```yaml
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: apa000pod
+          labels:
+            app: apa000kube
+        spec:
+          containers:
+            - name: apa000ex91
+              image: httpd
+              ports:
+              - containerPort: 80
+        ```
+        
 
-step2
+## メタデータとスペックの書き方  デプロイメント編
 
-```yaml
-apiVersion:
-kind:
-metadata:
-spec:
-```
+---
 
-step3
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-spec:
-```
-
-step4
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: apa000pod
-  labels:
-    app: apa000kube
-spec:
-```
-
-step5
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: apa000pod
-  labels:
-    app: apa000kube
-spec:
-  containers:
-    - name: apa000ex91
-      image: httpd
-      ports:
-      - containerPort: 80
-```
-
-p266
-
-ハンズオン(2)
-
-- Podがアイドルのグループ、コンテナがアイドルだとすると、デプロイメントは所属事務所のようなもの
-- selector
-    - 管理対象を指定する
-    - ラベルを指定する。templateの中のmetadata
+- フォーマット
+    
+    ```yaml
+    apiVersion:
+    kind:
+    metadata:
+      name:
+    spec:
+      selector:
+        matchLabels:
+      replicas:
+      template:
+        metadata:
+        spec:
+    ```
+    
+    - selector
+        - 特定のラベルがついたPodをデプロイメントが管理するための設定。
+        - 管理対象を指定する
+        - matchLabels
+            - ラベルを指定する。templateの中のmetadataで設定したラベルを指定する
 - replica
-    - Pod数を幾つに保つか
+    - Pod数を幾つに保つか。ゼロにすると、Podがなくなる
 - template
     - 作成するPodの情報を書く
-        - metadata, specが項目になる
+    - [メタデータとスペックの書き方 Pod編](https://www.notion.so/Pod-e5cd700892244fe9b6a26e8ef731ddb4?pvs=21) の内容をそのまま書くが、Podの名前は設定しない。数が多くなるとラベルで管理することが多く、あまり名前を設定しない傾向にある
+- ハンズオン
+    1. apa000dep.ymlを作成する
+        
+        Documentsフォルダ内にkube_folderを作成し、「apa000dep.yml」ファイルを入れる
+        
+    2. 大項目を並べる
+        
+        ```yaml
+        apiVersion:
+        kind:
+        metadata:
+        spec:
+        ```
+        
+    3. apiVersion, kindの設定値を記入する
+        
+        ```yaml
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+        spec:
+        ```
+        
+    4. metadataの設定値を記入する
+        
+        ```yaml
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: apa000dep
+        spec:
+        ```
+        
+    5. specに、セレクターとレプリカの値を設定する
+        
+        ```yaml
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: apa000dep
+        spec:
+          selector:
+            matchLabels:
+              app: apa000kube
+          replicas: 3
+        ```
+        
+    6. specのテンプレートにPodのファイル内容を転載する
+        
+        ```yaml
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: apa000dep
+        spec:
+          selector:
+            matchLabels:
+              app: apa000kube
+          replicas: 3
+          template:
+            metadata:
+              labels:
+                app: apa000kube
+            spec:
+              containers:
+                - name: apa000ex91
+                  image: httpd
+                  ports:
+                  - containerPort: 80
+        ```
+        
+    
 
-step2
+## メタデータとスペックの書き方  サービス編
 
-```yaml
-apiVersion:
-kind:
-metadata:
-spec:
-```
+---
 
-step3
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-spec:
-```
-
-step4
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: apa000dep
-spec:
-```
-
-step5
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: apa000dep
-spec:
-  selector:
-    matchLabels:
-      app: apa000kube
-  replicas: 3
-```
-
-step6
-
-```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: apa000dep
-spec:
-  selector:
-    matchLabels:
-      app: apa000kube
-  replicas: 3
-  template:
+- デプロイメントとサービスはほぼセットで使用する
+- フォーマット
+    
+    ```yaml
+    apiVersion:
+    kind:
     metadata:
-      labels:
-        app: apa000kube
+      name:
     spec:
-      containers:
-        - name: apa000ex91
-          image: httpd
-          ports:
-          - containerPort: 80
-```
+      type:         # サービスの種類 
+      ports:
+      - port:       # サービスのポート
+        targetPort: # コンテナのポート
+        protocol:   # 通信に使うプロトコル
+        nodePort:   # ノードのポート
+      selector:
+    ```
+    
 
-templateのmetadata内のnameはいらない
-
-p272 ハンズオン(3)
-
-typeの設定
+### typeの設定
 
 - Serviceの種類。外部とサービス間の通信を、どのIPアドレス(もしくはDNS)でアクセスするかを設定するもの
-- 業務で使うときは、LoadBalancerを設定するケースがほとんど。
-- NodePortはそのワーカーノードに直接アクセスするためのもの。
-- Externalname
-    - 中から外に通信したい時に使用する
+    
+    
+    | タイプ名 | 内容 |
+    | --- | --- |
+    | ClusterIP | ClusterIPでServiceにアクセスできるようにする(外からはアクセスできない)  |
+    | NodePort | ワーカーノードのIPでServiceにアクセスできるようにする |
+    | LoadBalancer | ロードバランサーのIPでServiceにアクセスできるようにする |
+    | ExternalName | Podからサービスを通じて外を出るための設定 |
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/a7035cb3-36de-4a47-be08-109969adceb7/Untitled.jpeg)
+    
+    - ClusterIP
+        - プライベートIPが設定されており、クラスター内部でのやり取りの時のみ使用する
+    - NodePort
+        - そのワーカーノードに直接アクセスするためのものであり、やや特殊
+    - LoadBalancer
+        - 閲覧社がWebサイトを閲覧する時に使用する。ロードバランサーのIPアドレスで接続する
+        - 業務で使うときは、「LoadBalancer」を設定するケースがほとんど。
+    - Externalname
+        - 中から外に通信したい時に使用する
 
-p273
+### portsの設定
 
-ポートの設定
+- 「port」でサービス、「nodePort」でワーカーノード、「targetPort」でコンテナのポートをそれぞれ設定する
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/bdd38692-7bf8-4c4d-9ac1-ad5a52a45f6f/Untitled.jpeg)
+    
 
-- サービスのポート、ワーカーノードへのポート、コンテナへのポートをそれぞれ設定する
+### selectorの設定
 
-(p274の図は写真をとる)
+- 特定のラベルのついたPodをサービスが管理するための設定
+- ラベルは、デプロイメントのコンテナ部分の設定でつけたラベルを指定する
+    - デプロイメントの時と違い、`matchLabels`は書いてはダメ
+        
+        → デプロイメントはラベルセレクターというものを使用して、この条件に合うときなどの指定ができるが、サービスは直接リソースを指定するため
+        
 
-p274
-
-セレクターの設定
-
-デプロイメントの時と違い、matchLabelsは書いてはダメ
-
-デプロイメントは、ラベルセレクターというものを使用して、この条件に合うときなどの指定ができる
-
-step2
-
-```yaml
-apiVersion:
-kind:
-metadata:
-spec:
-```
-
-step3
-
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-spec:
-```
-
-step4
-
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: apa000ser
-spec:
-  
-```
-
-step5
-
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: apa000ser
-spec:
-  type: NodePort
-  ports:
-  - port: 8099 # サービスのポート
-    targetPort: 80 # コンテナのポート
-    protocol: TCP
-    nodePort: 30080 # ノードのポート
-  selector:
-    app: apa000kube
-```
-
-p278
-
-Kubernetesのコマンド
-
-kubectlコマンドを使って操作する
-
-```yaml
-kubectl コマンド オプション
-```
-
-コマンド一覧
-
-太字のもののみ押さえる
-
-ハンズオン(1)定義ファイルでPodを作る
-
-step1
-
-デプロイメントの定義ファイルを読み込ませる
-
-```yaml
-kubectl apply -f /Users/
-```
-
-p284
-
-定義ファイルでPodを増やす
-
-apa000dep.ymlのreplicasを3から5に変更する
-
-```yaml
-apiVersion: apps/v1
-...
-spec:
-  selector:
-    matchLabels:
-      app: apa000kube
-  replicas: 5
-  template:
-    ...
-```
-
-p286
-
-イメージをApacheからnginxに変える
-
-```yaml
-apiVersion: apps/v1
-...
-spec:
-	...
-  template:
-		...
-    spec:
-      containers:
-        - name: apa000ex91
-          image: nginx
+- ハンズオン
+    1. apa000ser.ymlを作成する
+        
+        Documentsフォルダ内にkube_folderを作成し、「apa000ser.yml」ファイルを入れる
+        
+    2. 大項目を並べる
+        
+        ```yaml
+        apiVersion:
+        kind:
+        metadata:
+        spec:
+        ```
+        
+    3. apiVersion, kindの設定を記入する
+        
+        ```yaml
+        apiVersion: v1
+        kind: Service
+        metadata:
+        spec:
+        ```
+        
+    4. metadataの設定値を記入する
+        
+        ```yaml
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: apa000ser
+        spec:
+          
+        ```
+        
+    5. specの設定値を記入する
+        
+        ```yaml
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: apa000ser
+        spec:
+          type: NodePort
           ports:
-          - containerPort: 80
-```
+          - port: 8099 # サービスのポート
+            targetPort: 80 # コンテナのポート
+            protocol: TCP
+            nodePort: 30080 # ノードのポート
+          selector:
+            app: apa000kube
+        ```
+        
 
-p288
+# Kubernetesのコマンド
 
-手動でPodを削除する
+- kubectlコマンドを使って操作する
+    - 定義ファイルを元に一度にコンテナを作成するため、手作業で操作する機会が少ない
+    - フォーマット
+        
+        ```bash
+        kubectl コマンド オプション
+        ```
+        
+    - コマンド一覧
+        
+        
+        | コマンド | 内容 |
+        | --- | --- |
+        | create | リソースを作成 |
+        | delete | リソースを削除 |
+        | get | リソースの状態を表示 |
+        | set | リソースの値を設定 |
+        | apply | リソースの変更を反映 |
+        | scale | レプリカ数を変更 |
+        | logs | コンテナのログを表示 |
 
-p290
+## ハンズオン
 
-デプロイメントとサービスを削除する
+### 定義ファイルでPodを作る(1) デプロイメント編
+
+- ハンズオン
+    1. デプロイメントの定義ファイルを読み込ませる
+        
+        ```bash
+        % kubectl apply -f /Users/ryutafolder/Documents/kube_folder/apa000dep.yml
+        ```
+        
+    2. Podが作られていることを確認
+        
+        ```bash
+        % kubectl get Pods
+        NAME                         READY   STATUS              RESTARTS   AGE
+        apa000dep-749fc84c84-5b6sm   0/1     ContainerCreating   0          15s
+        apa000dep-749fc84c84-p6xxv   0/1     ContainerCreating   0          15s
+        apa000dep-749fc84c84-s5lns   0/1     ContainerCreating   0          15s
+        ```
+        
+
+### 定義ファイルでPodを作る(2) サービス編
+
+- ハンズオン
+    1. サービスの定義ファイルを読み込ませる
+        
+        ```bash
+        % kubectl apply -f /Users/ryutafolder/Documents/kube_folder/apa000ser.yml
+        ```
+        
+    2. サービスが作られていることを確認
+        
+        ```bash
+        % kubectl get services 
+        NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+        apa000ser    NodePort    10.104.67.20   <none>        8099:30080/TCP   15s
+        kubernetes   ClusterIP   10.96.0.1      <none>        443/TCP          2m6s
+        ```
+        
+
+### 定義ファイルでPodを増やす
+
+- ハンズオン
+    1. デプロイメントの定義ファイルを変更する
+        
+        apa000dep.ymlのreplicasを3から5に変更する
+        
+        ```yaml
+        apiVersion: apps/v1
+        ...
+        spec:
+          selector:
+            matchLabels:
+              app: apa000kube
+          replicas: 5
+          template:
+            ...
+        ```
+        
+    2. デプロイメントの定義ファイルを読み込ませ反映させる
+        
+        ```bash
+        % kubectl apply -f /Users/ryutafolder/Documents/kube_folder/apa000dep.yml
+        ```
+        
+    3. Podが増えていることを確認
+        
+        ```bash
+        % kubectl get pods
+        NAME                         READY   STATUS    RESTARTS   AGE
+        apa000dep-749fc84c84-5b6sm   1/1     Running   0          13h
+        apa000dep-749fc84c84-7nkf8   1/1     Running   0          18s
+        apa000dep-749fc84c84-hkjfx   1/1     Running   0          18s
+        apa000dep-749fc84c84-p6xxv   1/1     Running   0          13h
+        apa000dep-749fc84c84-s5lns   1/1     Running   0          13h
+        ```
+        
+
+### 定義ファイルでApacheをnginxに変える
+
+- ハンズオン
+    1. デプロイメントの定義ファイルを変更する
+        
+        「apa000dep.yml」のimageをhttpdからnginxにかえる
+        
+        ```yaml
+        apiVersion: apps/v1
+        ...
+        spec:
+        	...
+          template:
+        		...
+            spec:
+              containers:
+                - name: apa000ex91
+                  image: nginx
+                  ports:
+                  - containerPort: 80
+        ```
+        
+    2. デプロイメントの定義ファイルを読み込ませ反映させる
+        
+        ```bash
+        % kubectl apply -f /Users/ryutafolder/Documents/kube_folder/apa000dep.yml
+        ```
+        
+
+### 手動でPodを削除して自動復帰を確認する
+
+- ハンズオン
+    1. getコマンドでPodの一覧を表示する
+        
+        ```bash
+        % kubectl get pods
+        NAME                         READY   STATUS    RESTARTS   AGE
+        apa000dep-8468f698b8-c9lg2   1/1     Running   0          54s
+        apa000dep-8468f698b8-dj4r4   1/1     Running   0          32s
+        apa000dep-8468f698b8-gswj9   1/1     Running   0          54s
+        apa000dep-8468f698b8-qzf9c   1/1     Running   0          31s
+        apa000dep-8468f698b8-xbdz9   1/1     Running   0          54s
+        ```
+        
+    2. 手動でdeleteコマンドを実行し、Podを1つ消す
+        
+        ```bash
+        % kubectl delete pod apa000dep-8468f698b8-c9lg2
+        pod "apa000dep-8468f698b8-c9lg2" deleted
+        ```
+        
+    3. Podがなくなって追加されていることを確認
+        
+        ```bash
+        % kubectl get pods
+        NAME                         READY   STATUS    RESTARTS   AGE
+        apa000dep-8468f698b8-25lz4   1/1     Running   0          23s
+        apa000dep-8468f698b8-dj4r4   1/1     Running   0          3m17s
+        apa000dep-8468f698b8-gswj9   1/1     Running   0          3m39s
+        apa000dep-8468f698b8-qzf9c   1/1     Running   0          3m16s
+        apa000dep-8468f698b8-xbdz9   1/1     Running   0          3m39s
+        ```
+        
+
+### デプロイメントとサービスを削除する
+
+- ハンズオン
+    1. deleteコマンドでデプロイメントを削除する
+        
+        ```bash
+        % kubectl delete -f /Users/ryutafolder/Documents/kube_folder/apa000dep.yml
+        deployment.apps "apa000dep" deleted
+        ```
+        
+    2. deploymentがなくなっていることを確認
+        
+        ```bash
+        % kubectl get deployment
+        No resources found in default namespace.
+        ```
+        
+    3. deleteコマンドでサービスを削除する
+        
+        ```bash
+        % kubectl delete -f /Users/ryutafolder/Documents/kube_folder/apa000ser.yml
+        service "apa000ser" deleted
+        ```
+        
+    4. サービスがなくなっていることを確認
+        
+        ```bash
+         % kubectl get service
+        NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+        kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   13h
+        ```
