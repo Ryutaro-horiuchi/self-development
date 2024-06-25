@@ -31,7 +31,7 @@ class WeatherData(Subject):
         super().__init__()
         self._temperature = 0
 
-    def get_temperature(self):
+    def get_temperature(self) -> int:
         """気温を取得する"""
         return self._temperature
 
@@ -79,6 +79,7 @@ class WebPortal(Observer):
 
 
 if __name__ == "__main__":
+		# 初期化
     weather_data = WeatherData()
     display = Display(weather_data)
     email_notifier = EmailNotifier(weather_data)
@@ -86,8 +87,10 @@ if __name__ == "__main__":
 
     # 気温を28度に設定
     weather_data.set_temperature(28)
+
+		# メール送信を通知の対象から外す
     weather_data.remove_observer(email_notifier)
-    print('-------メール通知をオブザーバーから外しました-------')
+    print("""\n-------メール送信をオブザーバーから外しました-------\n""")
 
     # 気温を23度に設定
     weather_data.set_temperature(23)
