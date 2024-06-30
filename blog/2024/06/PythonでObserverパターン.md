@@ -24,9 +24,7 @@ Observerパターンは**サブジェクト**と**オブザーバー**の2つの
 
 <br>
 
-オブザーバーとサブジェクトの関係は、現実世界でもよく見る構図だと思います
-例えばショッピングサイトで、購入したい商品が品切れの時に、新たに入荷した際に通知を受け取るように設定できると思います
-<br>
+オブザーバーとサブジェクトの関係は、現実世界でもよく見られます。例えば、ショッピングサイトで購入したい商品が品切れの場合、新たに入荷した際に通知を受け取るように設定することができます。
 
 ![](https://storage.googleapis.com/zenn-user-upload/16cb5147fb06-20240629.png)
 
@@ -41,7 +39,7 @@ Observerパターンは**サブジェクト**と**オブザーバー**の2つの
 
 # クラス図
 
-Observerパターンの基本的なクラス構成は以下になります
+Observerパターンの基本的なクラス構成は以下の通りです
 
 ```mermaid
 ---
@@ -57,6 +55,7 @@ classDiagram
      +notifyObservers()
   }
   class ConcreteSubject {
+　　　　　　　　　　+list observers
      +registerObserver()
      +removeObserver()
      +notifyObservers()
@@ -77,8 +76,8 @@ classDiagram
 ```
 
 - Subject
-    - Observerインスタンスをコンポジションとして持ちます。そのため、メソッドにObserverインスタンスを登録する`registerObserver(),` 反対に削除する`removeObserver()`が用意されています
-    - `notifyObservers()`はSubjectの状態の変化により、実際にObserverに変更を通知するメソッドになります
+    - Observerのlistをコンポジションとして持ちます。そのためObserverインスタンスを登録する`registerObserver(),` 反対に削除する`removeObserver()`をメソッドとして用意します
+    - `notifyObservers()`はSubjectの状態の変化により、実際にObserverに変更を通知するメソッドです
 - ConcreteSubject
     - `getState()`、`setState()`はそれぞれオブザーバが監視したい**状態**を取得する、設定するメソッドになります
 - Observer, ConcreteObserver
@@ -123,7 +122,7 @@ classDiagram
             pass
     ```
     
-  Pythonでは、abc.ABCクラスを継承することで、抽象クラスを定義することができます`abstractmethod`をデコレーターとすることで抽象メソッドとし、Subjectからの変更通知を受け取るメソッド名を定めています
+  Pythonでは、abc.ABCクラスを継承することで、抽象クラスを定義することができます`abstractmethod`をデコレーターとして使用することで抽象メソッドとし、Subjectからの変更通知を受け取るメソッド名を定めています
 
 <br>
 
@@ -196,7 +195,6 @@ class Display(Observer):
 class EmailNotifier(Observer):
     """メール通知クラス"""
     def __init__(self, weather_data: WeatherData):
-        self._email_addresses = []
         self.weather_data = weather_data
         weather_data.register_observer(self)
 
@@ -216,7 +214,7 @@ class WebPortal(Observer):
         temperature = self.weather_data.get_temperature()
         print(f'ウェブサイトをアップデート - 現在の気温は{temperature}°Cです')
 ```
-どのクラスも初期化の時にWeatherDataを引数に取り、`register_observer()`メソッドを呼び出しています。こうすることでSubjectへの登録を漏れることなく、実行できます
+どのクラスも初期化の時にWeatherDataを引数に取り、`register_observer()`メソッドを呼び出しています。こうすることでオブザーバーの登録が漏れることを防ぎます
 
 <br>
 
@@ -244,7 +242,7 @@ if __name__ == "__main__":
 
 <br>
 
-新たにメール配信のみ気温更新後の処理対象から外す要望が挙がったと仮定し、その後新しい気温を設定してみます
+新たにメール配信のみ気温更新後の処理対象から外す要望があったと仮定し、その後新しい気温を設定してみます
 
 ```python
 if __name__ == "__main__":
@@ -283,9 +281,9 @@ if __name__ == "__main__":
 - 「変更を通知 → 複数の概念の異なる処理を実行したい」という時にObserverパターンは有効
 - オープン・クローズドの原則が守られており、仕様変更にも強い
 - サブジェクトとオブザーバーの2つの役割がある
-    - サブジェクトは変更を通知し、オブザーバーは変更通知を受け取る
+    - サブジェクトは状態の変更を通知し、オブザーバーは変更通知を受け取る
 - 設計ポイント
-    - SubjectはObserverをコンポジションとして持たせる
+    - SubjectはObserverのlistをコンポジションとして持たせる
     - ObserverはSubjectからの変更通知を受け取とるために、更新用の抽象メソッドを定義する
 
 <br>
