@@ -249,3 +249,69 @@ Cloud Logging は、Google Cloud のユーザーがクラウドリソースの�
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/1736494a-03ec-473d-83ac-3bed4c583081/Untitled.png)
 
 - 緑色は使用可能だが、それ以外は何かしらの障害や通知事項がある
+
+## Secury
+
+### Secret Manager
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/f70ab563-0041-4b64-9cc6-f7f6951556ad/Untitled.png)
+
+- Google Cloud上で機密情報を安全に管理、アクセス、監査するためのサービス
+    - シークレットの変更はバージョンとして保存されるため、古いバージョンへのアクセスやロールバックが容易に。
+    - CloudFunctionsと併用して、シークレットの有効期限を設定することができる
+    - SECRET(機密情報)の管理では、暗号化、アクセス管理、定期的なローテーションが重要になる
+- ベストプラクティス
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/68a735c6-42c8-4d86-9ce8-f23492914930/Untitled.png)
+    
+    - シークレットは特定のロケーション制限を加えることが多い
+        - 漏洩した時に制限を加えないと被害がグローバルになってしまうため
+
+### Cloud Key Manager Service(KMS)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/17f2b6e8-d0b7-4378-9e68-9f438350daa3/Untitled.png)
+
+- Google Cloud のカスタマーが暗号鍵を管理し、クラウド上での暗号化にそれらの鍵を使用するためのフルマネージド型のサービス
+    - GoogleCloudのみ、鍵をグローバルにも設定はできるが、選択は慎重にするべき
+- 多くの暗号アルゴリズムをサポート(全て覚える必要はない)
+    - AES256、RSA 2048、RSA 3072、RSA 4096、EC P256、EC P384 に対応
+- HSM（Hardware Security Module）の堅牢な鍵の保存が可能
+    - FIPS 140-2 レベル 3 検証済みの HSM で暗号鍵のホスティングや暗号オペレーションを実行
+        - FIPS 140-2
+            
+            ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/58d99515-6a03-4e60-952a-f88e0e3debd0/Untitled.png)
+            
+            <aside>
+            💡 IT業界の一般常識
+            
+            </aside>
+            
+    - フルマネージドのため、HSM クラスタの運用を気にする必要がない
+- External（外部）KMSを利用して Google Cloud にあるデータ保護、データと鍵の分離
+    - BigQuery, Compute Engine のデータは Google の外部の 3rd Party の鍵管理システムで管理されている暗号鍵で暗号化
+    - 外部鍵マネージャーとして Equinix、Fortanix、Ionic、Thales、Unbound が使われる
+
+### Security Command Center(SCC)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/3e4795f4-41bf-42f6-8642-059ff940de10/Untitled.png)
+
+- Google Cloud 上のリソースを自動的にスキャンして、脆弱性を検知するサービス。リソースの状況の確認、各種コンプライアンスへの準拠、分析を行う
+    - スタンダートとプレミアムの二つ
+- Google Cloud は数多くの業界標準のコンプライアンス認証を取得しており、SCC はこれらのコンプライアンス要件を満たすための検出ツールとして設計されている
+- 組織、もしくはプロジェクトレベルで確認を実施する
+    - スキャンが完了すると、重大度、法令（もしくは標準）への準拠度合い、推奨事項が表示される。
+    - サポートする法令の一部
+        
+        ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ae449d29-5bb8-4912-b3f5-ab2a3a784dde/Untitled.png)
+        
+
+### Cloud DLP
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/22a5d070-f013-4492-b8f5-06db138d5bcc/Untitled.png)
+
+- 機密情報を含むデータを発見、分類、保護する機能を提供する。データの機密性を維持しながら、組織がデータを安全に使用、共有、および保存するのをサポート
+    - 機密情報のデータ検出や、マスキングをしたりすることができる
+
+### Bullteins(ブルティンズ)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/62caeafa-3101-4139-a8f3-f6bf49044663/Untitled.png)
