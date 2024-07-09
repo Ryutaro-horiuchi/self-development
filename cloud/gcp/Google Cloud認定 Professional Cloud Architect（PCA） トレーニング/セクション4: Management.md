@@ -2,6 +2,8 @@
 
 ---
 
+---
+
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/7b2e2623-f57e-4167-a48f-436517109cb5/Untitled.png)
 
 - 組織、フォルダー、プロジェクト、リソースという階層構造
@@ -56,7 +58,7 @@
     ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/7e31c46f-23c3-4759-a68c-03225bda169e/Untitled.png)
     
 
-## Cloud Function Toolkit(CFT)
+### Cloud Function Toolkit(CFT)
 
 ---
 
@@ -74,6 +76,8 @@
     - CFTはTeraform等にも対応している
 
 ## IAM(Identity and Access Management)
+
+---
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/7045d10b-708c-4cc3-bce6-a535f0940ae8/Untitled.png)
 
@@ -149,6 +153,8 @@ GoogleCloudで定義される式言語。IAMロールを定義することがで
 
 ## Operation Suite(運用監視ツール)
 
+---
+
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/0f3068cf-fce0-4c55-854b-ba26ca016b33/Untitled.png)
 
 - システム監視とは　スライド
@@ -202,7 +208,7 @@ Cloud Logging は、Google Cloud のユーザーがクラウドリソースの�
             - → 不正なアクセスや設定のミスを迅速に特定することができる
     
 
-## サービスレベル
+### サービスレベル
 
 - SLO（Service Level Objective、サービスレベル目標）
     - サービスの品質やパフォーマンスに関する具体的な目標を示す
@@ -211,7 +217,7 @@ Cloud Logging は、Google Cloud のユーザーがクラウドリソースの�
     - サービス提供者と顧客の間での正式な書面による契約または合意
     - SLO（サービスの品質や性能の目標）だけでなく、それを達成できなかった場合のペナルティや補償、その他の契約条件なども含まれることが多い。
 
-## Cloud Monitoring
+### Cloud Monitoring
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6229f50a-2b63-4c5a-9b27-3e3cd70441b5/Untitled.png)
 
@@ -224,7 +230,7 @@ Cloud Logging は、Google Cloud のユーザーがクラウドリソースの�
     ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/58f69207-862a-4a94-8624-9962a0ba9201/Untitled.png)
     
 
-## Cloud Trace
+### Cloud Trace
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/18751c3a-1f23-46dd-8f4d-ac4f6aef7419/Untitled.png)
 
@@ -251,6 +257,8 @@ Cloud Logging は、Google Cloud のユーザーがクラウドリソースの�
 - 緑色は使用可能だが、それ以外は何かしらの障害や通知事項がある
 
 ## Secury
+
+---
 
 ### Secret Manager
 
@@ -315,3 +323,76 @@ Cloud Logging は、Google Cloud のユーザーがクラウドリソースの�
 ### Bullteins(ブルティンズ)
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/62caeafa-3101-4139-a8f3-f6bf49044663/Untitled.png)
+
+## その他
+
+---
+
+### 移行(Migration & Transfer)
+
+オンプレミスからクラウド環境への移行
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2b37e3e3-7c44-44ce-9711-9c6e3a90a79a/Untitled.png)
+
+- 移行計画を立てる際は、7つのRを意識する(試験には出ない)
+    1. Retire
+    不要と判断したアプリケーション・データベースを廃止、または削除する。
+    2. Retain
+    ビジネス上、クラウドへ移行する理由がないシステムを、もともとの環境で稼働させ続ける。
+    3. Relocate
+    オンプレミスで稼働していたシステムをクラウドへ移行する。VMwareなどの仮想環境を、クラウド環境に移行する。既存のアプリケーション・データベースには
+    変更を加えずに移行する。
+    4. Rehost
+    既存のアプリケーション・データベースに手を加えず、そのままクラウド環境に移行する。
+    5. Repurchase
+    アプリケーションやデータベースを、既存製品から別な製品に切り替える。（ライセンスモデルの製品から、SaaS製品に切り替える）
+    6. Replatform
+    クラウドの利点を活かすために、アプリケーションやデータベースを部分的に最適化し、移行する。
+    7. Refactor / Rearchitecture
+    クラウド移行に伴い、クラウドネイティブな機能を最大限に活かすため、プログラムコードレベルでのアプリケーション改修や、データベースの改修・変換を行う。
+- GoogleCloudは、さまざまな移行シナリオに対応するサービスを提供している
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/3866f096-0b26-4bb4-b1a7-06d2b917a5f7/Untitled.png)
+    
+
+### 災害対策（Disaster Recovery）
+
+リージョンやゾーンで災害が起きても、事業継続をするために災害対策（Disaster Recovery）を行い、システム全体の耐障害性・高可用性を実現する。
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/91eb0333-2c7f-4f66-a0d0-d5d897b64945/Untitled.png)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ef10ca2d-a2cf-4c0c-8942-dfa36e376801/Untitled.png)
+
+- RPO, RTOを短くするとコストが高くなる
+    - 上に行くに従って、RPO, RTOが長くなり、コストが低くなる
+
+### SRE(サイト信頼性エンジニアリング)
+
+Google が2003年に開発したソフトウェアエンジニアリングのアプローチであり、大規模な生産システムの信頼性、拡張性、高パフォーマンスを確保することを目的とする。
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/f0889273-64f2-4d40-8551-33acbd4b18b9/Untitled.png)
+
+### コンプライアンス(法令遵守)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/105cca07-1677-4194-bc26-df9651696f59/Untitled.png)
+
+(完全に暗記する必要はないが、一般常識で言葉だけでも覚えておく)
+
+### タグとラベル
+
+- ラベル
+    
+    Google Cloud のリソースに付与できるメタデータ（付加情報）である。ラベルにより、リソースの整理、管理、請求の管理などが容易になる。
+    
+    (AWS,やAzureでは、タグと呼ばれている)
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/04b2de70-cf0d-4d5d-866a-5f12dc448fab/Untitled.png)
+    
+- タグ
+    - 特に Compute Engine におけるネットワークの文脈で使われ、より細かい粒度で管理、識別が必要な場合に用いられる
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2a3ec241-367e-4d70-84ac-7d4432c4aa53/Untitled.png)
+    
+- 比較
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/0768c01b-26c4-44d4-bdb8-4854c3fd9b3e/Untitled.png)
