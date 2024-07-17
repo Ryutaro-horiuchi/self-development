@@ -164,3 +164,56 @@ Google Cloud Compute Engine（GCE）は、Google Cloud が提供する仮想マ�
 - マネージドインスタンスグループと非マネージドインスタンスグループ
     
     ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/426542f9-6f46-4328-bbec-db28b3142797/Untitled.png)
+
+
+## 仮想マシンの作成とWebサーバーのインストール[ハンズオン]
+### マシンタイプ
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/106cca6f-94f4-4f52-8cf8-b956463fe4ec/Untitled.png)
+
+- プリセット - あらかじめ用意されている
+- コア - 自分でCPU、メモリなどを選択できる
+
+### 可用性
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d5f077d7-da80-4f4b-9206-51d9dabf2aca/Untitled.png)
+
+- SpotVMか、標準か
+
+### ブートディスク
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/96bb76af-cfcd-475a-a3a9-49e6a2bf1497/Untitled.png)
+
+- OSやバージョン、ブートディスクの種類を選択できる
+
+### 自動化スクリプト
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ddbbb0b3-0853-41e2-b89f-bb4f1f4c3ee5/Untitled.png)
+
+詳細オプション > 管理
+
+- 自動化
+    - GCEが立ち上がった時のスクリプトを記述できる
+
+### SSH接続
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/05c2056b-70ef-4df7-a1a2-f991195bfd39/Untitled.png)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8ea7c471-44f8-4b5b-8c0b-c1f56ec7333e/Untitled.png)
+
+- コンソールからSSHでGCEの中にアクセスできる
+
+### Apache(Webサーバー)のインストール
+
+コマンド一覧
+
+- sudo su
+    - 管理者の権限に切り替える
+- apt update
+    - パッケージ管理リポジトリを最新に
+- apt install apache2
+    - continue ? → Y
+- ls /var/www/html
+    - index.htmlの確認
+- echo "Hello World!" > /var/www/html/index.html
+    - htmlの中に文字列を挿入
