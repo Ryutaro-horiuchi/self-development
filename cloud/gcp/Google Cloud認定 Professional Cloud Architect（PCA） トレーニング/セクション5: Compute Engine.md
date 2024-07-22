@@ -269,3 +269,37 @@ Google Cloud Compute Engine（GCE）は、Google Cloud が提供する仮想マ�
     - VMインスタンスを削除後、使用リソースがなしになり、静的アドレスを解放できるようになっている
         
         ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/3356184f-27ff-46df-9695-4281426a623a/Untitled.png)
+
+
+# インスタンステンプレートとマネージドインスタンスグループ
+## インスタンステンプレートの作成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2ac627ba-2fe7-45bf-a7fc-49e6075da32a/Untitled.png)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2a5ec79e-913c-4dd7-bc2a-e953304398d8/Untitled.png)
+
+- 名前は適当なもの
+- マシンの構成を一番安いもの
+    - E2
+- プリセットは、micro
+- ファイアウォール
+    - HTTPトラフィックを許可
+- 管理 > 起動スクリプト
+    
+    ```markdown
+    #!/bin/bash
+    apt update
+    apt -y install apache2
+    echo "Hello World! $(hostname -i)" > /var/www/html/index.html
+    ```
+    
+
+テンプレートが出来上がる
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e8e487b0-7935-4df4-8257-b5101224f8f7/Untitled.png)
+
+VMを作成を開くと、新たにVMを作成する
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ae706b3c-f01f-4ccb-a34d-23b9a383e1a9/Untitled.png)
+
+- インスタンステンプレートで定義した設定がデフォルトで反映されている
