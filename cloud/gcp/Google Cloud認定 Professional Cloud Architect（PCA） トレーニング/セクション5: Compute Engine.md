@@ -1,4 +1,4 @@
-## ComputeEngine
+# ComputeEngine
 
 Google Cloud Compute Engine（GCE）は、Google Cloud が提供する仮想マシン（VM）を提供するInfrastructure as a Service（IaaS）サービスである。
 
@@ -274,6 +274,8 @@ Google Cloud Compute Engine（GCE）は、Google Cloud が提供する仮想マ�
 # インスタンステンプレートとマネージドインスタンスグループ
 ## インスタンステンプレートの作成
 
+### テンプレートの作成
+
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2ac627ba-2fe7-45bf-a7fc-49e6075da32a/Untitled.png)
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2a5ec79e-913c-4dd7-bc2a-e953304398d8/Untitled.png)
@@ -296,6 +298,8 @@ Google Cloud Compute Engine（GCE）は、Google Cloud が提供する仮想マ�
 
 テンプレートが出来上がる
 
+## VMインスタンスを作成する
+
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e8e487b0-7935-4df4-8257-b5101224f8f7/Untitled.png)
 
 VMを作成を開くと、新たにVMを作成する
@@ -303,3 +307,99 @@ VMを作成を開くと、新たにVMを作成する
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ae706b3c-f01f-4ccb-a34d-23b9a383e1a9/Untitled.png)
 
 - インスタンステンプレートで定義した設定がデフォルトで反映されている
+- 作成すると、外部IPからHello Worldが確認できる
+
+## マネージドインスタンスグループを作成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/15691d28-c5db-4596-a149-2da2818d3a37/Untitled.png)
+
+### グループの種類
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/95a40d3e-e637-48a2-95ed-bca8b42725ee/Untitled.png)
+
+- 種類
+    - stateless
+        - バッジ処理やステートレスサービスを使う時
+    - stateful
+        - DBなどの永続的なデータを使用する
+    - unmanaged(非インスタンスグループ)
+        - 別の種類のインスタンスをグループ化
+        - オートスケーリングなどの設定ができない
+- 今回はstatelessを選択
+
+### 自動スケーリング
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/1c9eb42b-76c4-4521-825e-faf937b50508/Untitled.png)
+
+- 自動スケーリングモード
+    - オン
+        - 負荷が高い時にインスタンスを追加、負荷が低いときはインスタンスを削除する
+    - スケールアウト
+        - 負荷が高い時にインスタンス追加のみを行う
+    - オフ
+- 今回はオン。インスタンスの最小数を2, 最大数を3にする
+
+### シグナル
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/242055c8-3fae-42e4-b433-b27ed7b14706/Untitled.png)
+
+- Edit signal
+    - CPU使用率
+        - 60にすると、使用率が60を超えたらスケールアウトする
+    - 今回はCPU使用率 60
+- Predictive autoscaling
+    - 予測自動スケーリング。少なくとも3日間稼働させたデータの結果から予測を行うもの
+    - 今回はオフ
+
+### 初期化期間
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/3aab2750-befb-471c-a430-32401ab6a244/Untitled.png)
+
+- 初期化にかかる時間を設定することができる
+- 今回は60に設定
+
+### スケールインの制御
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6e680c1c-99cd-43f3-b769-c125efdb2218/Untitled.png)
+
+- スケールインをした直後に、トラフィックが急増し負荷が高くなることがある
+- 上記のリスクをヘッジするため、特定の時間で減少するインスタンス数を制御する
+- 今回は無効にする
+
+### 自動修復
+
+- ヘルスチェック
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d7cb0aea-3b5b-4bcf-9f73-09b0fd4af14c/Untitled.png)
+    
+    - 今回
+        - プロトコルをHTTPにする
+        - ヘルス条件を画像の通りにする
+- 初期遅延
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/bed19f77-56db-4758-b2d4-e495d0cef6ad/Untitled.png)
+    
+    - インスタンスが起動して、完全に立ち上がるまでの時間を指定する
+    - 今回は30に設定
+- 作成する
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/3cab250b-de3b-41c2-aa62-2d9dc76f84c7/Untitled.png)
+    
+
+### インスタンスグループ詳細
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d25cd2af-a1ae-40d8-aafe-4d54c92e0b03/Untitled.png)
+
+- VMインスタンスの最小数を2としたため、2つ立ち上がっていることが確認できる
+
+### 補足
+
+- 自動スケーリング
+    - 最大数は1以上にする必要がある
+    - インスタンスグループのインスタンスを削除しようとしても自動スケーリングの際は、インスタンスがまた立ち上がるため、VMインスタンスは削除できないようになっている
+        - → 削除するには、インスタンスグループを削除する必要がある
+        
+        ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/da6b9ce7-3abf-4949-a29d-79e91bb92c89/Untitled.png)
+
+# Container
+
