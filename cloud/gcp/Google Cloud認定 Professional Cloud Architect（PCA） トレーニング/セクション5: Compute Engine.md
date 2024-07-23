@@ -403,3 +403,107 @@ VMを作成を開くと、新たにVMを作成する
 
 # Container
 
+# コンテナとは
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/5a838bcb-a7ef-4610-b54a-55e8cf2066cd/Untitled.png)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/196f94b3-283b-4248-84f9-483b30790406/Untitled.png)
+
+- コマンド
+    - [`docker container run`](https://www.notion.so/docker-container-run-633fd0c29a1341809a4d00b6ecff3848?pvs=21)
+    - docker build
+        - [コマンド](https://www.notion.so/131b0650a9944942ab81fc440b23271f?pvs=21)
+    - docker commit
+        - 現在のコンテナの状態を新しいイメージに保存する
+    - docker push
+        - コンテナイメージからレジストリに保存する
+- Dockerfile
+    - [Dockerfileでイメージを作成する](https://www.notion.so/Dockerfile-f1d9aed101ba4ca59b7e204068d8d931?pvs=21)
+
+# Kubernetes
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2367bf35-64f4-4be4-8a6d-9ba80235f3c1/Untitled.png)
+
+[Kubernetesとは](https://www.notion.so/Kubernetes-611917bff1274225978c93a89cc2af3f?pvs=21) 
+
+# GKE
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/931a1334-ad77-4848-88b6-6b06e7ee491f/Untitled.png)
+
+- Kubernetesの特徴と一部重複している
+
+## 構成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e4cd858b-02ff-436a-99c4-d147a57ad5c0/Untitled.png)
+
+- kubectl
+    - Kubernetesクラスターをコマンドラインで操作するツール
+- Node
+    - GKEでは、ノードはGCEが動作している
+
+## 2つのクラスタモード
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/f1c4dcf8-ca21-4ef4-9b6d-361ecda3997e/Untitled.png)
+
+- 標準ではユーザーが管理
+- AutopilotはKubernetesの管理を簡略化
+
+## コマンド
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/bc526399-9dd0-4fc8-aa2d-50f000e210c9/Untitled.png)
+
+- クラスタに対しては、gcloudコマンドを使用する
+
+## 定義ファイル(マニフェスト)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/eb47b80e-fcc2-43e2-9f0f-6cefc8bfb60c/Untitled.png)
+
+[定義ファイルの書き方](https://www.notion.so/ddb664a0c2034dda8aa091003e4d693b?pvs=21) 
+
+## レプリカセット・デプロイメント等
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/f31247d4-b1f1-4426-b394-6377bba367b6/Untitled.png)
+
+[デプロイメントとレプリカセット](https://www.notion.so/71dd7de91e4f4ee69d8f7bd68d226318?pvs=21) 
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6b7c09a0-25ee-4565-8db0-91ead18dc7dd/Untitled.png)
+
+- 環境の移行がスムーズにできる
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8f0cbf8b-1727-4b37-a87f-704eb9e5656a/Untitled.png)
+
+[typeの設定](https://www.notion.so/type-e38add02a95f4a03801ec1f9a4e4211c?pvs=21) 
+
+## GKEの冗長構成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/045abd76-7303-4f66-98bc-cabc939dd2bf/Untitled.png)
+
+## GKEの各種機能
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c0f88d14-6cc4-4a8c-986f-717644e895fa/Untitled.png)
+
+- Tipsが重要そう
+
+## デプロイ
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d2b9c855-263b-4652-a6d6-5fa0974e9c36/Untitled.png)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/08637233-b821-4016-ba0d-c0fa59690408/Untitled.png)
+
+- Container Registryに保存しているイメージを指定
+
+## GCEとGKEの比較
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6cb45937-5179-4568-bfeb-412c39787edb/Untitled.png)
+
+## ベストプラクティス
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/004a2566-69f4-42db-90af-0f12c4a9b545/Untitled.png)
+
+# Container Registry
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6fbb04a4-8e53-458f-b838-d87ebb24e5eb/Untitled.png)
+
+- アーティファクト
+    - ソースコードのビルドによって生成されたバイナリファイルやパッケージを含む一連のファイル群
+
