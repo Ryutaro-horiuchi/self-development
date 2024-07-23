@@ -507,3 +507,42 @@ VMを作成を開くと、新たにVMを作成する
 - アーティファクト
     - ソースコードのビルドによって生成されたバイナリファイルやパッケージを含む一連のファイル群
 
+# ハンズオン
+## GKEを使ったサンプルアプリケーションの構築
+### クイックスタートを使用して、チュートリアルで作成する
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6165ce6b-02ac-4347-8ab1-bffa8694fcbe/Untitled.png)
+
+### オートパイロットモードで作成する
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/b0b85324-f9d0-49b0-8783-eeb7b5b482a4/Untitled.png)
+
+### フリート登録が新しくできている
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6dc6fe38-e8e3-4673-b5d9-44552c17a63d/Untitled.png)
+
+https://cloud.google.com/kubernetes-engine/fleet-management/docs?hl=ja
+
+### ネットワーキング
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/a9b4f497-fc31-47ad-bb22-65d3e985b02f/Untitled.png)
+
+- ネットワーク アクセス
+    - 一般公開かプライベートか選択できる
+- コントロールプレーン global access
+    
+    クラスタのリージョンに関係なく、GCPリージョンやオンプレミス環境からコントロールプレーンのプライベートエンドポイントにアクセスできる
+    
+
+### 詳細設定
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/a6d1e4fa-6c57-4a35-9013-d2fdc31c5065/Untitled.png)
+
+- 自動化
+    - メンテナンスを行う時間を設定できる
+- セキュリティ
+    - Binary Authorization の有効化
+        - イメージが特定の署名要件を満たしているかを検証
+    - 暗号鍵の設定
+- メタデータ
+    - ラベルの追加
