@@ -546,3 +546,23 @@ https://cloud.google.com/kubernetes-engine/fleet-management/docs?hl=ja
     - 暗号鍵の設定
 - メタデータ
     - ラベルの追加
+
+### コマンドベースへ
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/bc7f0875-5fda-4682-951d-57334530047c/Untitled.png)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e7171642-2a9b-4596-a451-8500037b1238/Untitled.png)
+
+### 必要なサンプルアプリを取得する
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/17a71013-239a-4923-b621-04f0a8eb5106/Untitled.png)
+
+- 右のチュートリアルに沿って進める
+
+### クラスタに接続する
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6399247c-cb1e-4b29-ade3-b74fb9603c1f/Untitled.png)
+
+Kubernetesクラスタを追加する
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c7d72be5-73c9-45e2-ad05-19020999e4a7/Untitled.png)
