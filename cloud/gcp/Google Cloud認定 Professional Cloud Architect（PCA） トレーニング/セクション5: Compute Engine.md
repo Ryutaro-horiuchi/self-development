@@ -509,6 +509,8 @@ VMを作成を開くと、新たにVMを作成する
 
 # ハンズオン
 ## GKEを使ったサンプルアプリケーションの構築
+## クラスタを作成する
+
 ### クイックスタートを使用して、チュートリアルで作成する
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6165ce6b-02ac-4347-8ab1-bffa8694fcbe/Untitled.png)
@@ -547,7 +549,9 @@ https://cloud.google.com/kubernetes-engine/fleet-management/docs?hl=ja
 - メタデータ
     - ラベルの追加
 
-### コマンドベースへ
+## サンプルアプリを作成して、クラスタにデプロイする
+
+### エディタを開く
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/bc7f0875-5fda-4682-951d-57334530047c/Untitled.png)
 
@@ -558,11 +562,124 @@ https://cloud.google.com/kubernetes-engine/fleet-management/docs?hl=ja
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/17a71013-239a-4923-b621-04f0a8eb5106/Untitled.png)
 
 - 右のチュートリアルに沿って進める
+- サンプルコード
+https://github.com/GoogleCloudPlatform/bank-of-anthos
 
 ### クラスタに接続する
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6399247c-cb1e-4b29-ade3-b74fb9603c1f/Untitled.png)
 
-Kubernetesクラスタを追加する
+- チュートリアル 3 -  5の手順
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c7d72be5-73c9-45e2-ad05-19020999e4a7/Untitled.png)
+
+### クラスタにアプリケーションをデプロイする
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6de10330-ce85-4f5d-95b2-1f7cf2596755/Untitled.png)
+
+コマンドを実行する
+
+```bash
+$ kubectl apply -f \
+    ./extras/jwt/jwt-secret.yaml # JWTトークン
+kubectl apply -f \
+    ./kubernetes-manifests # マニフェストファイルのパス
+```
+
+- apply
+    - マニフェストファイルに基づいてリソースの作成や更新を行う
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d5d7abff-671d-4c57-9340-27794de8af21/Untitled.png)
+
+Podが作成されている
+
+## コンソールから確認
+
+### ワークロード
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/986a1c08-77bd-4cb8-a270-d9d129fb02ae/Untitled.png)
+
+### ネットワーキング > Gateway.. > サービス
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/49bbc6de-2aad-4011-a84a-547758055795/Untitled.png)
+
+frontendのエンドポイントをクリックするとアクセスできる
+
+
+# PaaS
+## App Engine
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c6f86a4f-face-47ae-b216-296ebb778dc3/Untitled.png)
+
+### 環境の違い
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/cc6e62e4-ce66-4a14-91ea-4ad5b1b7bacf/Untitled.png)
+
+- 最小インスタンス
+    - スタンダードは0で、フレキシブルは1
+- フレキシブル環境はGCE上のDockerコンテナ内で実行される
+
+### スケーリング
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6463cebd-8b8a-403b-be49-ad04e58204ad/Untitled.png)
+
+### そのほかの特徴
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4ab13960-d28b-4635-a4cf-e1081896e27a/Untitled.png)
+
+- Blue/Greenデプロイメントに対応
+    - アプリケーションに接続できない時間が最小限に抑えられる
+    - コストは高くなる
+
+## Cloud Functions
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/0fa1fcab-d86b-4560-99c2-3a69d41329bb/Untitled.png)
+
+- オートスケーリング機能がある
+- 下記からデプロイが可能
+• ソースリポジトリ（GitHub や Bitbucket など）
+• ローカルマシン（gcloud コマンドを使用）
+• Cloud Console
+• Cloud Functions API
+
+### イベント駆動型とは
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c2f5d974-b6d1-4189-8e10-8f339baf7fcf/Untitled.png)
+
+### 実行時間の制限と料金項目
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/97956cd9-8039-4ec6-9dbc-09f6fd566546/Untitled.png)
+
+## Cloud Run
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/de5b3e2a-1c6c-4a54-8d76-e73256dd98d4/Untitled.png)
+
+- サーバーレス
+    - インフラ管理やサーバーの設定は自動で行ってくれる
+    - イベント駆動型(HTTPリクエスト)で、インスタンスが起動される
+        - リクエストがない時は、0になるため無駄なコストは省ける
+- Dockerをデプロイするためのもの
+
+### デプロイ方法
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/de62b76d-2f83-4930-97f1-a24cccb1c92b/Untitled.png)
+
+- Cloud Build
+    - コードの変更があったときに自動でイメージをビルド・デプロイする
+
+### Cloud Run for Anthos
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/aed8e61d-7d52-4e2f-a50c-f87d9435908e/Untitled.png)
+
+- for Anthos
+    - GKEの機能に準ずる
+
+## コンテナデプロイサービスの違い
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/27ef06c7-3a73-4519-a57f-255ea74deea0/Untitled.png)
+
+- 管理レベルが高い - ユーザーの負担が少ない
+
+## PaaSの分類
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4b31efd3-84c8-46c7-ad23-8aead271e876/Untitled.png)
