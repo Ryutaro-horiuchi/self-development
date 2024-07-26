@@ -683,3 +683,101 @@ frontendのエンドポイントをクリックするとアクセスできる
 ## PaaSの分類
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4b31efd3-84c8-46c7-ad23-8aead271e876/Untitled.png)
+
+
+## ハンズオン
+### App Engine によるアプリ開発
+### リージョンの選択
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/b0b6d0ae-ae79-45ec-95b1-90e0ff59d276/Untitled.png)
+
+- サービスアカウントはデフォルトのもの
+
+### リソースの選択
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c6f8d65c-56fb-4188-9a73-901ecc55e2d1/Untitled.png)
+
+### Cloud Shell → エディタを開く
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/24e19528-b76d-46be-8567-58b208d03714/Untitled.png)
+
+以降 gcloud app deployにてデプロイをする。経験があるので割愛
+
+### 使用していたコマンドメモ
+
+```bash
+$ gcloud app services list
+
+$ gcloud app versions list
+
+# アプリケーションのURLを取得できる。バージョンの指定も可能
+$ gcloud app browse (--version-=v1)
+https://....
+
+```
+
+### Cloud Functionsの操作
+# ファンクションを作成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ece11d7d-5d96-46fc-b79e-49a3985b77ff/Untitled.png)
+
+## 構成
+
+### 基本
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/cbd08812-70e7-4248-89e4-6b68d3dfb536/Untitled.png)
+
+- 第2世代の方がスペックが高い
+    - 最長タイムアウトは60分(HTTPSトリガー)
+        - 第1世代は9分
+- 今回は画像の通りに入力して「保存」する
+
+### ランタイム、ビルド、接続、セキュリティの作成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/49239bee-f3b9-4b02-a1ab-12b5f3650915/Untitled.png)
+
+- 今回はそのままで「次へ」
+
+## コード
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/df0eb492-0f51-4e5f-a197-00a38de63648/Untitled.png)
+
+- ランタイムで言語を選択できる
+- 今回はNode.js20で「デプロイ」
+
+# コンソール画面
+
+## テスト中
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/7c482d49-e048-4484-bc96-cffdb2c45e19/Untitled.png)
+
+- 上記の手順でテストを実行する
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d0bdbd1a-5237-468b-9d34-467025aedd3c/Untitled.png)
+
+- ログにテストの開始と実行されたことがわかる
+
+## トリガー
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/22bde96a-e1e6-458a-b1d9-950ebd50d644/Untitled.png)
+
+- トリガーURLから実行結果がわかる
+
+## ソース
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/bef41b71-ce15-4f71-b2a0-38a014929cca/Untitled.png)
+
+- コードが確認できる
+- 「編集」でコードを編集可能
+
+編集画面
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/1ee17f4d-6c5f-4393-8311-72ad0c6ecfb1/Untitled.png)
+
+- 「保存して再デプロイ」でデプロイが可能
+
+編集後
+
+ログからもバージョンが変更されていること。バージョン欄も「バージョン2 …」となっているのがわかる
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/81a78ac7-fc3c-4a99-993b-a033088e81e9/Untitled.png)
