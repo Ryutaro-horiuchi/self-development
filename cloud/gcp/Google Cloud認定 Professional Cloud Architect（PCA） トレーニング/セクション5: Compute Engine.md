@@ -781,3 +781,111 @@ https://....
 ログからもバージョンが変更されていること。バージョン欄も「バージョン2 …」となっているのがわかる
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/81a78ac7-fc3c-4a99-993b-a033088e81e9/Untitled.png)
+
+# CI/CD
+## デプロイと自動化 CIとCD
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/fc1206cd-2836-4192-8af0-3598dfa68918/Untitled.png)
+
+## Cloud Build
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/635572de-7084-4e51-bd4f-0a28b942340b/Untitled.png)
+
+- コンテナサービスとの親和性が高い
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2bc751a1-9669-4df5-a95a-bc06406dd623/Untitled.png)
+
+- ソースリポジトリへのコードのpushをトリガーに、Cloud Buildが自動で実行される
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2cb18a38-05b7-4d5e-bafe-b958b749917e/Untitled.png)
+
+- Node.jsのアプリケーションで、イメージを生成してGCRにpushするサンプル
+
+## デプロイとテストの戦略
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6fe0b713-2568-42b0-bb66-8d8efa268f4e/Untitled.png)
+
+### 代表的なテスト
+
+- Canary
+    
+    一部のユーザーに、本番環境のアプリケーションをデプロイ・テストする
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/b40a2c33-c894-4c4e-b3b3-0e63d7225af7/Untitled.png)
+    
+    - 本番環境でテストを実施できるので、環境差異による不具合が生まれにくい
+    - 意図しないユーザーがテスト環境へのトラフィックにならないようにセッションを固定する必要がある(スティッキーセッションで対応)
+    
+- シャドーテスト
+    
+    本番環境とは別の環境を設置し、本番環境と同等のトラフィックを流す
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/fbf604fd-b77f-4836-aacc-5e8f1e424002/Untitled.png)
+    
+    - 環境が増えるため、コストと運用上のオーバーヘッドが増加する
+
+- A/Bテスト
+    
+    異なる2 つのバージョン（A と B）をテストし、比較検証する。
+    主に Web テストで用いられ、A と B のどちらが優れたコンバージョンを得られるかを検証する。
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2feaef5c-f807-42cf-ab2c-c656fdcfda3f/Untitled.png)
+    
+
+### 代表的なデプロイ
+
+- In-Place
+    
+    稼働中の環境に対して、直接新しい環境を配置して、再起動する（デプロイの再作成、Recreate）
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/f2bf7d70-0841-4a1d-b8eb-13e1a5246d23/Untitled.png)
+    
+
+- ローリングアップデート
+    
+    新旧のアプリを並走させながら、一定数ずつアップデートを行う。
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/60822f65-f136-4fdb-90c1-e431e747818f/Untitled.png)
+    
+
+- Blue/Greenデプロイ
+    
+    新旧のアプリを併存させながらアップデートを行う（別名 Red/Black）
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/a38708ab-b027-4c13-8d8f-8b13bd83c919/Untitled.png)
+    
+    - ローリングアップデートの違いとして、新旧のアプリケーションが完全に併存する点
+    - コストと運用上のオーバーヘッド
+
+# Anthos
+## 概要
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6d820f4f-1f4d-4745-8264-c402bc14043c/Untitled.png)
+
+## アーキテクチャ
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/26edd77e-8c67-4494-a21a-80ce8d2540ae/Untitled.png)
+
+- オンプレミスとクラウド環境に跨って、ハイブリッドクラウド環境でリソースの管理ができる
+- Kubernetesがベース
+
+## サービスメッシュ
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/95757d59-5cdc-473a-899c-e880ec26a508/Untitled.png)
+
+- Anthos Service Mesh
+    
+    クラスタ間のトラフィックを監視。Istioというオープンソースが使用されている
+    
+- SLOを設定すると、アラートとSLO概要が表示される
+
+### Istio
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/098bb9c9-358a-41b6-b759-0076568009e0/Untitled.png)
+
+- マイクロサービスでは、複数のサービス間の通信や監視が複雑になる傾向。
+    
+    → Istioのサービスメッシュを使用することで、監視が容易に
+    
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2847b5f1-4b83-44b7-b3d9-5baa7d80a395/Untitled.png)
