@@ -93,26 +93,100 @@
 
 
 # ルーティングとファイアウォール
-## FirewallとRouting
+# FirewallとRouting
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/48002978-825b-4790-a3fb-895fadb49df9/Untitled.png)
+
+- 事前に定義されたルール
+    - ネットワークプロトコルやIPアドレスに基づいて
 
 ## Cloud Firewall
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/9c3ed5ff-53d0-4ec0-8da7-7894d0db99a9/Untitled.png)
 
+- 優先順位
+    - 番号が低いほど優先順位が高い
+
+### Cloud Firewall 設定画面
+
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/97940d77-8e83-413f-a449-b0acab460212/Untitled.png)
 
+- デフォルトルール　65535
+
+### FireWall Insights
+
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/f14a587e-d496-4e99-a62e-4ba50348080d/Untitled.png)
+
+- ファイアウォールの分析ができる
+    - ルールの使用率
+    - 変更履歴の追跡
 
 ## Cloud Armor
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4ce0d8e0-aa68-4aaf-8d7e-d0c4a87870d4/Untitled.png)
 
+- Cloud FirewallはVPCへ流入するトラフィックの制御に特化していたのに対し、CloudArmorはHTTP/HTTPSトラフィックの制御に特化している
+
+### DDoS 攻撃
+
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2dde2bc3-c06a-41be-b4f6-2a5e2a59f7ce/Untitled.png)
+
+- DDoS攻撃
+    - 対象のウェブサイトやサーバーに対して、複数のコンピューターから大量に行うことを指す
+    - トラフィックそのものは正常であることが多いため、特別な対応が必要
+
+## Cloud Router
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/83b57463-91b4-4e0a-83d9-e96f8b898174/Untitled.png)
 
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/707a9f0c-bfbe-46b6-aace-f1a77ae883d3/Untitled.png)
+
+- ネクストホップ
+    - 次の経由点
+
+## Cloud NAT
+
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/f2da34d6-78c7-439b-9a11-dc49a4129d83/Untitled.png)
 
+- VPC 内のリソースがインターネットや他の Google サービスにアクセスする際に、プライベート IP アドレスをパブリック IP アドレスに変換するサービス
+- 複数のプライベートIPアドレスに対して、1つ(または複数)のパブリックIPアドレスを使用して変換することで、外部IPアドレスの消費を抑制する
+
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/1e1b5e67-9dca-4a24-9ecc-1804ab81b2d4/Untitled.png)
+
+# LoadBalancer
+## 概要
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/5c2f7f70-4e3e-43bf-be6a-2ee0cdafa495/Untitled.png)
+
+- プレウォーミング
+    - Load Balancerや背後のリソースをあらかじめ準備しておく
+        - Ex. GCEのインスタンスの立ち上げに1-2分時間がかかるが、ユーザーはこの部分を意識せずに使用することができる
+- ヘルスチェック機能もある
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2eed9eab-26e2-4cc8-9591-ca0838e0003f/Untitled.png)
+
+## 分類
+
+### フォーマット
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/df220b51-0221-4fa7-8258-eab483088348/Untitled.png)
+
+- 内部IPか外部IPか
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e2f1641f-f8e5-4799-b262-da4be79f98eb/Untitled.png)
+    
+- 地域による分類
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/591e7b06-85cf-44bb-9bf4-e9ca074b3956/Untitled.png)
+    
+- 価格帯
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/5e27e840-4d0f-49a5-98f1-6145e07e4830/Untitled.png)
+    
+- プロキシ or パススルー
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d9874d35-dd7d-4c95-98fc-f170da58f0b1/Untitled.png)
+    
+- トラフィックの種類
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/08e6f513-bca5-4057-a471-467ae2445fad/Untitled.png)
