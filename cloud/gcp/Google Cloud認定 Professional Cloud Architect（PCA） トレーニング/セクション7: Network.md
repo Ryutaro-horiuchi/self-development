@@ -207,3 +207,46 @@
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/77685779-9e20-4084-83aa-380d5d4d32fc/Untitled.png)
 
 - MIGと組み合わせることで、オートスケーリング機能が提供される
+
+# ハンズオン　マネージドインスタンスグループを作成する
+
+[インスタンステンプレートとマネージドインスタンスグループ](https://www.notion.so/ebbf1351dc5343279bc9b977e5759ec0?pvs=21) 
+
+## トップ
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c640800c-c425-4bbe-a3a0-c814bfb38059/Untitled.png)
+
+「ロードバランシングを作成」をクリック
+
+## ロードバランサの作成
+
+### **ロードバランサのタイプ**
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/94d64482-ceb8-427f-9dcb-1f049ab11552/Untitled.png)
+
+- アプリケーション ロードバランサ（HTTP / HTTPS）を選択
+
+### **インターネット接続または内部**
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/679a3023-ce1d-4cad-8c82-deeeac6f788b/Untitled.png)
+
+- インターネット接続（外部）を選択
+
+### グローバルまたはシングル リージョンのデプロイ
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ed9bfe76-a7a2-467a-b937-881813ea397c/Untitled.png)
+
+- グローバルを選択
+
+### **ロードバランサの世代**
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/dfc5a672-a664-4ed3-b56f-0c995691f36b/Untitled.png)
+
+- 従来のだと、「フォールとインジェクション」や「リクエストヘッダー」と「レスポンスヘッダー」の変換などが対応していない
+- 今回は新しいものを選択
+
+### ロードバランサの作成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ca4dd6c3-60d8-45e8-8b03-a93135160fba/Untitled.png)
+
+「構成」をクリック
