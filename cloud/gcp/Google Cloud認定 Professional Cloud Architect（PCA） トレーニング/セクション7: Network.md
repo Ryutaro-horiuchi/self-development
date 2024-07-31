@@ -171,7 +171,7 @@
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/df220b51-0221-4fa7-8258-eab483088348/Untitled.png)
 
-- 内部IPか外部IPか
+- 内部負荷分散か外部負荷分散か
     
     ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e2f1641f-f8e5-4799-b262-da4be79f98eb/Untitled.png)
     
@@ -187,6 +187,23 @@
     
     ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d9874d35-dd7d-4c95-98fc-f170da58f0b1/Untitled.png)
     
+    - プロキシ
+        - 直接VMに接続せず、プロキシを経由して接続
+    - パススルー
+        - VMに直接接続する。(光回線がないと使用できないなどの制限がある)
 - トラフィックの種類
     
     ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/08e6f513-bca5-4057-a471-467ae2445fad/Untitled.png)
+    
+    - TCP UDPをネットワークロードバランサ
+    - HTTP HTTPSをアプリケーションロードバランサ
+
+### 決定木
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8fc4dbd3-d412-45ce-b7ae-528571945b75/Untitled.png)
+
+### ヘルスチェック
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/77685779-9e20-4084-83aa-380d5d4d32fc/Untitled.png)
+
+- MIGと組み合わせることで、オートスケーリング機能が提供される
