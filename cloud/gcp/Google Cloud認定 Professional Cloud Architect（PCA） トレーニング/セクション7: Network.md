@@ -250,3 +250,85 @@
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ca4dd6c3-60d8-45e8-8b03-a93135160fba/Untitled.png)
 
 「構成」をクリック
+
+## 構成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e9671b65-68ea-48b6-8f5f-9a0017793d17/Untitled.png)
+
+- フロントエンドはポート
+- バックエンドはロードバランサーを介した背後のサービス
+
+### フロントエンドの構成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2c58d236-fa53-4cdc-844a-64b90e59b869/Untitled.png)
+
+- 名前を入力して「完了」
+
+### バックエンドの構成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/9117512c-2654-43de-bd73-e21a4cddd81d/Untitled.png)
+
+- 「バックエンドバケットを作成」
+    - GCSのバケットを設定できる
+- 今回はマネージドインスタンスを割り当てるので、「バックエンドサービスを作成」
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/42abcd66-78c8-480d-bcfe-9af1fd8729f6/Untitled.png)
+    
+    - 名前入力
+    - インスタンスグループ欄にて作成した、インスタンスグループを割り当てる
+    - ポートは80
+- しきい値の設定
+    - 分散モードの説明
+        
+        > ロードバランサがバックエンド インスタンス グループ間または NEG 間でリクエストをどのように分散するかを指定します。HTTP(S) の場合、サポートされている分散モードは、使用率（インスタンス グループのバックエンド向け）、レート（インスタンス グループと NEG 向け）です。バックエンドの使用率またはレートが構成済みの最大値に達すると、ロードバランサは構成済みの最大値に達していない他のバックエンドに新しいリクエストを振り向けます。すべてのバックエンドが構成済みの最大値に達した場合は、ロードバランサは最大値を超えることになります。
+        > 
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ab90395b-0d4f-4b5f-9f1c-ba4694f6bd52/Untitled.png)
+    
+    - 今回はデフォルトのまま
+- CDN
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2c5678f4-fe9a-4be0-96ed-4436c30c4333/Untitled.png)
+    
+    - 今回はデフォルトのまま
+- ヘルスチェック、セキュリティ
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/18e52955-1b43-47c0-a3f5-575ee9eade8b/Untitled.png)
+    
+    - ポート: 80、タイムアウト: 5 秒、チェック間隔: 10 秒、異常しきい値: 3 回の試行
+    - セキュリティは今回設定しない
+
+### ルーティングルール
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/86e80639-05e8-4f2b-a8ca-bbe93ba560c2/Untitled.png)
+
+- ホスト、パスに応じてトラフィックを転送できる
+- 今回は設定なし
+
+### 作成
+
+「作成」をクリック
+
+# 挙動の確認
+
+## ロードバランサー コンソール画面
+
+![Monosnap Monosnap 2024-08-03 22-24-45.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8376a20f-815d-4d33-822f-4fd970c08e1f/Monosnap_Monosnap_2024-08-03_22-24-45.png)
+
+- フロントエンド、バックエンド別に確認できる
+
+## VMの確認
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2e5f1a0a-20d2-4e29-b196-3b3f1478878a/Untitled.png)
+
+- マネージドインスタンスグループの設定によって、VMマシンが2つ作成されている
+- 負荷がないため、この内部IPのいずれかにロードバランサーによって振り分けられる
+
+### リソースの削除の注意
+
+- ロードバランサーに関連づけられているマネージドインスタンスグループは削除することはできない
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/83bc3976-69b1-45e7-83f0-7d3b6344deb7/Untitled.png)
+    
+- VMも直接は削除できない
+- → ロードバランサーを削除後、インスタンスグループを削除する
