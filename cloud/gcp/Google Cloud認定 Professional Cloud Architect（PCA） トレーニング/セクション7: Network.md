@@ -332,3 +332,94 @@
     
 - VMも直接は削除できない
 - → ロードバランサーを削除後、インスタンスグループを削除する
+
+# CDN(Content Delivery Network)
+## 概要
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/5827f875-01a9-4c66-a699-e5d31d11a201/Untitled.png)
+
+- クライアントとオリジンの間にキャッシュを配置して、オリジンの負荷低減とレスポンス向上を目指す
+- CDNの文脈
+    - clients と CDN間のやり取り
+        - Viewer Request, Viewer Response
+    - clients と Originとのやり取り
+        - Origin Request, Origin Response
+
+## 生存期間の設定
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/7bbd2cc0-4a84-49cb-abc0-d4b2dea671db/Untitled.png)
+
+- 生存期間の設定が大事
+- コンテンツの鮮度とオリジンサーバーの負荷はトレードオフの関係にある
+    - 上記加味しながら、適切に設定する
+
+## キャッシュキーの調整
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e731a5b1-0822-4ed8-b43d-6403f99d4ea0/Untitled.png)
+
+### キャッシュキーの設定例
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/f4b11a99-290d-40e2-b49d-266b444640cd/Untitled.png)
+
+- 優先順位
+    - Cache-Control > Expires
+
+### ロードバランサーでアクセスログを取得する
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/69e6ed1e-048e-4e78-9d9c-8664590b8c51/Untitled.png)
+
+# DNS(Domain Name System)
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/0d675d39-bce9-4d32-be26-74a9e08f6da7/Untitled.png)
+
+- ドメイン名をIPアドレスに変換するシステム
+- ドメインの問い合わせをする際、キャッシュDNSサーバー、権威DNSサーバーの2段階で問い合わせをする
+
+## 主要なレコード
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/fb78c5f8-5429-4915-95e7-a90bfebf61ea/Untitled.png)
+
+- レコード
+    - ドメインとIPアドレスの組み合わせ
+- Aレコード、　CNAMEレコードは一般常識として覚えておく
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/a8917407-7057-4103-aac7-2b7c65f849fb/Untitled.png)
+
+# API
+
+# Apigee(アピジー)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/5d2db184-f1cd-482a-b4ea-eac39f983061/Untitled.png)
+
+## 例 オンラインの書籍販売システム
+
+### 書籍の追加 API
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/15dd1229-6ac7-42c8-b555-3b30b8b714da/Untitled.png)
+
+- Ex. オンラインの書籍販売システム
+    1. ApigeeにはあらかじめエンドポイントとしてIngressを登録しておく
+- 処理の流れ
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/17b898f9-a4d4-4e05-97d5-5547e96b7f39/Untitled.png)
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d6d7d034-ca14-419c-a736-c5a7a5b3993e/Untitled.png)
+    
+
+### 書籍の情報取得
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/952a784c-b4f5-425b-a26f-56923acd1f1f/Untitled.png)
+
+- 書籍の流れ
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/0640aa0e-c381-4f8c-bef5-f1241625b2ae/Untitled.png)
+    
+    - 認証情報を含める
+        
+        ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/da796d20-ba97-4784-baa4-dc250dcd4b3d/Untitled.png)
+        
+
+# 負荷対策も優れている
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8d759c78-ad21-4aad-a51f-7220f3c3bd93/Untitled.png)
+
+通常は大量のリクエストを送られると429を返すが、Apigeeは自動的にスケーリングを行い処理をする
