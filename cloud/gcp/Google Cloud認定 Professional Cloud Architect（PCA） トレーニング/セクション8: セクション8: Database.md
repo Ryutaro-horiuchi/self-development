@@ -280,3 +280,53 @@
 
 - Dataflowからのデータをインポートできる
 - 作成したデータをGCSにエクスポートできる
+
+# Non-Relational
+# Cloud Bigtable
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4bb3d340-d08e-4b47-b0b0-3a14d16000fc/Untitled.png)
+
+- 大規模な分散をサポートする高性能なNoSQLデータベースサービス
+- 時系列データ、分析などのユースケースに用いられる
+
+## 構成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e1a35001-d57a-4954-a057-5c73d579e665/Untitled.png)
+
+- Key-Value型のDBを拡張したカラムファミリー型のDB
+- まとまりをKeyspaceと呼んでいる
+- 1レコードをPartitionという括りに分割して、その中のカラムがKey Valueでひとつずつ管理される
+
+### Partition Keyによって、異なるカラム(Key Value)を持たせることができる
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/f00bdd45-5e10-4001-91a8-cc8a78f1ba0d/Untitled.png)
+
+## 特徴
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/dc205466-05be-43ce-9112-aa88e28209bb/Untitled.png)
+
+- 人間が変化に気づくのは13ミリ秒
+
+## ビッグデータ技術のフレームワーク
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/0f8793d3-3ce1-41d1-8248-e2383ee632cc/Untitled.png)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6ca7b5ec-d2f0-429b-a3dc-3c4b01de0a5c/Untitled.png)
+
+## ユースケース例
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/dc85b6d7-c1d7-40bd-8a3d-e42dd59a23e9/Untitled.png)
+
+# Cloud Firestore
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/fb2afe81-c1a0-408c-9155-51574b68e55e/Untitled.png)
+
+- FirebaseはGoogleが買収したリアルタイムなデータ提供を行うプラットフォーム
+- データはドキュメントとして保存される
+- Firebaseと組み合わせることで、バックエンドサーバーを必要としない
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/881cb05a-c4e5-445d-9e7a-3853f3acc979/Untitled.png)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/316aa6f1-7531-441e-b071-be3c8b4a470f/Untitled.png)
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c69cbcee-fcdb-4f9a-a9d0-66c8403703da/Untitled.png)
