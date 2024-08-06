@@ -330,3 +330,70 @@
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/316aa6f1-7531-441e-b071-be3c8b4a470f/Untitled.png)
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c69cbcee-fcdb-4f9a-a9d0-66c8403703da/Untitled.png)
+
+
+# ハンズオン: Cloud Firestore
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/fcb14249-869b-4e6d-a31e-a74e4fdde95e/Untitled.png)
+
+- データベースを作成
+
+## データベースの作成
+
+### Firestoreモードの選択
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4b34c864-4f92-4f7a-a2a4-4338d568babf/Untitled.png)
+
+- 「モードを比較」ボタンを押す
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ddeb78b6-19ed-4d4a-b6a0-dec6e984a547/Untitled.png)
+    
+
+### データベースの構成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/bf07fd87-f012-4aa8-9b80-4883e01dcfa4/Untitled.png)
+
+## データを作成
+
+### コレクションを作成
+
+- 「コレクションを開始」ボタンをおす
+    - IDを付与して、最初のドキュメントを追加する
+        
+        ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4441cd54-dc06-41c9-9133-39d41a5f04cd/Untitled.png)
+        
+- 作成される
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/305664e7-b2c3-470a-9eb5-ac3d4f71eb58/Untitled.png)
+    
+    - コレクションとドキュメントで構成されたNoSQLのデータができあがる
+- ドキュメントを追加したり、ドキュメントの配下にコレクションを追加することもできる
+    - → 階層的なデータを作成できる
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c8a517d1-dd54-4a65-ba3d-5f8c9a967c67/Untitled.png)
+    
+
+## フィルタリング
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/0fbef8bd-16ef-47ea-b89f-160253b0bfbf/Untitled.png)
+
+- クエリビルダー
+    
+    ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/54642874-cec1-46c8-8af5-21d4bdf01b13/Untitled.png)
+    
+    - SQLライクなクエリを生成できる
+
+## 複合インデックスの作成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/784dba28-5546-4e13-b5ab-c8ab3513d4f5/Untitled.png)
+
+## インポート/エクスポート
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/7f76292f-6450-4d01-9d3f-92e86e1f47a9/Untitled.png)
+
+- GCS間とのデータのインポート、エクスポートができる
+
+## 有効期間
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4eee8865-f309-4518-b3f1-1112c67a75b1/Untitled.png)
+
+- 現在の時刻が指定したtimestampフィールドの時刻を超えた場合、自動で削除される
