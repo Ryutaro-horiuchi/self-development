@@ -397,3 +397,34 @@
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4eee8865-f309-4518-b3f1-1112c67a75b1/Untitled.png)
 
 - 現在の時刻が指定したtimestampフィールドの時刻を超えた場合、自動で削除される
+
+# In - Memory
+## Cloud MemoryStore
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/3bfede34-6bf0-4251-8e5b-5993f439b08d/Untitled.png)
+
+- インメモリは、セッションやキャッシュなど一時的なデータの保存に使用される
+
+### インメモリデータベースの構成
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/de6e811e-bed9-4b0c-b496-be7f72fb0535/Untitled.png)
+
+- IMDBは、I/Oが永続的なストレージと比べて非常に高速
+- メモリとストレージの関係性は机と本棚に似ている
+    - 机 = メモリ 本棚 = ストレージ
+    - 机の上に本を置いておくと、本棚に置いてあるよりも高速に本を読むことができる
+    - 一方で机の上に置いておける本棚は限られているため、大量の本を置くには本棚が適している
+
+### RedisとMemcachedの比較
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2f6e4027-7731-4b0d-ae74-47357ce5c0af/Untitled.png)
+
+- Redisは多くのデータタイプをサポートする
+- AOF
+    - 全ての書き込みをログに溜めておくことで、データの永続性を実現した機能
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/188d8d22-8af3-46a8-91fd-1d473c461f35/Untitled.png)
+
+## DBaaSの性能とソリューション
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4620e127-7928-4408-8d30-39ec613560c3/Untitled.png)
