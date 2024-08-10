@@ -132,6 +132,8 @@ Storage
 ## (ハンズオン) Cloud Pub/Subの操作
 ## トピックの作成
 
+- トピック・・・送信するためのリソースである
+
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/686907de-0237-48cb-9210-673b48fcc45a/Untitled.png)
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/86aae964-eff1-4910-96e6-7bec6bc31164/Untitled.png)
@@ -141,3 +143,162 @@ Storage
 Pub/Sub トピックが生成される
 
 ![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/7c398ec7-3a28-4a4b-8b17-fde1c4d7e57c/Untitled.png)
+
+## サブスクリプションの作成
+
+- サブスクリプション・・・受信するためのリソース
+
+![Monosnap test-topic – Pub:Sub – PCA-Udemy – Google Cloud コンソール 2024-08-10 11-21-08.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c7c2a02c-3a91-4657-a230-cf896b58bbea/Monosnap_test-topic__PubSub__PCA-Udemy__Google_Cloud_%E3%82%B3%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB_2024-08-10_11-21-08.png)
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/60237b2f-819a-4a94-b6a5-11286378cbdc/image.png)
+
+- サブスクリプションID
+    - 任意のID
+- 配信タイプ
+    - pull サブスクライバーが必要な時にメッセージをpull(リクエスト)する
+    - push サブスクライバーにすぐにメッセージをpushする
+    - 今回はpull
+- メッセージ保持期間
+    - 未確認のメッセージの保持期間の指定
+        - 「確認済みメッセージを保持」を有効にすると、上記の保持期間が確認ずみのメッセージにも適用される
+    - 今回はデフォルトのまま
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ae34df2a-cd8c-49c0-9be9-5fe6510058f3/image.png)
+
+- 確認応答期限
+    - Pub/Sub がメッセージを再送信する前にサブスクライバーからの受信確認を待つ時間です
+    - 今回はデフォルトのまま
+- サブスクリプション フィルタ
+    - フィルタ構文が指定されている場合、サブスクライバーはフィルタに一致するメッセージのみを受信する
+    - 今回はデフォルトのまま
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/bcf80c01-9337-4220-bea4-c5c2b071cd98/image.png)
+
+- 重複対応
+    - 下記の項目はパフォーマンスとトレードオフの関係にある
+    - 1回限りの配信
+        - サブスクリプションに送信されたメッセージが、メッセージの確認応答の期限が切れる前に再送信されないことが保証されます。
+        - 今回はデフォルトのまま
+    - メッセージの順序指定
+        - 同じ順序指定キーがタグ付けされているメッセージは、公開順に受信されます
+        - 今回はデフォルトのまま
+- デッドレタリング
+    - ネットワークエラーなどで配信に失敗した際に、再びオンラインになったタイミングでデッドレターキューから再施行される
+    - 今回はデフォルトのまま
+- 再試行ポリシー
+    - 再試行する場合、すぐに行うか、指数バックオフ期間の経過後に送信するかを選択できる
+    - 今回はデフォルトのまま
+
+→ 「作成」
+
+## メッセージを送信する
+
+### トピックからメッセージを送信する
+
+![Monosnap test-topic – Pub:Sub – PCA-Udemy – Google Cloud コンソール 2024-08-10 11-46-57.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/04b76648-9f3d-4790-ad45-ce288696b47c/Monosnap_test-topic__PubSub__PCA-Udemy__Google_Cloud_%E3%82%B3%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB_2024-08-10_11-46-57.png)
+
+- 「メッセージをパブリッシュ」を選択
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ea2d4745-0f97-4770-b469-085622262ffc/image.png)
+
+任意のメッセージを書いて公開(publish)
+
+## メッセージを受信する
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/a109cfed-9546-4894-9b9e-07586111cfa7/image.png)
+
+- サブスクリプションを選択する
+
+![Monosnap test-topic-sub – Pub:Sub – PCA-Udemy – Google Cloud コンソール 2024-08-10 11-52-07.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/9c90315c-0940-49a3-85fd-1f93a7b50752/Monosnap_test-topic-sub__PubSub__PCA-Udemy__Google_Cloud_%E3%82%B3%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB_2024-08-10_11-52-07.png)
+
+- 任意のサブスクリプション → メッセージタブから「PULL」を選択
+    
+    
+
+![Monosnap test-topic-sub – Pub:Sub – PCA-Udemy – Google Cloud コンソール 2024-08-10 11-54-00.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/1a570dde-4af2-4beb-aacb-3940056936f2/Monosnap_test-topic-sub__PubSub__PCA-Udemy__Google_Cloud_%E3%82%B3%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB_2024-08-10_11-54-00.png)
+
+- メッセージが受信できた
+
+別のサブスクリプションでも、上記の手順でメッセージを受信できる
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/07dcb768-6a40-4046-b300-75e96fad7170/image.png)
+
+### 確認応答する
+
+![Monosnap test-topic-sub-2 – Pub:Sub – PCA-Udemy – Google Cloud コンソール 2024-08-10 12-02-28.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e5a88c85-ef3f-4022-841e-4c30fee93b0f/Monosnap_test-topic-sub-2__PubSub__PCA-Udemy__Google_Cloud_%E3%82%B3%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB_2024-08-10_12-02-28.png)
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c729f86e-d61d-4830-9cf6-d3ffa8427dce/image.png)
+
+- 確認したメッセージが削除された(設定で確認後も保持することも可能)
+
+## スナップショット
+
+![Monosnap スナップショット – Pub:Sub – PCA-Udemy – Google Cloud コンソール 2024-08-10 12-07-06.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/10d3e859-9291-460b-ade7-2ccd991d3887/Monosnap_%E3%82%B9%E3%83%8A%E3%83%83%E3%83%95%E3%82%9A%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88__PubSub__PCA-Udemy__Google_Cloud_%E3%82%B3%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB_2024-08-10_12-07-06.png)
+
+- サブスクリプションのメッセージ確認応答状態をキャプチャしてくれる
+
+## スキーマの作成
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d5ed410d-337b-49f7-a4b7-2f8d871c4bed/image.png)
+
+- 「スキーマを作成」をクリック
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/929b96ea-ea16-4e33-9a73-2da35e19ac1c/image.png)
+
+メッセージのスキーマを設定することができる
+
+- Avroとプロトコルバッファの2種類
+
+- テスト
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4a2dc0d1-1369-40dd-bd64-c207cc314623/image.png)
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/f4562b50-f05d-4dc0-b7f0-6eeabda8df9d/image.png)
+    
+    - スキーマに対して有効か確認できる
+
+# Data Processing （Dataflow, Data Fusion, Dataprep）データ処理・データ加工サービス
+## Cloud Dataflow
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c36f6c4a-00cf-46e9-8f97-2719f251966d/image.png)
+
+- バッジとストリーミングの両方に対応
+- 一連の処理のことをパイプラインと呼ぶ
+- Apache Beamsのサンプル
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/9c2cc377-5336-4765-bd31-03307df65bee/image.png)
+    
+
+### ウインドウ
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/62770df2-5cd4-4397-8e19-25c44f00a332/image.png)
+
+### Dataflowのサービスイメージ
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/1db92fb6-bd90-4e75-9af1-83d2389c895f/image.png)
+
+- ジョブグラフ
+    - データの流れと変換を含むパイプラインをビジュアルで表示する
+- ジョブ指標
+    - ジョブの実行に関する詳細な情報や統計を提供する
+    - パフォーマンス、リソースの使用状況、エラーの発生状況をリアルタイムで確認できる
+
+## Cloud Data Fusion
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/01e67182-d06a-47e4-b994-032a2a42d7d3/image.png)
+
+- CDAP
+    - データ分析アプリケーションの開発や運用をグラフィカルに可視化して、データフローを抽象化するためのツール
+- コードが不要であるため、非エンジニアでも直感的な操作が可能
+
+### 構成要素のイメージ図
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ae93a2ec-d265-48f5-9829-b7374ba81a2d/image.png)
+
+## Cloud Dataprep
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/98110c38-2ce4-45e2-b20d-9023b0ef1a97/image.png)
+
+### 操作イメージ
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/01b5a7c8-35f8-4d9f-8dd5-7c64954e2ff9/image.png)
