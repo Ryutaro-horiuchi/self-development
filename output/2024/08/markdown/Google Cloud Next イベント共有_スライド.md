@@ -62,8 +62,8 @@ img {
 # 参考
 
 <div class="hoge">
-  <img width="50%" src="/Users/ryutafolder/workspace/self-development/output/2024/08/Monosnap Next_Tokyo_24_Program_Guide 2024-08-18 16-38-31.png">
-  <img style="margin-left: 8px;"height="80%" width="50%" src="/Users/ryutafolder/workspace/self-development/output/2024/08/Next1.jpeg">
+  <img width="50%" src="../image/Monosnap Next_Tokyo_24_Program_Guide 2024-08-18 16-38-31.png">
+  <img style="margin-left: 8px;"height="80%" width="50%" src="../image/Next1.jpeg">
 </div>
 
 ---
@@ -87,12 +87,10 @@ section {
 
 # Gemini for Google Cloud 
 
-- Google Cloud向けのGeminiが今年4月に新たに発表された。
+- Google Cloud向けのGeminiが2024年4月に新たに発表された。
 - Googleの最新AIモデルである「Gemini」を用いた複数のサービスの統合的なブランド
-  - コーディング支援のGemini Code Assistも傘下に加わっている
 
-
-<img height="60%" width="60%" src="/Users/ryutafolder/workspace/self-development/output/2024/08/Monosnap Gemini for Google Cloud is here | Google Cloud Blog 2024-08-18 16-53-46.png">
+<img style="margin: auto" height="60%" width="80%" src="../image/Monosnap Gemini for Google Cloud is here | Google Cloud Blog 2024-08-18 16-53-46.png">
 
 <!-- この中から、主にGemini code Assist, Gemini in BigQueryについて取り上げます -->
 
@@ -114,6 +112,11 @@ ul {
 - GitHub Copilotと競合するサービス
 
 ---
+<style scoped>
+section {
+  justify-content: flex-start;
+}
+</style>
 
 
 # Gemini Code Assist デモ
@@ -206,7 +209,13 @@ BigQuery上で、自然言語を使用してSQLの生成や補完ができる
 
 
 ---
-# BigQuery data canvas (プレビュー) デモ画像
+<style scoped>
+section {
+  justify-content: flex-start;
+}
+</style>
+
+# BigQuery data canvas デモ
 
 ---
 <style scoped>
