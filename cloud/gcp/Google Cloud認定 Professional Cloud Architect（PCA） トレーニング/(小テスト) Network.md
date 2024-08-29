@@ -45,3 +45,52 @@
     - 解答
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/20d0fa4c-9ff6-4edc-af49-ba2e96b02064/image.png)
+        
+6. ○
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/0d679d9b-d5a8-4161-b6d8-d1427d609a28/image.png)
+    
+    - 解答
+        
+        ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4aeae553-0137-4c12-aff3-7e3380e8fcd8/image.png)
+        
+7. ○
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4a71ad46-58d9-42b0-bea7-7aa8b28522ce/image.png)
+    
+    - 解答
+        
+        ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/f7a4b699-166a-432f-aa00-3b80e4fab7de/image.png)
+        
+    - 用語
+        - [Cloud Storage FUSE](https://cloud.google.com/storage/docs/gcs-fuse?hl=ja)
+            
+            Cloud Storage バケットをローカル ファイル システムとしてマウントしてアクセスできるようにする [FUSE](http://fuse.sourceforge.net/) アダプタです。
+            
+        - NFS
+            
+            ネットワーク経由でファイルを共有するための分散ファイルシステムプロトコル。NFSを使用することで、異なるコンピュータやオペレーティングシステムが同じファイルシステムにアクセスし、あたかもローカルに接続されたディスクのようにファイルを読み書きできるようになります
+            
+8. ○
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c7494dd2-70e2-403c-a6e3-3437b876f8f6/image.png)
+    
+    - 解答
+        
+        ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/9867d5b5-3adb-4443-8651-2f8b8b8f0690/image.png)
+        
+    - 用語
+        
+        Ingress: 上り (インターネットから、VPC環境へ)
+        
+        Egress: 下り (VPC環境から、インターネットへ)
+        
+9. ○
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/bfda8c27-8f37-4d86-9945-07684e6223f6/image.png)
+    
+    - 解答
+        
+        ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8aa7bc3b-67df-4a18-aabc-078f628431e1/image.png)
+        
+        [VPC Service Controls](https://www.notion.so/VPC-Service-Controls-45f3cc03ece94148879c9d2cd605c11a?pvs=21)
