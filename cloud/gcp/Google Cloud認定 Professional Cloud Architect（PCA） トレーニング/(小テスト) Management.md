@@ -1,6 +1,6 @@
 間違えたもの、気になった問題をピックアップ
 
-1. ×
+1. × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/72dad94d-2455-4dd1-8f95-5aa7a4f7f0c4/image.png)
     
@@ -10,8 +10,11 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/dbf8f946-dfff-4d38-a1b2-ce0e84571f17/image.png)
         
-
-1. ○
+    - 事前定義済み ダッシュボード画像
+        
+        ![Monosnap 概要 – Monitoring – PCA-Udemy – Google Cloud コンソール 2024-09-05 18-55-05.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/43868e95-795f-4f92-a8fd-10b5a02ecfad/Monosnap_%E6%A6%82%E8%A6%81__Monitoring__PCA-Udemy__Google_Cloud_%E3%82%B3%E3%83%B3%E3%82%BD%E3%83%BC%E3%83%AB_2024-09-05_18-55-05.png)
+        
+2. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/cf0b6967-5c9b-4475-8cf9-8bd86c59ef3b/image.png)
     
@@ -20,6 +23,43 @@
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/7355cfce-b283-484f-858b-73245a222490/image.png)
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/5c4a6b84-d66c-46bc-b02e-2c94b82ab808/image.png)
+        
+
+3. ○ ○
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8601636d-2682-450c-81f6-a5b2215736f3/image.png)
+
+- 解答
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c422d017-00ee-481e-8142-b776594740fd/image.png)
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/a9036418-6184-4750-9c64-8bcc1fb0ebcb/image.png)
+    
+1. ○ ○
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/edc61cfe-892b-437f-9024-d7fbb3b0034f/image.png)
+    
+    - 解答
+        
+        ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/3362d29c-9cb4-4c81-b837-3bcb8dbac625/image.png)
+        
+        ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/1d7da9ea-04a3-4129-bd6b-db34d740226b/image.png)
+        
+        **特定のドメイン（例：`example.com`）に属するIDにのみ、プロジェクトやリソースへのアクセスを許可するようにポリシーを設定する**ということ
+        
+    - 用語
+        - パーミッション
+            
+            IAM（Identity and Access Management）を通じてユーザーやサービスアカウントに割り当てられるアクセス権のこと
+            
+        - ドメイン
+            - この文脈における「ドメイン」とは、Cloud IdentityやGoogle Workspace（旧G Suite）で使用される、組織のインターネット上のドメイン名。
+            - たとえば、「example.com」というドメインを持つ会社があれば、その会社の従業員が使うメールアドレスは「user@example.com」のようになります。この「example.com」がその会社の「ドメイン」です。
+        - ID
+            - Google CloudにおけるIAM（Identity and Access Management）で管理されるユーザーやサービスの「アイデンティティ（Identity）」のこと
+            - Ex.
+                - **ユーザーID**: `user@example.com`（個々のユーザーに割り当てられるメールアドレス）
+                - **サービスアカウントID**: `service-account@example-project.iam.gserviceaccount.com`（Google Cloudリソースにアクセスするアプリケーションやサービスに割り当てられるID）
         
 
 6. ○
