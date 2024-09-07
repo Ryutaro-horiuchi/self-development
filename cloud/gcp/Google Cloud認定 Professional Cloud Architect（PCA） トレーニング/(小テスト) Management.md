@@ -1,5 +1,3 @@
-間違えたもの、気になった問題をピックアップ
-
 1. × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/72dad94d-2455-4dd1-8f95-5aa7a4f7f0c4/image.png)
@@ -60,17 +58,25 @@
             - Ex.
                 - **ユーザーID**: `user@example.com`（個々のユーザーに割り当てられるメールアドレス）
                 - **サービスアカウントID**: `service-account@example-project.iam.gserviceaccount.com`（Google Cloudリソースにアクセスするアプリケーションやサービスに割り当てられるID）
+2. 〇 〇
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8dabb87f-5648-4aa2-bdc2-ab72f586a362/image.png)
+    
+    - 解答
         
-
-6. ○
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/682a2fd0-2b6c-4286-803f-b84972c1ea95/image.png)
-
-- 解答
+        ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2c419e59-dc25-4fb9-9ff0-1074eaab33b1/image.png)
+        
+3.  ○ ×
     
-    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/50907218-780d-4e0d-9031-44718627da0c/image.png)
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/682a2fd0-2b6c-4286-803f-b84972c1ea95/image.png)
     
-1. ×
+    - 解答
+        
+        ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/50907218-780d-4e0d-9031-44718627da0c/image.png)
+        
+        - [**`--auto-delete`**](https://cloud.google.com/sdk/gcloud/reference/compute/instances/set-disk-auto-delete#--auto-delete)
+            - 指定されたディスクの自動削除を有効にする。デフォルトでは有効で、無効にするには `--no-auto-delete` を使用する。
+4. ×  ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e7359352-f019-44b2-b17a-698ccd7d22d7/image.png)
     
@@ -78,7 +84,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/91287f95-627c-43f4-8fb8-acb4d2dfed34/image.png)
         
-2. ○
+5. ○ ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ad1629dd-079e-4791-b368-59890aa1a56f/image.png)
     
@@ -86,7 +92,21 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/797cd8d3-3304-4a2d-b72b-7d5f2e62955f/image.png)
         
-3. ○
+    - 用語
+        - [Cloud Logging agent](https://cloud.google.com/logging/docs/agent/logging/installation?hl=ja#before_you_begin)
+            - VM インスタンスや選択したサードパーティ ソフトウェア パッケージから Cloud Logging にログをストリーミングします
+            
+            <aside>
+            💡
+            
+            - **これは以前のエージェントです。**このエージェントは引き続きサポートされますが、新しい Google Cloud ワークロードには使用しないことをおすすめします。
+                
+                代わりに、新しい Google Cloud ワークロードには [Ops エージェント](https://cloud.google.com/logging/docs/agent/ops-agent?hl=ja)を使用し、最終的に既存の Compute Engine VM を Ops エージェントを使用するように移行することをおすすめします
+                
+            </aside>
+            
+        - [Cloud Audit Logs 監査ログ](https://www.notion.so/Cloud-Audit-Logs-ec9fc28e0cf5420487bc2d92cdcb419e?pvs=21)
+6. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/1ac9ec09-8d21-483a-8df3-889127fdedfb/image.png)
     
@@ -94,7 +114,12 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/066c19c0-a9fb-4fe4-9d1f-18ea3f9fd163/image.png)
         
-4. ×
+    - 用語
+        - Google Cloud Directory Sync (GCDS)
+            
+            オンプレミスのディレクトリサービス（通常は Active Directory や LDAP）と Google Workspace や Google Cloud Identity 間で、ユーザーアカウントやグループの情報を同期するためのツールです
+            
+7. × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/db1df622-a6f8-4a95-ad2e-50700de2dae0/image.png)
     
@@ -102,7 +127,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/89332ffe-ead1-4719-b708-83e2b86067e7/image.png)
         
-5. ○
+8. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/25d5e9db-f588-4c53-be4d-5f3fbc5e4cf1/image.png)
     
@@ -112,7 +137,7 @@
         
         [Secret Manager](https://www.notion.so/Secret-Manager-cd8a92a7286640f7bb32a28c91b42367?pvs=21) 
         
-6. ×
+9. × ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/3796ec27-29bc-418b-a19a-ec1c4f659575/image.png)
     
@@ -120,7 +145,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/1073d748-f030-4583-93c1-6696a7f7ea2d/image.png)
         
-7. ○
+10. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8cf270b3-0483-48b1-b788-94113783e331/image.png)
     
@@ -128,7 +153,9 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2a8db1c5-9d6d-4267-9560-298e4b407ad6/image.png)
         
-8. ×
+        [Cloud DLP](https://www.notion.so/Cloud-DLP-776bf46f4e3b4528ba1fa563d6e57cb6?pvs=21) 
+        
+11. × ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/bd0aa2dc-fd63-4737-98ce-04a046d7b984/image.png)
     
@@ -147,7 +174,7 @@
             </aside>
             
         
-9. ○
+12. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/90ab87df-7852-4b1c-85ac-491c420cee96/image.png)
     
@@ -155,10 +182,19 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8fd169b7-bbba-4e3f-9db7-a4654b04b6ff/image.png)
         
-        [Deployment Manager(CDM)](https://www.notion.so/Deployment-Manager-CDM-b65f308c08a749789f334c94b4716d76?pvs=21) 
+        ‣ 
         
-
-1. ×
+    - 用語
+        - サービスプロビジョニング
+            
+            特定のソフトウェアやクラウドサービスを提供するために、そのサービスが適切に設定され、ユーザーや他のシステムがアクセスできるようにするプロセス
+            
+13. ○ ○ 
+    - 解答
+        
+        ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/5c429cf3-03dd-4bbe-ba40-8281461e2069/image.png)
+        
+14. × ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e41cf497-586f-4d07-b22b-0a94820e79df/image.png)
     
@@ -166,8 +202,11 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/7f4d7976-a1a2-4b18-90b9-4a9e90a85d3f/image.png)
         
-
-1. ○
+    - 用語
+        
+        ‣ 
+        
+15. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ce07b2b6-72e3-4905-891d-9c16bdf8fddd/image.png)
     
@@ -175,8 +214,12 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/83da1336-06a2-45ef-8ef9-0a86342ea697/image.png)
         
-
-1. ○
+    - 用語
+        - レジリエンス(弾性、回復性)
+            
+            需要に応じてシームレスに拡張ができ、リソース損失があった際も耐えうる構成のこと
+            
+16. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/07245ae5-7e18-4ad4-a7d0-3aede987f1ba/image.png)
     
@@ -184,14 +227,20 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e1fc2e6f-6e59-4c38-aeae-7b30f17971b8/image.png)
         
-    - ロールアウトとは
-        
-        新しいバージョンのアプリケーションコードを、既存のバージョンと並行して実行し、徐々にトラフィックを新しいバージョンに移行していくプロセス
-        
-2. ○
+    - 用語
+        - ロールアウト
+            
+            新しいバージョンのアプリケーションコードを、既存のバージョンと並行して実行し、徐々にトラフィックを新しいバージョンに移行していくプロセス
+            
+17. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ac6c210a-b4c7-4fef-b0bd-dd36afa30157/image.png)
     
     - 解答
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/956557c0-56b6-4517-a17f-5d09d994f673/image.png)
+        
+    - 用語
+        - ロールバック
+            
+            ロールバックとは、システムやアプリケーションを更新・変更した後、何らかの問題が発生した際に、その変更を取り消し、以前の安定した状態に戻す操作のこと
