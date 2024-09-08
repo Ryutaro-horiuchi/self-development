@@ -1,4 +1,32 @@
-1. ○
+1. 〇 〇
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/a4a707f9-3dd5-40f0-9887-101ce6d4ee01/image.png)
+    
+    - 解答
+        
+        ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/690b5852-519e-4c8a-962f-781d55d14fb0/image.png)
+        
+        ‣ 
+        
+    - 用語
+        - アクティブ / パッシブ
+2. 〇 〇
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/95c6b252-7108-4bbc-a907-c3044630fe5b/image.png)
+    
+    - 解答
+        
+        ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/0ab85fb5-2524-44be-908c-31172b0e3a98/image.png)
+        
+3. 〇 〇
+    
+    ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/008e7b83-7d1f-4b41-9c69-008231df5bf4/image.png)
+    
+    - 解答
+        
+        ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6ffaac51-fd00-492f-a218-0cf9091bdafd/image.png)
+        
+4. ○ ○ 
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d94b4609-7f93-4ece-be86-722ca9f8c62c/image.png)
     
@@ -6,7 +34,10 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/035bbef4-cdc5-4533-872d-d33e408e8921/image.png)
         
-2. ×
+    - 用語
+        - Runbook
+            - 「Migrate for Compute Engine」に関するRunBookは、オンプレミスの環境や他のクラウド環境からGoogle CloudのCompute Engineへシステムを移行するための具体的な手順書です。
+5. × ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/3354318a-61f2-401b-bb0a-74ff510423ce/image.png)
     
@@ -14,9 +45,9 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/40a24cb5-427c-42b2-8607-203b8a9b582c/image.png)
         
-        [Dataproc](https://www.notion.so/Dataproc-898c5d4802294dac9589b62c416386c3?pvs=21) 
+        ‣ 
         
-3. ×
+6. × ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ad2e72c7-a689-4bd6-892b-a521756e0a56/image.png)
     
@@ -26,20 +57,20 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/eccfdef2-7f21-4921-b839-da7b183e786a/image.png)
         
-        - 用語
-            - ワークロード
-                - システムやサーバーが実行するタスクやアプリケーションの集合を指します。
-                    - Ex. データベース処理、Webサービス、機械学習モデルのトレーニングなど、特定の目的のために実行されるコンピューティングタスク全体を「ワークロード」と呼びます
-            - 単一テナントノード
-                - ホストは1つのプロジェクト専用に使用され、他のプロジェクトのVMはそのホストと共有されない
-            - 共有単一テナントノードグループ
-                - 同じホスト(物理的なサーバー)に他のプロジェクトのVMを配置できます
-                - VM作成時にアフィニティやアンチアフィニティを指定することで、VMの配置を制御できます。
-            - アフィニティラベル
-                - VMを特定のノードに配置するためのラベル。VMの作成時にこれを指定することで、そのVMが特定のノードに配置されるようになる
-            - アンチアフィニティラベル
-                - 特定のVMが同じノードに配置されないようにするためのラベル
-4. ×
+    - 用語
+        - ワークロード
+            - システムやサーバーが実行するタスクやアプリケーションの集合を指します。
+                - Ex. データベース処理、Webサービス、機械学習モデルのトレーニングなど、特定の目的のために実行されるコンピューティングタスク全体を「ワークロード」と呼びます
+        - 単一テナントノード
+            - ホストは1つのプロジェクト専用に使用され、他のプロジェクトのVMはそのホストと共有されない
+        - 共有単一テナントノードグループ
+            - 同じホスト(物理的なサーバー)に他のプロジェクトのVMを配置できます
+            - VM作成時にアフィニティやアンチアフィニティを指定することで、VMの配置を制御できます。
+        - ノードアフィニティラベル
+            - VMを特定のノードに配置するためのラベル。VMの作成時にこれを指定することで、そのVMが特定のノードに配置されるようになる
+        - ノードアンチアフィニティラベル
+            - 特定のVMが同じノードに配置されないようにするためのラベル
+7. × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/dab40e36-d3be-4067-8c9c-4a8796e216dc/image.png)
     
@@ -49,11 +80,15 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6358286c-b619-4d64-a8bb-7f6965fef922/image.png)
         
-    - レジリエンス
-        
-        高い可用性（99.99%）を維持し、サービスを継続的に提供できる能力
-        
-5. ×
+    - 用語
+        - カオスエンジニアリング
+            - システムの耐障害性（レジリエンス）を確認するために、意図的にシステムに障害やストレスを発生させ、システムがどのように反応し、回復するかをテストする手法
+            - 加える障害の例として、ランダムなサーバー停止やネットワーク遅延など
+        - レジリエンス
+            
+            高い可用性（99.99%）を維持し、サービスを継続的に提供できる能力
+            
+8. × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/aa903a0d-0ad0-495d-9cc1-72d472aa5b4b/image.png)
     
@@ -63,7 +98,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/76be7912-b9c4-43f4-863c-a823332e1aba/image.png)
         
-6. ×
+9. × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/3b146988-3d1b-4396-94f0-99fb8e70fcb6/image.png)
     
@@ -73,7 +108,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/7c72898f-e6e4-49f0-9a12-20b840eb74f3/image.png)
         
-7. ○
+10. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4dee12cf-4001-4445-9fee-e70dc1010466/image.png)
     
@@ -83,7 +118,9 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2da4ec80-af99-413d-b663-4ef2bd0c7e33/image.png)
         
-8. ×
+    - ポイント
+        - インスタンスプレートは、直接ディスクから作成されない
+11. ×  ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/695e2310-1dfc-4fa2-9c49-72a497b5378c/image.png)
     
@@ -91,7 +128,10 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/40b4e4e1-dc44-4316-8bdd-59913456a23b/image.png)
         
-9. ×
+    - 用語
+        - OS Patch Management
+            - 仮想マシン（VM）インスタンスのオペレーティングシステム（OS）を安全で最新の状態に保つために、パッチの適用を自動的または手動で管理するサービス
+12. × ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c3cada37-59ea-4167-a9ba-b7c125d3d28c/image.png)
     
@@ -100,15 +140,17 @@
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/42df3c51-7fb6-4edf-accc-b9176d3068c1/image.png)
         
     - 用語
+        - ダイナミックテンプレート
+            - アプリケーションのデプロイや環境構築を効率化するために使用されるテンプレートで、動的に変化する設定やパラメータを扱うことができる仕組みを指します
+            - Helm
+                - Kubernetesアプリケーションを管理するためのオープンソースのパッケージマネージャー
+                    - **パッケージ管理**:
+                        - Helmでは、Kubernetesリソースの集合を「チャート（Chart）」と呼ばれるパッケージとして扱います。これにより、アプリケーションのデプロイや管理が簡単になります。
+                    - **チャート（Chart）**:
+                        - Chartは、Kubernetesのすべてのリソース（Pod、サービス、デプロイメントなど）を定義するテンプレートと設定ファイルのセットです。これを使用して、同じアプリケーションを異なる環境で簡単にデプロイできます。
         - Jenkins
             - オープンソースの自動化サーバーで、主に継続的インテグレーション（CI）および継続的デリバリー（CD）のために使用されます
-        - Helm
-            - Kubernetesアプリケーションを管理するためのオープンソースのパッケージマネージャー
-                - **パッケージ管理**:
-                    - Helmでは、Kubernetesリソースの集合を「チャート（Chart）」と呼ばれるパッケージとして扱います。これにより、アプリケーションのデプロイや管理が簡単になります。
-                - **チャート（Chart）**:
-                    - Chartは、Kubernetesのすべてのリソース（Pod、サービス、デプロイメントなど）を定義するテンプレートと設定ファイルのセットです。これを使用して、同じアプリケーションを異なる環境で簡単にデプロイできます。
-10. ×
+13. × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/9dfbbb25-11ac-465d-ba73-e69d4393fb97/image.png)
     
@@ -120,7 +162,7 @@
         
     - 用語
         
-        [GKEの各種機能](https://www.notion.so/GKE-05c9bf20af474ea2b54ab2aa255f23ee?pvs=21) 
+        ‣ 
         
         - アプリケーションの更新中に使用される設定
             - maxUnavailable
@@ -132,7 +174,7 @@
                 アップデート中に一時的に許容される追加のPodの最大数または割合を指定。これにより、既存のPodに加えて一時的に新しいPodを多く起動できる
                 
             
-11. ○
+14. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d84f215f-291e-4669-99f5-83d1240bf106/image.png)
     
@@ -149,7 +191,7 @@
                 - **スケーリング:** Podの数を増減させることで、アプリケーションの負荷に対応できます。
                 - **順序のあるデプロイ:** Podは順番に作成・削除されるため、状態遷移を管理しやすいです。
             - マニフェストファイルを作成し、kube applyコマンドでデプロイする
-12. ○
+15. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/43b57efe-8cba-478c-ac20-bcce61515351/image.png)
     
@@ -160,7 +202,7 @@
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d8ca7b93-c3a1-4630-bc76-61e817dbba6f/image.png)
         
     - Google Container Engineは、GKEの旧称
-13. ○
+16. ○ ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/bd34018c-9eba-46ba-a477-739852994a7a/image.png)
     
@@ -170,10 +212,13 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/a8a4cbc4-35a6-40ad-9f70-dbeaabe4eaaa/image.png)
         
-    
-    [Untitled](https://www.notion.so/212797933feb406983a8ac2af51c860c?pvs=21) 
-    
-14. ○
+        ‣ 
+        
+    - 用語
+        - Cloud DNS for GKE
+            - GKE 向けの DNS プロバイダとして使用できます。
+            - クラスタでホストされる DNS プロバイダを必要とせずに、マネージド DNS で Pod と Service の DNS 解決
+17. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/3a9eb543-ffb5-4ce1-9660-e6f182c0274a/image.png)
     
@@ -189,7 +234,7 @@
             - Google Kubernetes Engine (GKE) クラスタを監視および運用管理するためのツールセット
             - モニタリング、ログ管理、アラート、トレース、エラーレポートの機能が提供されている
             
-15. ○
+18. ○ ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4b7623c5-612e-48a4-b494-d5b21b4f1edc/image.png)
     
@@ -197,7 +242,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/9ccf904c-c4b1-4753-9e31-5ff3df39937c/image.png)
         
-16. ○
+19. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/a692d528-4e04-4bfe-bb46-9c1eacaa634a/image.png)
     
@@ -210,7 +255,7 @@
             
             オープンソースのマルチクラウド継続的デリバリー（CD）プラットフォーム。AWS、Google Cloud、Azure、Kubernetesなど、複数のクラウドプロバイダーをサポートしている。
             
-17. ○
+20. ○ ○ 
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/528a82ab-3ad9-48c3-9833-971b084b8267/image.png)
     
@@ -223,7 +268,7 @@
             
             Google Cloudが提供するソースコードのセキュリティをチェックするツール
             
-18.  ×
+21.  × ○ 
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/dabc5f30-390f-4a64-8045-13c52cf92bc3/image.png)
     
@@ -234,7 +279,7 @@
     
     [サービスメッシュ](https://www.notion.so/7f95ae789ca44ba797ff5033886d80e4?pvs=21) 
     
-19. ○
+22. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/fdc77255-cffe-49ee-a6f4-eca5176dcd4d/image.png)
     
@@ -243,7 +288,7 @@
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d849a9e3-3714-4835-b747-9a571afcb0b8/image.png)
         
 
-24. ○ 
+24. ○  ○
 
 ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/550e9547-e9c7-4b8c-baae-23ba43f7f040/image.png)
 
@@ -251,7 +296,7 @@
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6a50ef33-3cbd-4579-bb39-9c74e8b9a358/image.png)
     
-1. ○
+1. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/94a89992-7f2e-48ce-b864-1299d4708877/image.png)
     
@@ -259,7 +304,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d717ce65-47a1-44e8-a7ae-f95263cc1471/image.png)
         
-2.  ×
+2.  × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ef0ddde3-7ce6-48ed-98ec-7d33fa9e5528/image.png)
     
@@ -297,10 +342,10 @@
                         averageValue: 100**
                 ```
                 
-                `num_undelivered_messages`が平均100を超えると、Pod数を増やすように設定されています。
+                この例では、`num_undelivered_messages`が平均100を超えると、Pod数を増やすように設定されています。
                 
             
-3. ○
+3. ○ ○　
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/6ebe491d-059f-4205-856b-d2cbbc4feedd/image.png)
     
@@ -308,7 +353,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c391c802-43cd-4790-a98a-bd3e7ee444a0/image.png)
         
-4. ○
+4. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/9b37b72e-e04b-430c-8d17-0a421637add7/image.png)
     
@@ -316,7 +361,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4242df0b-99f7-4483-a1cd-cb225852fad8/image.png)
         
-5. ×
+5. × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/baddeeb7-79fd-4f1d-a836-55f5bf64ec9d/image.png)
     
@@ -324,7 +369,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8c3a84dc-37b7-474b-8163-ac477cdd953f/image.png)
         
-6.  ×
+6.  × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8fbb46f6-32ce-4872-b080-b85b7de52296/image.png)
     
@@ -334,11 +379,11 @@
         
     - 用語
         - Cloud Dataflow
-            - [Cloud Dataflow](https://www.notion.so/Cloud-Dataflow-5e6f2b2a9a054b169982ce6fca668388?pvs=21)
+            - ‣
         - J2EEアプリケーション
             - Javaプラットフォームの一部で、エンタープライズ向けのアプリケーションを構築するための仕様とAPIのセット。
             - J2EEは、後にJava EE（Enterprise Edition）や現在の Jakarta EE として進化
-7. ×
+7. × ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/1a51a282-67c1-4139-a6eb-c0ac16add0f1/image.png)
     
