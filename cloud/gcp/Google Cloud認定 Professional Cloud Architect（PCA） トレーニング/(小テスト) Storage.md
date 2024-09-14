@@ -1,4 +1,4 @@
-1.  ○ 
+1.  ○ ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/831cdbb9-bb69-4833-b482-b783602fc358/image.png)
     
@@ -9,7 +9,7 @@
     
     [Cloud Key Manager Service(KMS)](https://www.notion.so/Cloud-Key-Manager-Service-KMS-50c6acdc758246e48baa44cc2a840c16?pvs=21) 
     
-2. ×
+2. × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/cab00ab2-b1bb-494c-97a0-afe22cf8a9f7/image.png)
     
@@ -17,7 +17,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d55e6bce-0c8b-4a48-9ac5-8c2a1af60214/image.png)
         
-3. ○
+3. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/f496d315-83a7-4f2c-a973-c6c5ebc4335e/image.png)
     
@@ -26,11 +26,12 @@
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/58bddb75-bcc0-4a65-b2f1-f7fe5b3dcdf1/image.png)
         
     - GCS 保持ポリシー
+        - [バケットロック](https://www.notion.so/5af50765a379410e9d5178401ace35f1?pvs=21)
         - バケットに保持ポリシーを追加して、保持期間を指定できます。
         - バケットの保持ポリシーが設定されている場合、バケット内のオブジェクトを削除または置換できるのは、保存期間が過ぎてからです。
         - この制約は、現在バケットにあるオブジェクトだけでなく、今後バケットに作成されるオブジェクトにも適用されます
         
-4.  ×
+4.  ×  ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/46393aaf-433c-4325-8a7c-ed86bd8e0c98/image.png)
     
@@ -47,7 +48,7 @@
         - `--encryption-key`
             - 暗号化キーを指定する
             
-5. ○
+5. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8c27eb0a-d666-49f8-a858-5de21c069979/image.png)
     
@@ -55,7 +56,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/eeb6ecd3-a56c-4acb-b33a-f4b52e8cbad7/image.png)
         
-6. ○
+6. ○ ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2896f520-e167-4f5f-a679-e50a0139e31c/image.png)
     
@@ -65,7 +66,7 @@
         
         [アップロード方法の判断](https://www.notion.so/e4610e6810e448c8a7c2c8845c6e0480?pvs=21) 
         
-7. ×
+7. × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/655a502f-5d91-4d30-8bfe-1f2453f8ed8f/image.png)
     
@@ -82,7 +83,7 @@
             
             - ファイルとディレクトリの構造や、標準的なファイル操作など
 
-9. ○
+9. ○ ○
 
 ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/5853c8d5-23c1-470d-92f5-24f5408ce692/image.png)
 
@@ -90,7 +91,7 @@
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d4c308c3-4cb5-43a0-912d-a31daff65a89/image.png)
     
-1. ○
+1. ○  ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/119d8e1e-46ab-4944-b4e6-d1cd9daa248e/image.png)
     
@@ -98,10 +99,14 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/385c6023-44d7-47e6-b5e2-e7777ae9a0fe/image.png)
         
-2.  ×
+2.  ×  ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/7f66edd7-1f4b-4f6b-b277-f9244122f6c3/image.png)
     
     - 解答
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/59cfde8f-26e1-423d-b99a-2f7960a66a70/image.png)
+        
+    - 用語
+        
+        [アップロード方法の判断](https://www.notion.so/e4610e6810e448c8a7c2c8845c6e0480?pvs=21)
