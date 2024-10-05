@@ -66,7 +66,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/2c419e59-dc25-4fb9-9ff0-1074eaab33b1/image.png)
         
-3.  ○ ×
+3.  ○ × ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/682a2fd0-2b6c-4286-803f-b84972c1ea95/image.png)
     
@@ -74,8 +74,11 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/50907218-780d-4e0d-9031-44718627da0c/image.png)
         
-        - [**`--auto-delete`**](https://cloud.google.com/sdk/gcloud/reference/compute/instances/set-disk-auto-delete#--auto-delete)
-            - 指定されたディスクの自動削除を有効にする。デフォルトでは有効で、無効にするには `--no-auto-delete` を使用する。
+        - 解説
+            - [BigQueryへのCloud Billingデータのエクスポート機能](https://www.notion.so/BigQuery-Cloud-Billing-11593db0555480a78e5cf7bad4c7c37c?pvs=21)
+            - [ディスクの状態を持続させるには](https://www.notion.so/11593db05554803cb9c9ff81c78caf71?pvs=21)
+            - 他の選択肢について
+                - C: CPU使用率をラベルとして適用しても、コスト削減には直接繋がりません。
 4. ×  ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e7359352-f019-44b2-b17a-698ccd7d22d7/image.png)
@@ -84,7 +87,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/91287f95-627c-43f4-8fb8-acb4d2dfed34/image.png)
         
-5. ○ ×
+5. ○ × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ad1629dd-079e-4791-b368-59890aa1a56f/image.png)
     
@@ -119,6 +122,8 @@
             
             オンプレミスのディレクトリサービス（通常は Active Directory や LDAP）と Google Workspace や Google Cloud Identity 間で、ユーザーアカウントやグループの情報を同期するためのツールです
             
+            [Google Cloud Directory Sync(GCDS)](https://www.notion.so/Google-Cloud-Directory-Sync-GCDS-ee58a28282074126b905af8b976ca28b?pvs=21) 
+            
 7. × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/db1df622-a6f8-4a95-ad2e-50700de2dae0/image.png)
@@ -137,7 +142,7 @@
         
         [Secret Manager](https://www.notion.so/Secret-Manager-cd8a92a7286640f7bb32a28c91b42367?pvs=21) 
         
-9. × ×
+9. × × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/3796ec27-29bc-418b-a19a-ec1c4f659575/image.png)
     
@@ -155,7 +160,7 @@
         
         [Cloud DLP](https://www.notion.so/Cloud-DLP-776bf46f4e3b4528ba1fa563d6e57cb6?pvs=21) 
         
-11. × ×
+11. × × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/bd0aa2dc-fd63-4737-98ce-04a046d7b984/image.png)
     
@@ -182,7 +187,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/8fd169b7-bbba-4e3f-9db7-a4654b04b6ff/image.png)
         
-        ‣ 
+        [Deployment Manager(CDM)](https://www.notion.so/Deployment-Manager-CDM-b65f308c08a749789f334c94b4716d76?pvs=21) 
         
     - 用語
         - サービスプロビジョニング
@@ -194,7 +199,7 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/5c429cf3-03dd-4bbe-ba40-8281461e2069/image.png)
         
-14. × ×
+14. × × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/e41cf497-586f-4d07-b22b-0a94820e79df/image.png)
     
@@ -204,7 +209,7 @@
         
     - 用語
         
-        ‣ 
+        [Canary](https://www.notion.so/Canary-cc0cd1ebc18f43ce982b42f9b0179f63?pvs=21) 
         
 15. ○ ○
     

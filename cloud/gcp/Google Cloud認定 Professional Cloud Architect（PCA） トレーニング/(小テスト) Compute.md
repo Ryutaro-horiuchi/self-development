@@ -35,9 +35,8 @@
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/035bbef4-cdc5-4533-872d-d33e408e8921/image.png)
         
     - 用語
-        - Runbook
-            - 「Migrate for Compute Engine」に関するRunBookは、オンプレミスの環境や他のクラウド環境からGoogle CloudのCompute Engineへシステムを移行するための具体的な手順書です。
-5. × ×
+        - [Runbook](https://www.notion.so/Runbook-10993db0555480df94ccc8846a10dc5e?pvs=21)
+5. × × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/3354318a-61f2-401b-bb0a-74ff510423ce/image.png)
     
@@ -47,7 +46,7 @@
         
         ‣ 
         
-6. × ×
+6. × × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ad2e72c7-a689-4bd6-892b-a521756e0a56/image.png)
     
@@ -61,15 +60,9 @@
         - ワークロード
             - システムやサーバーが実行するタスクやアプリケーションの集合を指します。
                 - Ex. データベース処理、Webサービス、機械学習モデルのトレーニングなど、特定の目的のために実行されるコンピューティングタスク全体を「ワークロード」と呼びます
-        - 単一テナントノード
-            - ホストは1つのプロジェクト専用に使用され、他のプロジェクトのVMはそのホストと共有されない
-        - 共有単一テナントノードグループ
-            - 同じホスト(物理的なサーバー)に他のプロジェクトのVMを配置できます
-            - VM作成時にアフィニティやアンチアフィニティを指定することで、VMの配置を制御できます。
-        - ノードアフィニティラベル
-            - VMを特定のノードに配置するためのラベル。VMの作成時にこれを指定することで、そのVMが特定のノードに配置されるようになる
-        - ノードアンチアフィニティラベル
-            - 特定のVMが同じノードに配置されないようにするためのラベル
+        
+        [ノードアフィニティラベル](https://www.notion.so/11393db0555480ed8705d61d02de752a?pvs=21) 
+        
 7. × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/dab40e36-d3be-4067-8c9c-4a8796e216dc/image.png)
@@ -120,7 +113,7 @@
         
     - ポイント
         - インスタンスプレートは、直接ディスクから作成されない
-11. ×  ×
+11. ×  ×  ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/695e2310-1dfc-4fa2-9c49-72a497b5378c/image.png)
     
@@ -128,10 +121,13 @@
         
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/40b4e4e1-dc44-4316-8bdd-59913456a23b/image.png)
         
+        解答ではEとなっているが、おそらくBの方が正解の可能性が高い。下記は同じ問題でBを正解としている。
+        
+        - ‣
     - 用語
         - OS Patch Management
             - 仮想マシン（VM）インスタンスのオペレーティングシステム（OS）を安全で最新の状態に保つために、パッチの適用を自動的または手動で管理するサービス
-12. × ×
+12. × × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/c3cada37-59ea-4167-a9ba-b7c125d3d28c/image.png)
     
@@ -140,14 +136,9 @@
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/42df3c51-7fb6-4edf-accc-b9176d3068c1/image.png)
         
     - 用語
-        - ダイナミックテンプレート
-            - アプリケーションのデプロイや環境構築を効率化するために使用されるテンプレートで、動的に変化する設定やパラメータを扱うことができる仕組みを指します
-            - Helm
-                - Kubernetesアプリケーションを管理するためのオープンソースのパッケージマネージャー
-                    - **パッケージ管理**:
-                        - Helmでは、Kubernetesリソースの集合を「チャート（Chart）」と呼ばれるパッケージとして扱います。これにより、アプリケーションのデプロイや管理が簡単になります。
-                    - **チャート（Chart）**:
-                        - Chartは、Kubernetesのすべてのリソース（Pod、サービス、デプロイメントなど）を定義するテンプレートと設定ファイルのセットです。これを使用して、同じアプリケーションを異なる環境で簡単にデプロイできます。
+        
+        [Helm ](https://www.notion.so/Helm-10193db0555480799f4bf54386f3b6e6?pvs=21) 
+        
         - Jenkins
             - オープンソースの自動化サーバーで、主に継続的インテグレーション（CI）および継続的デリバリー（CD）のために使用されます
 13. × ○
