@@ -137,7 +137,7 @@
         
     - 用語
         
-        [Helm ](https://www.notion.so/Helm-10193db0555480799f4bf54386f3b6e6?pvs=21) 
+        ‣ 
         
         - Jenkins
             - オープンソースの自動化サーバーで、主に継続的インテグレーション（CI）および継続的デリバリー（CD）のために使用されます
@@ -193,7 +193,7 @@
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d8ca7b93-c3a1-4630-bc76-61e817dbba6f/image.png)
         
     - Google Container Engineは、GKEの旧称
-16. ○ ×
+16. ○ × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/bd34018c-9eba-46ba-a477-739852994a7a/image.png)
     
@@ -225,7 +225,7 @@
             - Google Kubernetes Engine (GKE) クラスタを監視および運用管理するためのツールセット
             - モニタリング、ログ管理、アラート、トレース、エラーレポートの機能が提供されている
             
-18. ○ ×
+18. ○ × ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/4b7623c5-612e-48a4-b494-d5b21b4f1edc/image.png)
     
@@ -374,7 +374,7 @@
         - J2EEアプリケーション
             - Javaプラットフォームの一部で、エンタープライズ向けのアプリケーションを構築するための仕様とAPIのセット。
             - J2EEは、後にJava EE（Enterprise Edition）や現在の Jakarta EE として進化
-7. × ×
+7. × × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/1a51a282-67c1-4139-a6eb-c0ac16add0f1/image.png)
     

@@ -1,4 +1,4 @@
-1. ○  ×
+1. ○ × ○
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/d3724132-120d-410b-9598-f17278f9598a/image.png)
     
@@ -97,7 +97,7 @@
         
         [サブネット](https://www.notion.so/80bb2c46b53f48ed8b8158256614b428?pvs=21) 
         
-10. × ×
+10. × × ×
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/f90b0c69-f542-47b5-9960-41250bb86d73/image.png)
     
@@ -106,17 +106,14 @@
         ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/ca43c08c-327e-448d-9ece-eb9f0cefabad/image.png)
         
     - 用語
-        - サーバーレスVPCアクセス (Serverless VPC Access)
-            
-            Cloud Functions、Cloud Run、App Engine などのサーバーレスサービスから、Google Cloud内の Virtual Private Cloud (VPC) ネットワーク、あるいはVPCリソース（例えば、Cloud SQL、Compute EngineのVMインスタンス、GKEクラスターなど）にアクセスできるようにする機能です。
-            
+        - [サーバーレスVPCアクセス](https://www.notion.so/VPC-10993db05554809c81f7edf6dcaf3052?pvs=21)
         - Private Google Access
             
             [限定公開のGoogleアクセス(Private Google Access)](https://www.notion.so/Google-Private-Google-Access-5aacab7a078c45efb8f5ed4c3b98a047?pvs=21) 
             
             VPC内のリソースがインターネットを経由せずに、Google CloudのAPIやサービス（Cloud Storage、BigQueryなど）にプライベートIPアドレスを使用してアクセスできるようにする機能
             
-11. × ×
+11. × × ○(不安)
     
     ![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/42b16988-a5a8-437d-af8b-c8412ee1342b/acd4bb9d-339e-480b-a26b-a437542a367f/image.png)
     
