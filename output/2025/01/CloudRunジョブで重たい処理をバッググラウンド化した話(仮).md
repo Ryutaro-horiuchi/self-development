@@ -1,18 +1,18 @@
 ## 初めに
 
-業務でDjangoアプリケーション上で時間がかかる処理をCloudRunジョブに移行し、バックグラウンド化しました。初めて触った部分でもあるので、備忘録として残しておきたいと思います。
+業務でDjangoアプリケーション上で時間がかかる処理をCloudRunジョブに移行しました。初めて触った部分でもあるので、備忘録として残しておきたいと思います。
 
 ## 前提
 
 ### 対象読者
 
-- CloudRunの基本的な理解
-- Python, Djangoの基本的な理解
+- CloudRunサービスは知っているけど、CloudRunジョブは触ったことがない方
+- CloudRunジョブをコードから実行する方法を知りたい方
 
 ### 記事で触れること
 
 - PythonからCloudRunジョブを実行する
-- ジョブ実行時にオプションをつけてオーバーライドする
+- オプションをカスタムして実行する
 
 ### 記事で触れないこと
 
@@ -24,7 +24,7 @@
 
 CloudRunはサービスとジョブとに分かれていますが、ジョブはタスクを実行するだけであり、サービスと違いHTTPリクエストはリッスンしません。任意のタイミング、スケジュールに沿った実行が可能です。
 
-詳細は公式のページをご確認ください
+詳細は公式のページをご覧ください
 
 [ジョブを作成する  |  Cloud Run Documentation  |  Google Cloud](https://cloud.google.com/run/docs/create-jobs?hl=ja)
 
@@ -32,7 +32,7 @@ CloudRunはサービスとジョブとに分かれていますが、ジョブは
 
 - カスタムコマンドを作成
     
-    CloudRunジョブ用にカスタムコマンドを作成します。例なので、簡単な内容としては実際にはバックグラウンド化したい重たい処理を呼び出します
+    CloudRunジョブ用にカスタムコマンドを作成します。例のコードはオプションidを受け取り出力するだけの簡単な処理にしていますが、実際にはバックグラウンド化したい重たい処理を呼びだします
     
     - app/management/commands/job.py
         
@@ -48,7 +48,7 @@ CloudRunはサービスとジョブとに分かれていますが、ジョブは
             print(f'id: {id}が渡されました')
         ```
         
-    - これで、python [manage.py](http://manage.py) job —id={id}の形でコマンド実行できます
+    - これで、`python [manage.py](http://manage.py) job —id={id}`の形ででコマンド実行できます
 - CloudRunジョブを実行するエンドポイントを用意
     
     アプリケーションからCloudRunジョブを呼び出すエンドポイントを用意します
@@ -90,6 +90,18 @@ CloudRunはサービスとジョブとに分かれていますが、ジョブは
           return HttpResponse()
         ```
         
-        - CloudRunを実行するために、専用のgoogle-cloud-runをインストールします
+        - 専用ライブラリ [google-cloud-run](https://cloud.google.com/python/docs/reference/run/latest)をインストールします
+        - `client.run_job`
+            - ジョブ実行をトリガーできます。この時、ジョブ実行を作成するためのパラメーター `request`を引数に取ります
+        - request
+            - name
+                - CloudRunJobのジョブ名を指定します。フォーマットは`projects/{project}/locations/{location}/jobs/{job}`になります
+            - overrides
+                - ジョブの仕様を上書きします。
+                    - `run_v2.types.RunJobRequest.Overrides.ContainerOverride`
+                        - コンテナごとのオーバーライド指定になります。今回は`args`にて、引数をオーバーライドしていますが、他に`env`や`clear_args`を用いて環境変数を上書きしたり、元々設定されている引数を消去できます。詳細は以下をご覧ください
+                            
+                            [Class ContainerOverride (0.10.14)  |  Python client library  |  Google Cloud](https://cloud.google.com/python/docs/reference/run/latest/google.cloud.run_v2.types.RunJobRequest.Overrides.ContainerOverride)
+                            
     
-- CloudRunJobで実行するか
+- CloudRunJobをコンソールで作成する
