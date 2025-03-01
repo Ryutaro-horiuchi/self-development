@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <script type="module" src="./sample.js"></script> -->
+</head>
+<body>
+  <p>マクロタスクとレンダリング</p>
+  <p id="count">countの値: 0</p>
+  <script>
+    setTimeout(() => {
+      const count = document.getElementById("count")
+      count.innerHTML = `countの値: 1`
+    }, 0)
+
+    setTimeout(() => {
+      const count = document.getElementById("count")
+      count.innerHTML = 'countの値: 2'
+    }, 0)
+    // <p>マイクロタスクとレンダリング</p>
+    // <p id="count">countの値: 0</p>
+    // Promise.resolve().then(() => {
+    //   const count = document.getElementById("count")
+    //   count.innerHTML = 'この代入はHTMLに表示されない'
+    // });
+
+    // Promise.resolve().then(() => {
+    //   const count = document.getElementById("count")
+    //   for(let i=0; i < 10**4; i++) {
+    //     count.innerHTML = `countの値: ${i}`
+    //   }
+    // });
+  </script>
+</body>
+</html>
