@@ -1,0 +1,13 @@
+{% load tz %}
+
+<div>
+  {% localtime on %}
+    <p>localtime on {{ value }}</p>
+  {% endlocaltime %}
+
+  {% localtime off %}
+  <p>localtime off {{ value }}</p>
+  {% endlocaltime %}
+
+  <p>{{ value }}</p>
+</div>
