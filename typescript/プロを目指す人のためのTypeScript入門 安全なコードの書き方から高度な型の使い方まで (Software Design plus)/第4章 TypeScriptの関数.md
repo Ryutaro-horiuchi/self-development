@@ -202,3 +202,125 @@ TypeScriptでは関数も値であるため、関数を表す型がある。そ�
     ```
     
     - isUsedプロパティを持つオブジェクトであると同時にnumber側を受け取る関数でもあるような値の型
+
+
+## 関数型の部分型関係
+
+[部分型関係](https://www.notion.so/2a193db0555480299d34e6b856201660?pvs=21) 
+
+- Ex.
+    - オブジェクトの部分型関係 (復習)
+        
+        ```tsx
+        type HasName = { name: string };
+        type HasNameAndAge = { name: string; age: number };
+        
+        // オブジェクトの部分型関係
+        // HasNameAndAge の値は HasName の条件をすべて満たす。
+        // よって HasNameAndAge の値は、HasName 型の変数に代入できる。
+        const p: HasNameAndAge = { name: "Alice", age: 20 };
+        const q: HasName = p; // ✅ OK
+        ```
+        
+        - `HasNameAndAge`は`HasName`の部分型である
+            - プロパティが多い方が部分型である
+    - 関数型の部分型関係
+        
+        ```tsx
+        type HasName = { name: string };
+        type HasNameAndAge = { name: string; age: number };
+        
+        // 関数型
+        type F1 = (arg: HasName) => void;
+        type F2 = (arg: HasNameAndAge) => void;
+        ```
+        
+        - **`F1(** HasName を受け取る関数**)` は `F2(**　HasNameAndAge **を受け取る関数)` の部分型** になる
+            - → オブジェクトの型の関係と逆なのは、関数の引数型は反変（contravariant）だから
+            - 引数が少ない方が部分型である
+
+### 引数の数による部分型関係
+
+ある関数型Fの引数リストの末尾に新たな引数を追加して関数型Gを作った場合、FはGの部分型となる
+
+```tsx
+type UnaryFunc = (arg: number) => number;
+type BinaryFunc = (left: number, right: number) => number;
+
+const double: UnaryFunc = arg => arg * 2;
+const add: BinaryFunc = (left, right) => left + right;
+
+// UnaryFuncをBinaryFuncとして扱うことができる
+const bin: BinaryFunc = double;
+// 20 が表示される
+console.log(bin(10, 100));
+```
+
+# ジェネリックス
+
+- 型引数を受け取る関数を作る機能のこと
+    - [型引数を持つ型](https://www.notion.so/2a193db0555480c28a14f39480f8f494?pvs=21)
+
+## 使い方
+
+- 構文
+    - 定義: 関数名<型引数リスト>(仮引数群)という構文を付け足す
+    - 呼び出し: 関数<型引数群>(引数群)
+- 「入力の値によって出力の値が決まる」ような時がジェネリックスの基本的なユースケース
+- Ex.
+    
+    ```tsx
+    function repeat<T>(element: T, length: number): T[] {
+      const result: T[] = [];
+      for (let i = 0; i < length; i++) {
+        result.push(element);
+      }
+      return result;
+    }
+    
+    // ["a", "a", "a", "a", "a"] が表示される
+    console.log(repeat<string>("a", 5)); 
+    // [123, 123, 123] が表示される
+    console.log(repeat<number>(123, 3)); 
+    ```
+    
+- Ex.2 関数の記法別
+    
+    ```tsx
+    // function関数式
+    const repeat = function<T>(element: T, length: number): T[] {
+      ...
+    }
+    // アロー関数
+    const repeat = <T>(element: T, length: number): T[] => {
+      ...
+    }
+    // メソッド記法
+    const utils = {
+      repeat<T>(element: T, length: number): T[] {
+    		...
+      }
+    }
+    ```
+    
+
+## 関数の型引数は省略することができる
+
+```tsx
+function repeat<T>(element: T, length: number): T[] {
+  ...
+}
+
+// 省略なし 
+console.log(repeat<string>("a", 5)); 
+// 省略。型推論
+console.log(repeat("a", 5)); 
+```
+
+## 型引数を持つ関数型
+
+関数定義時と同様、型を定義する際も`<型引数リスト>`を使用して型を定義できる
+
+```tsx
+type Func = <T>(arg: T, num: number) => T[];
+```
