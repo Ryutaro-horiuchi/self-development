@@ -181,3 +181,103 @@ class User {
     
     console.log(User.adminUser.getAge()); // 9999 と表示される
     ```
+
+### 型引数を持つクラス
+
+- クラスも型引数を持つことができる
+- Ex.
+    
+    ```tsx
+    class User<T> {
+      name: string;
+      #age: number;
+      readonly data: T;
+    
+      constructor(name: string, age: number, data: T) {
+        this.name = name;
+        this.#age = age;
+        this.data = data;
+      }
+    
+      public isAdult(): boolean {
+        return this.#age >= 20;
+      }
+    }
+    
+    // uhyoはUser<string>型
+    const uhyo = new User<string>("uhyo", 26, "追加データ");
+    // dataはstring型
+    const data = uhyo.data;
+    
+    // johnはUser<{ num: number; }>型
+    const john = new User("John Smith", 15, { num: 123 })
+    // data2は{ num: number; }型
+    const data2 = john.data;
+    ```
+    
+    - 型引数は省略もできる。その時は引数の値から推論される
+
+## クラスの型
+
+- クラス宣言はクラスオブジェクトという値を作るものであると同時に、インスタンスの型を宣言するものである
+- Ex.
+    
+    ```tsx
+    class User {
+    	name: string = "";
+    	age: number = 0;
+    
+    	isAdult(): boolean {
+    		return this.age >= 20;
+    	}
+    }
+    
+    // これはもちろんOK
+    const uhyo: User = new User();
+    // これもOK!
+    const john: User = {
+      name: "John Smith",
+      age: 15,
+      isAdult: () => true
+    };
+    
+    ```
+    
+    - Userという型も生成されている
+    - 例ではname, ageというプロパティとisAdultというメソッドを持っていれば、`new User();`という構文で作成されなくてもUser型として扱える
+
+### newシグネチャによるインスタンス化可能性の表現
+
+- 前提
+    - クラスオブジェクトそのものの型はどんなものか
+        - `class User {…}`と宣言したならば、変数Userが持つ型はどのように表現できるか
+    - new (引数リスト) ⇒ インスタンスの型という記法で型を表現できる
+    - Ex.
+        
+        ```tsx
+        class User {
+          name: string = "";
+          age: number = 0;
+        }
+        
+        type MyUserConstructor = new () => User;
+        
+        // UserはMyUserConstructor型を持つ
+        const MyUser: MyUserConstructor = User;
+        // MyUserはnewで使用可能
+        const u = new MyUser();
+        // uはUser型を持つ
+        console.log(u.name, u.age);
+        ```
+        
+- 本題: newシグネチャ
+    - コールシグネチャの亜種
+        - [コールシグネチャによる関数型の表現](https://www.notion.so/2a593db0555480528217e55c14f58dab?pvs=21)
+    - newで呼び出せると同時に、それ自身もプロパティやメソッドを持つというオブジェクトを表現したい場合に使用できる
+    - Ex.
+        
+        ```tsx
+        type MyUserConstructor = {
+          new (): User;
+        };
+        ```
