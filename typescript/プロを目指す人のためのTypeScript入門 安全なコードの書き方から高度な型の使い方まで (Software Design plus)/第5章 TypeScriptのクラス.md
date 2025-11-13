@@ -279,5 +279,121 @@ class User {
         ```tsx
         type MyUserConstructor = {
           new (): User;
+          
         };
         ```
+
+## クラスの継承
+
+### override修飾子
+
+- オーバーライドを明示する。
+- Ex.
+    
+    ```tsx
+    class User {
+      ...
+      public isAdult(): boolean {
+        return this.#age >= 20;
+      }
+    }
+    
+    class PremiumUser extends User {
+      rank: number = 1;
+    
+      public override isAdult(): boolean {
+        return true;
+      }
+    }
+    ```
+    
+- `override`を使わなくてもオーバーライドは可能であり、挙動は変わらない
+    
+    → コンパイルエラー時に指摘してもらうために書くもの
+    
+- tsconfig.jsonで設定する`noImplicitOverride`コンパイラオプションを有効化すると、オーバーライドをする際は必ず`override`修飾子をつける必要がある
+
+### implementsキーワードによるクラス型のチェック
+
+- クラスを定義する際に、それをある型に適合する(部分型となる)ことを明確化したい時に使用する
+- 構文
+    - class クラス名 implements 型
+- Ex.
+    
+    ```tsx
+    type HasName = {
+      name: string;
+    }
+    
+    // class Premiumuser extends User implements HasName extendsとの併用
+    class User implements HasName {
+      name: string;
+      #age: number;
+    
+      constructor(name: string, age: number) {
+        this.name = name;
+        this.#age = age;
+      }
+    
+      public isAdult(): boolean {
+        return this.#age >= 20;
+      }
+    }
+    ```
+    
+    - User型がnameプロパティを持たないとコンパイルエラーが発生する
+
+## this
+
+### アロー関数におけるthis
+
+- アロー関数はthisを外側の関数から受け継ぐ
+    - アロー関数は自分自身のthisを持たないとも言える
+- Ex.
+    
+    ```tsx
+    class User {
+      name: string;
+      #age: number;
+    
+      ...
+    
+      public filterOlder(users: readonly User[]): User[] {
+        return users.filter(u => u.#age > this.#age);
+      }
+    }
+    ```
+    
+    - filterOlder内のコールバック関数のthisは、関数内ではなく外側のfilterOlderから受け継いでいる。
+
+### 関数の中以外のthis(静的プロパティおよび静的ブロック)
+
+- thisはクラスオブジェクトそのものを指す
+- Ex.
+    
+    ```tsx
+    class A {
+      static foo = 123;
+      static bar = this.foo * 2;
+      static {
+        console.log("bar is", this.bar); // "bar is" 246 と表示される
+      }
+    }
+    ```
+    
+
+```tsx
+class User {
+	name: string;
+	age: number;
+
+	constructor(name: string, age: number) {
+		this.name = name
+		this.age = age
+	}
+
+	getMessage(message: string): string {
+		return `${this.name} (${this.age}) 「${message}」`
+	}
+}
+```
