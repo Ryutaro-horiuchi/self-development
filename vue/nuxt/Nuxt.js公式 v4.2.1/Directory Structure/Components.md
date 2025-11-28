@@ -259,3 +259,70 @@ export default defineNuxtModule({
     </template>
     
     ```
+
+## Client Components
+
+- コンポーネントをクライアントサイドでのみレンダリングしたい場合、コンポーネント名に `.client` サフィックスを追加できます。
+- 比較
+    
+    
+    | 種類 | SSR HTML | Hydration | 実行場所 |
+    | --- | --- | --- | --- |
+    | **Server Components**（デフォルト） | 生成される | あり | 主にサーバー（＋一部クライアント） |
+    | **Client Components** | ❌ 生成されない | ❌ ない | クライアントのみ |
+    - ブラウザAPIを使うコンポーネントがあるときに有用
+- Ex.
+    
+    ```tsx
+    | components/
+    --| Comments.client.vue
+    
+    ```
+    
+    ```tsx
+    <template>
+      <div>
+        <!-- this component will only be rendered on client side -->
+        <Comments />
+      </div>
+    </template>
+    
+    ```
+    
+
+## Server Components
+
+- クライアントサイドアプリ内で個々のコンポーネントをサーバーサイドレンダリングすることを可能にする
+- 静的サイトを生成する場合でも、Nuxt内でサーバーコンポーネントを使用できる
+
+### Standalone server components
+
+- 常にサーバー上でレンダリングされる。「アイランドコンポーネント」とも呼ばれます。
+- プロパティが更新されると、ネットワークリクエストが発生し、レンダリングされたHTMLがインプレースで更新される。
+- .serverサフィックスを付けたサーバー専用コンポーネントを登録し、アプリケーション内のどこでも自動的に使用できるようになります。
+    
+    ```tsx
+    -| components/
+    ---| HighlightedMarkdown.server.vue
+    
+    ```
+    
+
+<aside>
+⚠️
+
+サーバーコンポーネントは現在実験的機能です。使用するには、nuxt.configで「component islands」機能を有効にする必要があります
+
+```tsx
+export default defineNuxtConfig({
+  experimental: {
+    componentIslands: true,
+  },
+})
+```
+
+</aside>
+
+### Client components within server components
+
+サーバーコンポーネント内のクライアントコンポーネント
