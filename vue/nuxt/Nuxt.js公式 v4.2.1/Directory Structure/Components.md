@@ -297,8 +297,11 @@ export default defineNuxtModule({
 
 ### Standalone server components
 
-- 常にサーバー上でレンダリングされる。「アイランドコンポーネント」とも呼ばれます。
+- 常にサーバー上でレンダリングされるコンポーネント。「Islands components」とも呼ばれます。
 - プロパティが更新されると、ネットワークリクエストが発生し、レンダリングされたHTMLがインプレースで更新される。
+    
+    → 必要に応じてサーバー ≒ SSR の恩恵を受けつつ、クライアント側の負荷やバンドルサイズを抑える設計が可能
+    
 - .serverサフィックスを付けたサーバー専用コンポーネントを登録し、アプリケーション内のどこでも自動的に使用できるようになります。
     
     ```tsx
@@ -323,6 +326,55 @@ export default defineNuxtConfig({
 
 </aside>
 
+### Server Component Context
+
+- [Standalone server components](https://www.notion.so/Standalone-server-components-2b893db0555480c38355e08927a05bc1?pvs=21) においてレンダリングされたコンポーネントにおける独立した実行コンテキストのこと
+- 特徴
+    - アイランドコンポーネントがレンダリングされるとき、内部で 別のVueアプリ (インスタンス) が作られる
+    - アプリの他の部分から「アイランドコンテキスト」にアクセスすることはできず、アイランドコンポーネントからアプリの他の部分のコンテキストにアクセスすることもできない
+    - Nuxtのplugins/内にある`defineNuxtPlugin()`は、`env: { islands: false }` が設定されていない限り、アイランドのレンダリング時に再度実行される
+
 ### Client components within server components
 
-サーバーコンポーネント内のクライアントコンポーネント
+- サーバー側でレンダリングされるコンポーネントの中に、ブラウザで動くインタラクティブな部分（Client Component）だけを埋め込める機能
+- クライアントサイドで読み込みたいコンポーネントに`nuxt-client`属性を設定することで、コンポーネントを部分的にハイドレートできます。
+- Ex.
+    
+    ```tsx
+    <!-- Server Component -->
+    <template>
+      <h1>サーバーで描画される部分</h1>
+    
+      <MyCounter nuxt-client />
+    </template>
+    
+    ```
+    
+- メリット
+    1. パフォーマンスが良い
+        
+        HTML 部分はほぼサーバー側で出すので、クライアントの JS は最小で済む。
+        
+    2. 必要なところだけインタラクティブにできる
+        
+        フォームやボタンなど、必要なところだけ Client Component にする。
+        
+    3. 開発者が「このコンポーネントはどこで動くか」をコントロールできる
+        
+        Nuxt が勝手に混ぜるのではなく、明示的に切り分けられる。
+        
+
+## Paired with a Client component
+
+サーバーコンポーネントとクライアントコンポーネントをセットで作成する
+
+- SSR で重い処理（データ取得、パース、HTML生成など）を行い
+- クライアント側はその結果を受け取り、最小限の JS でインタラクティブにする
+- ケース
+    - SSR で HTML が必要（SEO 対策）だけどクライアントではアニメ、ボタン、切替UIが欲しい
+
+```tsx
+-| components/
+---| Comments.client.vue
+---| Comments.server.vue
+```
