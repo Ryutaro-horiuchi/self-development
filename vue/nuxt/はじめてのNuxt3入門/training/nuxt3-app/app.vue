@@ -1,16 +1,13 @@
 <template>
   <div>
-    <NuxtLayout :name="layout">
-      <NuxtPage />
-    </NuxtLayout>
+    <h1>{{ title }}</h1>
+    <button @click="$event => titleState.changeTitle('Hello Nuxt3!')">
+      changeTitle
+    </button>
   </div>
 </template>
 
 <script setup>
-const layout = 'custom'
-useHead(
-  {
-    title: "カスタムタイトル"
-  }
-)
+ const titleState = useTitle()
+ const { title } = titleState
 </script>
