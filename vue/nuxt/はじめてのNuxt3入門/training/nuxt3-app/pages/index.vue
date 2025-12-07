@@ -1,14 +1,13 @@
 <template>
   <div>
-    <h1>Top Page</h1>
-    <hr>
-    <p>{{ users[0] }}</p>
+    <p>{{ counter }}</p>
+    <button @click="counterStore.countUp">+</button>
+    <button @click="counterStore.countDown">-</button>
+    <button @click="counterStore.reset">reset</button>
   </div>
 </template>
 
 <script setup>
-  const { data: users, error } = await useFetch("https://jsonplaceholder.typicode.com/userss")
-  if (error.value) {
-    throw createError({ statusCode: 404, statusMessage: "Page not found!!" } )
-  }
+  const counterStore = useCounterState()
+  const { counter } = counterStore
 </script>

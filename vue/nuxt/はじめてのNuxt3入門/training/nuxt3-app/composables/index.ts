@@ -1,11 +1,25 @@
 import { Ref } from "vue"
-export const useTitle = () => {
-  const title = useState<string>('title', ()=>  "Hello World!")
-  const changeTitle = (title: Ref<string>) => (value: string) => {
-    title.value = value
-  }
+
+export const useCounterState = () => {
+  const count = useState<number>("counter", ()=> 0)
   return {
-    title: readonly(title),
-    changeTitle: changeTitle(title)
+    counter: readonly(count),
+    countUp: countUp(count),
+    countDown: countDown(count),
+    reset: reset(count)
   }
+}
+
+const countUp = (count: Ref<number>) => () => {
+  count.value++
+}
+
+const countDown = (count: Ref<number>) => () => {
+  if (count.value > 0) {
+    count.value--
+  }
+}
+
+const reset = (count: Ref<number>) => () => {
+  count.value = 0
 }
