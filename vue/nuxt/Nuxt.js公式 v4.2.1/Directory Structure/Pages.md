@@ -181,3 +181,93 @@
     ```
     
     これにより、アプリ内に /、/about、/contact ページが生成される。
+    
+
+## Special Metadata
+
+- アプリ全体で独自に使用するメタデータを定義することは可能
+- 種類(抜粋)
+    - `ailas`
+        
+        異なるパス名で同じページにアクセスすることができる
+        
+    - `keepalive`
+        
+        Nuxt は自動的にページを Vue の `<KeepAlive>` コンポーネントでラップする。これは、例えば動的な子ルートを持つ親ルートで、ルート変更時にページ状態を保持したい場合に有用
+        
+        [KeepAliveタグ](https://www.notion.so/KeepAlive-fd8e981bdf804e069937b0b374e2ef4f?pvs=21) 
+        
+
+## Navigation
+
+ナビゲーションアプリのページ間を移動するには、`<NuxtLink>` コンポーネントを使用する
+
+- Ex
+    
+    ```tsx
+    <template>
+      <NuxtLink to="/">Home page</NuxtLink>
+    </template>
+    
+    ```
+    
+
+### プログラムによるナビゲーション
+
+`navigateTo()`ユーティリティメソッドを通じてプログラムによるナビゲーションが可能
+
+- Ex
+    
+    ```tsx
+    <script setup lang="ts">
+    const name = ref('')
+    const type = ref(1)
+    
+    function navigate () {
+      return navigateTo({
+        path: '/search',
+        query: {
+          name: name.value,
+          type: type.value,
+        },
+      })
+    }
+    </script>
+    
+    ```
+    
+
+## 複数ページのディレクトリ
+
+- デフォルトでは、すべてのページはプロジェクトのルートにある `app/pages` ディレクトリに配置する必要がある。
+    
+    → ただし、Nuxt Layers を使用してアプリのページのグループ化を作成できる
+    
+    - Ex.
+        - ディレクトリ構造
+            
+            ```tsx
+            -| some-app/
+            ---| nuxt.config.ts
+            ---| pages/
+            -----| app-page.vue
+            -| nuxt.config.ts
+            
+            ```
+            
+        - some-app/nuxt.config.ts
+            
+            ```tsx
+            // some-app/nuxt.config.ts
+            export default defineNuxtConfig({
+            })
+            ```
+            
+        - nuxt.config.ts
+            
+            ```tsx
+            export default defineNuxtConfig({
+              extends: ['./some-app'],
+            })
+            
+            ```
