@@ -226,3 +226,189 @@
     	<p>リストに<NuxtLink v-bind:to="{name: 'index'}">戻る</NuxtLink></p>
     </template>
     ```
+
+
+## データ取得処理を再実行するリフレッシュ
+
+- refreshプロパティ
+    - useAsyncDataと同じ処理を含んだ関数となっており、このプロパティを関数として実行するだけで、useAsyncData()関数が再実行される
+    - refreshプロパティを関数として実行する際、関数内に新しいパラメーターを用意するコードがないと再実行の際に新しい情報は取得されない
+    - Ex.
+        
+        ```tsx
+        const asyncData = await useAsyncData(
+        	(): Promise<any> => {
+        		...
+        		const response = $fetch(urlFull);
+        		return response;
+        	},
+        	{
+        		transform: (data: any): string => {
+        			...
+        		}
+        	}
+        );
+        const pending = asyncData.pending;
+        const weatherDescription = asyncData.data;
+        const refresh = asyncData.refresh;
+        
+        const onCityChanged = () => {
+        	selectedCity.value = cityList.value.get(selectedCityId.value) as City;
+        	refresh();
+        }
+        ```
+        
+- watchオプション
+    - refreshプロパティとは別の関数を再実行する仕組み
+    - Ex.
+        
+        ```tsx
+        const selectedCityId = ref(1853909);
+        
+        const asyncData = await useAsyncData(
+        	(): Promise<any> => {
+        		...
+        		return response;
+        	},
+        	{
+        		transform: (data: any): WeatherInfoData => {
+        			...
+        		},
+        		watch: [selectedCityId]
+        	}
+        );
+        ```
+        
+        - watchオプションに、配列として監視してほしいリアクティブ変数を渡すと、その値が変更されたときにリフレッシュが行われるようになっている
+
+## コンポーザブル
+
+よく使うコードを再利用する場合、別ファイルに記述してその関数をインポートして利用するという方法が一般的だが、Nuxtでは、これを自動化し、インポートを不要にする機能としてコンポーザブル(Composables)というものがある
+
+### コンポーザブルの作り方
+
+1. コンポーザブルを定義するファイルは、composablesフォルダ内に格納する
+2. 1のフォルダ内にuse〇〇.tsというキャメル記法の名称のファイルを作成する
+3. 2と同名のメソッドを定義しエクスポートする
+4. 3のメソッド内に再利用したいコードを記述し、その結果をリターンする
+- 構文
+    
+    ```tsx
+    export const use〇〇 = (引数: 引数の型, ...) => {
+    	return 戻り値
+    }
+    ```
+    
+- Ex. composables/useWeatherInfoFetcher.ts
+    
+    ```tsx
+    export const useWeatherInfoFetcher = (city: City) => {
+    	const config = useRuntimeConfig();
+    	const asyncData = useLazyAsyncData(
+    		...
+    	);
+    	return asyncData;
+    };
+    ```
+    
+
+### コンポーザブルの利用
+
+- コンポーザブルはオートインポートであるため、単に関数を呼び出すだけ
+    
+    ```tsx
+    ...
+    const asyncData = useWeatherInfoFetcher(selectedCity.value);
+    ...
+    ```
+    
+
+## ランタイム設定の定義(Runtime Config)
+
+プロジェクト全体で使われる定数値を設定情報としてまとめる機能がNuxtのランタイム設定
+
+### ランタイム設定を記述 runtimeConfigプロパティ
+
+- nuxt.config.tsに記述する
+    - プロジェクトを作成すると自動で生成されている
+    - Ex. nuxt.config.ts 初期値
+        
+        ```tsx
+        // https://nuxt.com/docs/api/configuration/nuxt-config
+        export default defineNuxtConfig({
+          devtools: { enabled: true }
+        })
+        ```
+        
+- runtimeConfigプロパティ内にランタイム設定を記述する
+    - Ex.
+        
+        ```tsx
+        // https://nuxt.com/docs/api/configuration/nuxt-config
+        export default defineNuxtConfig({
+          devtools: { enabled: true },
+        	runtimeConfig: {
+        		public: {
+        			weatherInfoUrl: "https://api.openweathermap.org/data/2.5/weather",
+        			weathermapAppid: "xxxxxx"
+        		}
+        	}
+        })
+        ```
+        
+        - publicプロパティで定義しないと、private扱いになり、サーバーサイドレンダリングのみで使用はできるが、クライアントサイドレンダリングでは利用できなくなる
+    
+    ### ランタイム設定の利用
+    
+    - useRuntimeConfig()関数の戻り値オブジェクトからアクセスする
+    - Ex.
+        
+        ```tsx
+        export const useWeatherInfoFetcher = (city: City) => {
+        	const config = useRuntimeConfig();
+        	const params:{
+        		lang: string;
+        		q: string;
+        		appid: string;
+        	} =
+        	{
+        		lang: "ja",
+        		q: city.q,
+        		appid: config.public.weathermapAppid
+        	}
+        	const asyncData = useLazyFetch(
+        		config.public.weatherInfoUrl,
+        		...
+        	);
+        	return asyncData;
+        };
+        ```
+        
+
+### 環境変数の利用
+
+- .envファイルでの環境変数とランタイム設定を自動対応させ、対応するものに関しては、値を上書きする仕組みがある
+    - .env.localやenv.productionも同じように作用する
+- Ex.
+    - .env
+        
+        ```tsx
+        NUXT_PUBLIC_WEATHERMAP_APPID = "xxxxx"
+        ```
+        
+    - nuxt.config.ts
+        
+        ```tsx
+        export default defineNuxtConfig({
+        	...
+        	runtimeConfig: {
+        		public: {
+        			weathermapAppid: ""
+        		}
+        	}
+        })
+        ```
+        
+        - weathermapAppidは、環境変数`NUXT_PUBLIC_WEATHERMAP_APPID`の値`xxxx`に上書きされる
+- 対応関係
+    - ランタイム設定の設定名を全て大文字のスネーク記法に変換し、先頭に`NUXT_`を付与する。publicのランタイム設定の場合は、`NUXT_PUBLIC_`とする
