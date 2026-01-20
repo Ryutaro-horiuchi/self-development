@@ -53,3 +53,70 @@ const pending = asyncData.pending;
 ```
 
 - 同一Nuxtプロジェクト内のサーバーAPIエンドポイントへのアクセスの場合は、プロトコル部分やホスト部分は省略でき、パス部分のみを記述するだけで問題ない
+
+## GETリクエスト
+
+### クエリパラメーターでの会員詳細情報の取得
+
+- Ex.
+    - pages/member/memberDetail/[id].vue
+        
+        ```tsx
+        const route = useRoute()
+        const asyncData = useLazyFetch(
+        	"/api/getOneMemberInfo",
+        	{
+        		query: {id: route.params.id}
+        	}
+        );
+        ```
+        
+        - queryプロパティでクエリパラメーターidとして、ルートパラメータで渡された値を付与する
+
+### サーバーサイドでのクエリパラメーターの取得
+
+- Ex.
+    - server/api/getOneMemberInfo.ts
+        
+        ```tsx
+        export default defineEventHandler(
+        	(event): Member => {
+        		//クエリパラメータを取得。
+        		const query = getQuery(event);
+        		//membersDB.tsを利用して会員リスト情報Mapオブジェクトを生成。
+        		const memberList = createMemberList();
+        		//クエリパラメータのidを数値に変換。
+        		const idNo = Number(query.id);
+        		//クエリパラメータに該当する会員情報オブジェクトを取得。
+        		const member = memberList.get(idNo) as Member;
+        		//取得した会員情報オブジェクトをリターン。
+        		return member;
+        	}
+        );
+        ```
+        
+- `getQuery(event)`を実行すると、イベントオブジェクト内に格納されたクエリパラメーターを取り出せる
+
+## POSTリクエスト
+
+リクエストボディでの新規会員情報の送信
+
+### リクエストボディの取得
+
+- Ex.
+    
+    ```tsx
+    export default defineEventHandler(
+    	async (event) => {
+    		const body = await readBody(event);
+    		console.log(body);
+    		return {
+    			result: 1,
+    			member: body
+    		};
+    	}
+    );
+    ```
+    
+- `readBody(event)`を実行すると、リクエストボディを取得できる
+    - この関数は非同期関数であるため、awaitを利用する必要がある点に注意
