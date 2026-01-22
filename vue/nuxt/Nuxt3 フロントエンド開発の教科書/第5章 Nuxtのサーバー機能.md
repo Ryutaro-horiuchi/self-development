@@ -120,3 +120,55 @@ const pending = asyncData.pending;
     
 - `readBody(event)`を実行すると、リクエストボディを取得できる
     - この関数は非同期関数であるため、awaitを利用する必要がある点に注意
+
+## サーバーサイドルーティング
+
+### routesサブフォルダ
+
+- pagesフォルダ配下にファイルを作成するとそのままルーティング化する仕組みが、サーバーサイドにもそのまま適用できる
+    - server/api 配下に作成したファイルはそのまま/api配下のパスとして実行されるが、`routes`フォルダの場合はルーティングの仕組みが適用される
+
+### HTTPメソッドは拡張子で指定する
+
+- Ex.
+    - パス: `/member-management/members`
+    - HTTPメソッド:  `get`
+        
+        → `members.get.ts`になる。単純だが、postの時は`members.post.ts`
+        
+
+### ルートパラメーターの取得
+
+- サーバーサイドでもルートパラメーターを含めたファイルの作成方法は、pagesフォルダ内のファイルの作成方法と同じである
+- Ex.  ファイル作成
+    - パス: `/member-management/members/32234`
+    - HTTPメソッド: `get`
+    
+    ```tsx
+    server/routes/member-management/members/[id].get.ts
+    ```
+    
+- Ex. ルートパラメータ取得コード
+    
+    ```tsx
+    export default defineEventHandler(
+    	(event): ReturnJSONMembers => {
+    		//ルートパラメータを取得。
+    		const params = event.context.params;
+    		//membersDB.tsを利用して会員リスト情報Mapオブジェクトを生成。
+    		const memberList = createMemberList();
+    		//ルートパラメータのidを数値に変換。
+    		const idNo = Number(params!.id);
+    		//ルートパラメータに該当する会員情報オブジェクトを取得。
+    		const member = memberList.get(idNo) as Member;
+    		//送信データオブジェクトをリターン。
+    		return {
+    			result: 1,
+    			data: [member]
+    		};
+    	}
+    );
+    ```
+    
+    - event.context.params
+        - ルートパラメーターを全て取得できる
