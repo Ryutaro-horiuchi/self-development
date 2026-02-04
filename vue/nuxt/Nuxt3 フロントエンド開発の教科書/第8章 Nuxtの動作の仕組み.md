@@ -136,3 +136,37 @@ export default defineNuxtConfig({
     
     - CSRとは違い、サーバーからレスポンスが送信された段階で、すでにdivタグ内にレンダリングされていることがわかる
 - SSRイメージ
+
+
+### SSGとISGの挙動
+
+<aside>
+💡
+
+まだ発展途上である
+
+</aside>
+
+- /ssgに遷移し、　ページのソースを表示
+    
+    ```tsx
+    <html >
+    ...
+    <body ><div id="__nuxt"><!--[--><p>現在の時刻: 6:29:42</p><p><a href="/" class=""> 戻る </a></p><!--]--></div><script type="application/json" id="__NUXT_DATA__" data-ssr="true">[["Reactive",1],{"data":2,"state":3,"_errors":4,"serverRendered":5,"path":6,"prerenderedAt":7},{},{},{},true,"/ssg",1770240582821]</script><script>window.__NUXT__={};window.__NUXT__.config={public:{},app:{baseURL:"/",buildAssetsDir:"/_nuxt/",cdnURL:""}}</script><script type="module" src="/_nuxt/entry.58b6f3a7.js" crossorigin></script></body>
+    </html>
+    ```
+    
+    - 何回リロードしても時刻は変わらない
+    - 発展途上な点
+        - サーバーサイド側ではSSGの挙動として問題ないが、フロント側では画面をリロードするとJSが実行されて、表示時刻が更新されてしまう
+        - SSGがまともに動作する環境は限定的で、NetlifyとVercelのみとアナウンスされている
+- /Isgに遷移
+    
+    ```tsx
+    <html >
+    ...
+    <body ><div id="__nuxt"><!--[--><p>現在の時刻: 6:34:45</p><p><a href="/" class=""> 戻る </a></p><!--]--></div><script type="application/json" id="__NUXT_DATA__" data-ssr="true">[["Reactive",1],{"data":2,"state":3,"_errors":4,"serverRendered":5,"path":6,"prerenderedAt":7},{},{},{},true,"/ssg",1770240582821]</script><script>window.__NUXT__={};window.__NUXT__.config={public:{},app:{baseURL:"/",buildAssetsDir:"/_nuxt/",cdnURL:""}}</script><script type="module" src="/_nuxt/entry.58b6f3a7.js" crossorigin></script></body>
+    </html>
+    ```
+    
+    - 一定時間(60秒)過ぎてから更新すると、時刻が更新される
