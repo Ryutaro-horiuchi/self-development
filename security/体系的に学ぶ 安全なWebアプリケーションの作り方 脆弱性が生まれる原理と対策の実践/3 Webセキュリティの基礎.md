@@ -119,3 +119,61 @@
     - hiddenパラメーター VS クッキーやセッション変数
         - セッションはセッションIDの固定化攻撃に弱い欠点がある
         - 利用者自身に書き換えられては困る認証や認可はセッション変数に保存すべきだが、それ以外の情報はhiddenパラメーターに保存することを検討すると良い
+
+## ステートレスなHTTP認証
+
+- HTTPには、Basic認証やNTLM認証、Digest認証などの認証機能がサポートされている
+    - HTTPがステートレスであることから、HTTP認証もまたステートレスである
+
+### Basic認証を体験する
+
+- 流れ
+    1. 認証が必要なページにリクエストがあると一旦「401 Unauthorized 」を返す
+        1. 認証に失敗した場合は、Basic認証の規定に伴い以下のヘッダを出力する
+            
+            ```
+            HTTP/1.1 401 Unauthorized
+            WWW-Authenticate: Basic realm="Basic Authentication Sample"
+            ```
+            
+            - [`WWW-Authenticate: <challenge>`](https://developer.mozilla.org/ja/docs/Web/HTTP/Reference/Headers/WWW-Authenticate#%E6%A7%8B%E6%96%87)
+                - `<challenge>` が `<auth-scheme>` で構成される
+                    - auth-schemeにて認証方式を指定[`Basic`](https://developer.mozilla.org/ja/docs/Web/HTTP/Guides/Authentication#basic_%E8%AA%8D%E8%A8%BC%E6%96%B9%E5%BC%8F)、`Digest`、`Negotiate`、`AWS4-HMAC-SHA256`
+                
+    2. これを受けたブラウザは、IDとパスワードの入力画面を表示し、入力されたIDとパスワードを追加したリクエストを改めてサーバーに送信する
+        1. リクエスト時に以下のAuthorizationヘッダーが付与される
+            
+            ```
+            Authorization: Basic dXNlcjE6cGFzczE=
+            ```
+            
+            - 「Basic」の後ろの文字列はIDとパスワードをコロンで区切ってBase64エンコードしたもの
+- 一度Basic認証に成功すると、その後のリクエストはブラウザが自動的にAuthorizationヘッダを付与する。
+    - 見かけ上は認証状態が保持されているように見えるが、実際には毎リクエストIDとパスワードが送出されており、認証状態はどこにも保存されていない
+
+## クッキーとセッション管理
+
+### セッション管理
+
+- ECサイトの「ショッピングカート」や、ログインの有無やログインユーザー名などの認証の状態を覚えておくことをセッション管理と呼ぶ
+
+### 流れ(書籍サンプルアプリケーション)
+
+- 1. ログイン画面を表示
+    - 以下のレスポンスが返る
+        
+        ```
+        Set-Cookie: PHPSESSID=c7a1sq899c8kdq817fsode2n25; path=/
+        ```
+        
+        - Set-Cookieにより、Webサーバーはブラウザに対してセッションID(クッキー値)を覚えるように指示
+- 2.IDとパスワードを入力してログイン
+    - リクエストヘッダに以下が載ってくる
+        
+        ```
+        Cookie: PHPSESSID=c7a1sq899c8kdq817fsode2n25
+        ```
+        
+        - 一旦セッションIDを覚えたブラウザはその後同じサイトにリクエストを送る際には、覚えたセッションIDを送信する
+        - クッキー値は有効期限が設定できるが、設定されていないクッキーは、ブラウザを終了させるまで有効
+    - サンプルのアプリケーションでは、認証成功後ユーザーIDをセッション変数$_SESSION[”ID”]に格納し、以後セッションIDからユーザーIDを取り出している
